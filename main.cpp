@@ -37,6 +37,7 @@ struct Card
 //*******************************
 
 const int DECKSIZE = 52;
+const int MAXDECK = 11;
 
 //*******************************
 //Prototype Functions
@@ -51,6 +52,7 @@ bool validAgain(int);
 bool validBets(int);
 void game(int, Card [], int);
 
+void dealTwoCars(Card [], int, Card [], int, int &, int &);
 
 
 
@@ -61,12 +63,19 @@ void game(int, Card [], int);
 int main(){
     
     //Declaring variables
-    int players, again;
-    int cardLocation = 0;
+    int players, again, action;
+    int cardLocation, playerOneTotal;
     
     
     //Creating the deck of cards
     Card deck[DECKSIZE];
+    
+    //These structures will be used to hold the cards that dealer, playerOne and playerTwo have
+    //The constanst is set to 11 because that is the maximun number of cards that someone can have
+    //before Black Jack or 21 may arise.
+    Card playerOne[MAXDECK];
+    Card playerTwo[MAXDECK];
+    Card dealer[MAXDECK];
     
     //welcome();
     //mainMenu():
@@ -78,16 +87,29 @@ int main(){
     
     do {
         
+        //These variables must be returned to zero at the end of every round.
+        cardLocation = 0;
+        playerOneTotal = 0;
+        
         //This will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
+    
+        dealTwoCars(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
         
-//        cout << "You have a " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
-        
+        cout << "Your total is: " << playerOneTotal << endl;
+        cout << "1. Hit" << endl;
+        cout << "2. Stand" << endl;
+        cout << "3. Double Down" << endl;
+        cout << "4. Surrender" << endl;
+        cout << "What is your action?" << endl;
+        cin >> action;
         
         
         
         cardLocation++;
         
+        
+        //Make this into a function
         cout << "Do you want to play again? " << endl;
         cout << "1. Play Again" << endl;
         cout << "2. Stop Playing" << endl;
@@ -97,6 +119,7 @@ int main(){
             cout << "You may only select 1 or 2" << endl;
             cin >> again;
         }
+        //End function 
         
     } while (again != 2);
 
@@ -141,12 +164,35 @@ int numberOfPlayers(){
     return players;
 }// End of numberOfPlayers function
 
+
+//This function will deal the first two cards to the player(s)
+void dealTwoCars(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal){
+    
+    int aceValue;
+    
+    for (int i = 0; i < 2; i++)
+    {
+        cout << "your " << cardLocation + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
+        if (deck[cardLocation].valueTwo == 11){
+            cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+            cin >> aceValue;
+            deck[cardLocation].valueOne = aceValue;
+        }
+        playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
+        playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        //I have to increment the cardLocation after each hand to ensure that the cards are not
+        //repeated.
+        cardLocation++;
+    }
+    
+}//End of dealTwoCars
+
+
+
+
 //This function will run the main aspect of the game.
 void game(int players, Card deck[], int DECKSIZE){
-    
 
-
-    
     
 //    arrayForBets = new int[players];
 //    
@@ -170,7 +216,7 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
             deck[0].valueOne = 1;
             deck[0].valueTwo = 11;
             deck[0].suite = "Spade";
-            deck[0].face = "A";
+            deck[0].face = "ACE ";
             deck[1].valueOne = 2;
             deck[1].valueTwo = 2;
             deck[1].suite = "Spade";
@@ -223,7 +269,7 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
             deck[13].valueOne = 1;
             deck[13].valueTwo = 11;
             deck[13].suite = "Clubs";
-            deck[13].face = "A";
+            deck[13].face = "ACE ";
             deck[14].valueOne = 2;
             deck[14].valueTwo = 2;
             deck[14].suite = "Clubs";
@@ -276,7 +322,7 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
             deck[26].valueOne = 1;
             deck[26].valueTwo = 11;
             deck[26].suite = "Diamonds";
-            deck[26].face = "A";
+            deck[26].face = "ACE ";
             deck[27].valueOne = 2;
             deck[27].valueTwo = 2;
             deck[27].suite = "Diamonds";
@@ -329,7 +375,7 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
             deck[39].valueOne = 1;
             deck[39].valueTwo = 11;
             deck[39].suite = "Hearts";
-            deck[39].face = "A";
+            deck[39].face = "ACE ";
             deck[40].valueOne = 2;
             deck[40].valueTwo = 2;
             deck[40].suite = "Hearts";
