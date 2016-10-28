@@ -54,8 +54,11 @@ void game(int, Card [], int);
 int playAgain();
 void stand();
 
-void dealTwoCars(Card [], int, Card [], int, int &, int &);
-
+void dealTwoCards(Card [], int, Card [], int, int &, int &);
+void dealOneCard(Card [], int, Card [], int, int &, int &);
+void makeBets(int *, int);
+void surrender(int *, int);
+void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
 
 
 //******************************
@@ -67,6 +70,7 @@ int main(){
     //Declaring variables
     int players, again, action;
     int cardLocation, playerOneTotal;
+    int *arrayForBets;
     
     
     //Creating the deck of cards
@@ -89,16 +93,19 @@ int main(){
     
     do {
         
-        //Need to allocated bets-add function for that.
-        
         //These variables must be returned to zero at the end of every round.
         cardLocation = 0;
         playerOneTotal = 0;
         
+        //This line sets up the array for the players bets
+        arrayForBets = new int[players];
+        //Calling the function allow the player to see their bets
+        makeBets(arrayForBets, players);
+        
         //This will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
     
-        dealTwoCars(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+        dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
         
         //Show dealers hand here????
         
@@ -110,13 +117,14 @@ int main(){
         cout << "What is your action?" << endl;
         cin >> action;
         if (action == 1){
-            //hitMe();
+            dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
         }else if (action == 2){
             stand();
         }else if (action == 3){
-            //Doubledown();
+            Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
+            //May need a function to end game-since the player doubledown  or use a boolean flag?
         }else if (action == 4){
-            //Surrender();
+            surrender(arrayForBets, players);
         }
         
         
@@ -165,9 +173,24 @@ int numberOfPlayers(){
     return players;
 }// End of numberOfPlayers function
 
+//This function will allow the players to make their bets
+void makeBets(int *arrayForBets, int players){
+    
+    //This loop will ask the players to make their bets.
+    for (int i = 0; i < players; i ++){
+        cout << "Player " << i + 1 << " please place your bet: " << endl;
+        cout << "The bet must be between 10 and 500" << endl;
+        cin >> arrayForBets[i];
+        while ((arrayForBets[i] < 10) || (arrayForBets[i] > 500) ){
+            cout << "The bets must be between 10 and 500" << endl;
+            cin >> arrayForBets[i];
+        }
+    }
+}//End of makeBets function
+
 
 //This function will deal the first two cards to the player(s)
-void dealTwoCars(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal){
+void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal){
     
     int aceValue;
     
@@ -187,6 +210,68 @@ void dealTwoCars(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     }
     
 }//End of dealTwoCars
+
+
+//This function will deal one card to the player(s) when they do the hit action
+void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal){
+    
+    int aceValue;
+    
+    cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    if (deck[cardLocation].valueTwo == 11){
+        cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+        cin >> aceValue;
+        deck[cardLocation].valueOne = aceValue;
+    }
+    playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
+    playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
+    //I have to increment the cardLocation after each hand to ensure that the cards are not
+    //repeated.
+    cardLocation++;
+    
+}//End of dealOneCard function
+
+//This function is where the player will doubledown.
+void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal, int *arrayForBets, int players){
+    
+    float betIncrease;
+    //Again may need to do something with a second player-see notes in surrender function
+    
+    cout << "Please enter in a percentage of how much you would like to increase the bet by: " << endl;
+    cin >> betIncrease;
+    int aceValue;
+    
+    cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    if (deck[cardLocation].valueTwo == 11){
+        cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+        cin >> aceValue;
+        deck[cardLocation].valueOne = aceValue;
+    }
+    playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
+    playerOne[cardLocation] = deck[cardLocation];
+    
+    
+    //I have to increment the cardLocation after each hand to ensure that the cards are not
+    //repeated.
+    cardLocation++;
+    
+}//End of Doubledown function
+
+//This function will take care of the player surrendering.
+void surrender(int *arrayForBets, int players){
+    
+    int loss;
+    
+    //May need a marker in here to id which player it is 1 or 2 I will also probably need an if then
+    //statement to go into a certain field depending on the player. Best bet may be to use a Boolean
+    //flag.
+    cout << "You choose to surrender!" << endl;
+    cout << "You will lose half your earnings" << endl;
+    loss = arrayForBets[0] * .50;
+    arrayForBets[0] = loss;
+    cout << "You now have " << arrayForBets[0] << endl;
+
+}//End of surrender function
 
 
 //This function will run the main aspect of the game.
