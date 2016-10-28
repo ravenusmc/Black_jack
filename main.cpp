@@ -51,6 +51,8 @@ bool validPlayers(int);
 bool validAgain(int);
 bool validBets(int);
 void game(int, Card [], int);
+int playAgain();
+void stand();
 
 void dealTwoCars(Card [], int, Card [], int, int &, int &);
 
@@ -87,6 +89,8 @@ int main(){
     
     do {
         
+        //Need to allocated bets-add function for that.
+        
         //These variables must be returned to zero at the end of every round.
         cardLocation = 0;
         playerOneTotal = 0;
@@ -96,6 +100,8 @@ int main(){
     
         dealTwoCars(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
         
+        //Show dealers hand here????
+        
         cout << "Your total is: " << playerOneTotal << endl;
         cout << "1. Hit" << endl;
         cout << "2. Stand" << endl;
@@ -103,29 +109,24 @@ int main(){
         cout << "4. Surrender" << endl;
         cout << "What is your action?" << endl;
         cin >> action;
+        if (action == 1){
+            //hitMe();
+        }else if (action == 2){
+            stand();
+        }else if (action == 3){
+            //Doubledown();
+        }else if (action == 4){
+            //Surrender();
+        }
         
         
         
         cardLocation++;
         
-        
-        //Make this into a function
-        cout << "Do you want to play again? " << endl;
-        cout << "1. Play Again" << endl;
-        cout << "2. Stop Playing" << endl;
-        cout << "Do you want to play again? " << endl;
-        cin >> again;
-        while (!validAgain(again)) {
-            cout << "You may only select 1 or 2" << endl;
-            cin >> again;
-        }
-        //End function 
+        //Asking the player(S) if they want to play again.
+        again = playAgain();
         
     } while (again != 2);
-
-    
-    
-    
 
     
     //system("pause"); //This line is for Microsoft Visual users.
@@ -188,8 +189,6 @@ void dealTwoCars(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
 }//End of dealTwoCars
 
 
-
-
 //This function will run the main aspect of the game.
 void game(int players, Card deck[], int DECKSIZE){
 
@@ -209,7 +208,31 @@ void game(int players, Card deck[], int DECKSIZE){
     
 
 }//End of Game Function
-        
+
+//This function will simply alert the user that they have decided to stand
+//meaning that they will no longer take any cards.
+void stand(){
+    cout << "You choose to stand" << endl;
+    cout << "This means you are not asking for any more cards!" << endl;
+}
+
+
+//This function will ask the player if they want to play again
+int playAgain(){
+    
+    int again;
+    cout << "Do you want to play again? " << endl;
+    cout << "1. Play Again" << endl;
+    cout << "2. Stop Playing" << endl;
+    cout << "Do you want to play again? " << endl;
+    cin >> again;
+    while (!validAgain(again)) {
+        cout << "You may only select 1 or 2" << endl;
+        cin >> again;
+    }
+    return again;
+}// End of PlayAgain function
+
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
         {
