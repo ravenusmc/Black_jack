@@ -59,7 +59,7 @@ void dealOneCard(Card [], int, Card [], int, int &, int &);
 void makeBets(int *, int);
 void surrender(int *, int);
 void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
-
+void getDealersCards(Card [], int, int &, int&);
 
 //******************************
 //Main Function
@@ -68,8 +68,7 @@ void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
 int main(){
     
     //Declaring variables
-    int players, again, action;
-    int cardLocation, playerOneTotal;
+    int players, again, action, cardLocation, playerOneTotal, dealerTotal;
     int *arrayForBets;
     
     
@@ -88,14 +87,16 @@ int main(){
     players = numberOfPlayers();
     //This will actually create the deck of cards
     createDeck(deck, DECKSIZE);
+    
     //This function will be the actual game function
-    //game(players, deck, DECKSIZE);
+    //game(players, deck, DECKSIZE); NOT USING AS OF NOW
     
     do {
         
         //These variables must be returned to zero at the end of every round.
         cardLocation = 0;
         playerOneTotal = 0;
+        dealerTotal = 0;
         
         //This line sets up the array for the players bets
         arrayForBets = new int[players];
@@ -104,11 +105,14 @@ int main(){
         
         //This will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
+        
+        //Show dealers hand here????
+        getDealersCards(deck, DECKSIZE, cardLocation, dealerTotal);
+
     
         dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
         
-        //Show dealers hand here????
-        
+
         cout << "Your total is: " << playerOneTotal << endl;
         cout << "1. Hit" << endl;
         cout << "2. Stand" << endl;
@@ -187,6 +191,14 @@ void makeBets(int *arrayForBets, int players){
         }
     }
 }//End of makeBets function
+
+//This function will deal two cards to the dealer.
+void getDealersCards(Card deck[], int DECKSIZE, int &cardLocation, int &playerOneTotal){
+    
+    //look at my array of structures for the dealers cards
+    
+    cardLocation++;
+}//End of getDealersCards function
 
 
 //This function will deal the first two cards to the player(s)
