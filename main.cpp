@@ -54,6 +54,7 @@ bool validBets(int);
 void game(int, Card [], int);
 int playAgain();
 void stand();
+int cardCheck(int, int, int);
 
 void dealTwoCards(Card [], int, Card [], int, int &, int &);
 void dealTwoCardsTwo(Card [], int, Card [], int, int &, int &);
@@ -137,8 +138,8 @@ int main(){
         }
         
         //These functions check to see if player one or two has BLACKJACK on the initial round.
-        BlackJack = Winner(BlackJack, playerOneTotal, arrayForBets, players);
-        BlackJack = WinnerTwo(BlackJack, playerTwoTotal, arrayForBets, players);
+        Break = Winner(BlackJack, playerOneTotal, arrayForBets, players);
+        Break = WinnerTwo(BlackJack, playerTwoTotal, arrayForBets, players);
         
         //This is a line break to help with output
         cout << endl;
@@ -147,13 +148,13 @@ int main(){
         cout << endl;
         
         //if (players == 1 && (foldem == false && BlackJack == false && hold == false) ){
-        if (players == 1 && Break == false ){
+        if (players == 1 && Break == false){
             while (Break == false){
                 cout << "1. Hit" << endl;
                 cout << "2. Stand" << endl;
                 cout << "3. Double Down" << endl;
                 cout << "4. Surrender" << endl;
-                cout << "What is your action?" << endl;
+                cout << "Player one, what is your action: " << endl;
                 cin >> action;
                 if (action == 1){
                     dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
@@ -167,20 +168,18 @@ int main(){
                     Break = true;
                 }else if (action == 3){
                     Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
+                    Break = true;
                 //May need a function to end game-since the player doubledown  or use a boolean flag?
                 }else if (action == 4){
                     surrender(arrayForBets, players);
                     Break = true;
                     Surrender = true;
                 }
-        }
-
-            //BlackJack = true;
-//          foldem = true;
-        
+            }
         }
         
         cout << endl;
+        //Writing the function for the below if then statement.
 //        void determineWinnerOne(bool Surrender, int playerOneTotal, int dealerTotal,int *arrayForBets, int players, int dealerWinnings);
         
         if (players == 1 && Surrender == false){
@@ -190,38 +189,58 @@ int main(){
                 cout << "Player one Wins!" << endl;
                 arrayForBets[0] = arrayForBets[0] * 2;
                 cout << "You won $" << arrayForBets[0] << endl;
+                playerOneEarnings += arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             }else if (playerOneTotal < dealerTotal){
                 cout << "The players total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "The dealer wins!" << endl;
                 cout << "The dealer won $" << arrayForBets[0] << endl;
+                playerOneEarnings -= arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
                 dealerWinnings += arrayForBets[0];
             }else if (playerOneTotal == dealerTotal){
                 cout << "The dealer and player have the same values" << endl;
                 cout << "The game is a tie and no one wins anything" << endl;
+            }else if (playerOneTotal > 21 && dealerTotal <= 21){
+                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "The dealer won!" << endl;
+                cout << "The dealer won $" << arrayForBets[0] << endl;
+                playerOneEarnings -= arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
+                dealerWinnings += arrayForBets[0];
             }else{
                 cout << "The players total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "The dealer won!" << endl;
                 cout << "The dealer won $" << arrayForBets[0] << endl;
                 dealerWinnings += arrayForBets[0];
+                playerOneEarnings -= arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             }
         }else if (players == 1 && Surrender == true){
             cout << "You choose to surrender!" << endl;
             cout << "You now have " << arrayForBets[0] << endl;
+            playerOneEarnings -= arrayForBets[0];
+            cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             
         }
         
-        if (players == 1){
-            playerOneEarnings += arrayForBets[0];
-            cout << "Player one your total earnings are $" << playerOneEarnings << endl;
-        }
+//        if (players == 1){
+//            playerOneEarnings += arrayForBets[0];
+//            cout << "Player one your total earnings are $" << playerOneEarnings << endl;
+//        }
 
-
-        
         //Asking the player(s) if they want to play again.
         again = playAgain();
         cardLocation++;
+        
+        //This will automatically end the program if the last card is reached. THIS FUNCTION MAY
+        //NOT BEEN NEEDED BECAUSE THE PROGRAM ALWAYS RESHUFFLES THE CARD DECK AND CARD LOCATION TO
+        //ZERO THROUGH EVERY ROUND.
+        //again = cardCheck(cardLocation, DECKSIZE, again);
+
 
     } while (again != 2);
 
@@ -458,6 +477,17 @@ int playAgain(){
     }
     return again;
 }// End of PlayAgain function
+
+//This function checks to see if the card deck is almost used up. If it is, it will force the
+//players to end the game and reshuffle the deck.
+int cardCheck(int cardLocation, int DECKSIZE, int again){
+    if (cardLocation == DECKSIZE){
+        again = 2;
+        return again;
+    }else {
+        return again;
+    }
+}//End of cardCheck Function
 
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
@@ -709,9 +739,9 @@ void shuffle(Card deck[], int DECKSIZE){
         
         
 
-//***************************
+//**************************************
 //Validation functions below this point
-//***************************
+//*************************************
 
 //This function checks to ensure that the game only has one or two players.
 bool validPlayers(int value){
@@ -738,36 +768,6 @@ bool validAgain(int value){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//int getNum(){
-//
-//    int value;
-//
-//    value = rand()%MAX_VALUE;
-//
-//    return value;
-//}
-
-
 //int getNum(){
 //
 //    int value;
@@ -784,11 +784,6 @@ bool validAgain(int value){
 
 //int random;
 
-//Declaring variables for use in this function
-//int cardPosition, cardPosition2;
-
-//This is a dynamically created array for the number of players and the bets that they make.
-//int *arrayForBets;
 //
 //srand(time(0));
 //random = rand()%MAX_VALUE;
@@ -803,85 +798,6 @@ bool validAgain(int value){
 //    cout << random  << endl;
 //    x++;
 //    }
-
-    
-    
-    //Getting the system time for random number generator
-    //    unsigned seed = time(0);
-    //Seeding the random number generator
-    //    srand(seed);
-
-
-
-
-
-//This function will initialize the deck of cards.
-//void createDeck(Card deck[], int DECKSIZE) //creates deck
-//{
-//    
-//    for (int i=0; i < 9; i++)
-//    {
-//        deck[i].number = i + 2;
-//        deck[i].suite = "Hearts";
-//    }
-//    
-//    for (int i=9; i < 12; i++)
-//    {
-//        deck[i].number = 10;
-//        deck[i].suite = "Hearts";
-//    }
-//    
-//    deck[12].number = 11;
-//    deck[12].suite = "Hearts";
-//    
-//    for (int i=13; i < 22; i++)
-//    {
-//        deck[i].number = i - 11;
-//        deck[i].suite = "Jacks";
-//    }
-//    
-//    for (int i=22; i < 25; i++)
-//    {
-//        deck[i].number = 10;
-//        deck[i].suite = "Jacks";
-//    }
-//    
-//    deck[25].number = 11;
-//    deck[25].suite = "Jacks";
-//    
-//    
-//    for (int i=26; i < 35; i++)
-//    {
-//        deck[i].number = i - 24;
-//        deck[i].suite = "Spades";
-//    }
-//    
-//    for (int i=35; i < 38; i++)
-//    {
-//        deck[i].number = 10;
-//        deck[i].suite = "Spades";
-//    }
-//    
-//    deck[38].number = 11;
-//    deck[38].suite = "Spades";
-//    
-//    for (int i=39; i < 48; i++)
-//    {
-//        deck[i].number = i - 37;
-//        deck[i].suite = "Clubs";
-//    }
-//    
-//    for (int i = 48; i < 51; i++)
-//    {
-//        deck[i].number = 10;
-//        deck[i].suite = "Clubs";
-//    }
-//    
-//    deck[51].number = 11;
-//    deck[51].suite = "Clubs";
-//    
-//}
-
 
 //This function will run the main aspect of the game.
 //void game(int players, Card deck[], int DECKSIZE){
