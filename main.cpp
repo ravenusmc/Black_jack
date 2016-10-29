@@ -78,8 +78,13 @@ int main(){
     //Declaring variables
     int players, again, action, cardLocation, playerOneTotal, playerTwoTotal, dealerTotal;
     int *arrayForBets;
+    int dealerWinnings = 0;
+    int playerOneEarnings = 0;
     bool BlackJack = false;
     bool foldem = false;
+    bool hold = false;
+    bool Break = false;
+    bool Surrender = false;
     
     
     //Creating the deck of cards
@@ -108,6 +113,8 @@ int main(){
         playerOneTotal = 0;
         playerTwoTotal = 0;
         dealerTotal = 0;
+        Break = false;
+        Surrender = false;
         
         //This will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
@@ -139,10 +146,9 @@ int main(){
         getDealersCards(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
         cout << endl;
         
-        while (BlackJack == false){
-            cout << "game continues!" << endl;
-            
-            if (players == 1 && (foldem == false && BlackJack == false) ){
+        //if (players == 1 && (foldem == false && BlackJack == false && hold == false) ){
+        if (players == 1 && Break == false ){
+            while (Break == false){
                 cout << "1. Hit" << endl;
                 cout << "2. Stand" << endl;
                 cout << "3. Double Down" << endl;
@@ -152,50 +158,71 @@ int main(){
                 if (action == 1){
                     dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
                     if (playerOneTotal > BLACKJACK){
-                        foldem = true;
+                        Break = true;
+                    }else if (playerOneTotal == BLACKJACK){
+                        Break = true;
                     }
                 }else if (action == 2){
                     stand();
+                    Break = true;
                 }else if (action == 3){
                     Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
                 //May need a function to end game-since the player doubledown  or use a boolean flag?
                 }else if (action == 4){
                     surrender(arrayForBets, players);
+                    Break = true;
+                    Surrender = true;
                 }
-            }
-            
-            
-//            BlackJack = true;
-//            foldem = true;
+        }
+
+            //BlackJack = true;
+//          foldem = true;
         
         }
         
-        //The player can keep on hitting until they lose
+        cout << endl;
+//        void determineWinnerOne(bool Surrender, int playerOneTotal, int dealerTotal,int *arrayForBets, int players, int dealerWinnings);
         
-//        cout << "1. Hit" << endl;
-//        cout << "2. Stand" << endl;
-//        cout << "3. Double Down" << endl;
-//        cout << "4. Surrender" << endl;
-//        cout << "What is your action?" << endl;
-//        cin >> action;
-//        if (action == 1){
-//            dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
-//        }else if (action == 2){
-//            stand();
-//        }else if (action == 3){
-//            Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
-//            //May need a function to end game-since the player doubledown  or use a boolean flag?
-//        }else if (action == 4){
-//            surrender(arrayForBets, players);
-//        }
+        if (players == 1 && Surrender == false){
+            if ((playerOneTotal > dealerTotal) && (playerOneTotal <= 21)){
+                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "Player one Wins!" << endl;
+                arrayForBets[0] = arrayForBets[0] * 2;
+                cout << "You won $" << arrayForBets[0] << endl;
+            }else if (playerOneTotal < dealerTotal){
+                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "The dealer wins!" << endl;
+                cout << "The dealer won $" << arrayForBets[0] << endl;
+                dealerWinnings += arrayForBets[0];
+            }else if (playerOneTotal == dealerTotal){
+                cout << "The dealer and player have the same values" << endl;
+                cout << "The game is a tie and no one wins anything" << endl;
+            }else{
+                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "The dealer won!" << endl;
+                cout << "The dealer won $" << arrayForBets[0] << endl;
+                dealerWinnings += arrayForBets[0];
+            }
+        }else if (players == 1 && Surrender == true){
+            cout << "You choose to surrender!" << endl;
+            cout << "You now have " << arrayForBets[0] << endl;
+            
+        }
         
+        if (players == 1){
+            playerOneEarnings += arrayForBets[0];
+            cout << "Player one your total earnings are $" << playerOneEarnings << endl;
+        }
+
+
         
-        
-        cardLocation++;
-        
-        //Asking the player(S) if they want to play again.
+        //Asking the player(s) if they want to play again.
         again = playAgain();
-        
+        cardLocation++;
+
     } while (again != 2);
 
     
@@ -360,6 +387,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     }
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
     playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
+    cout << "Player one your total is " << playerOneTotal << endl;
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
     cardLocation++;
@@ -400,11 +428,10 @@ void surrender(int *arrayForBets, int players){
     //May need a marker in here to id which player it is 1 or 2 I will also probably need an if then
     //statement to go into a certain field depending on the player. Best bet may be to use a Boolean
     //flag.
-    cout << "You choose to surrender!" << endl;
-    cout << "You will lose half your earnings" << endl;
+    //cout << "You choose to surrender!" << endl;
+    //cout << "You will lose half your earnings" << endl;
     loss = arrayForBets[0] * .50;
     arrayForBets[0] = loss;
-    cout << "You now have " << arrayForBets[0] << endl;
 
 }//End of surrender function
 
