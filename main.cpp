@@ -142,29 +142,52 @@ int main(){
         while (BlackJack == false){
             cout << "game continues!" << endl;
             
-            BlackJack = true;
-            foldem = true;
+            if (players == 1 && (foldem == false && BlackJack == false) ){
+                cout << "1. Hit" << endl;
+                cout << "2. Stand" << endl;
+                cout << "3. Double Down" << endl;
+                cout << "4. Surrender" << endl;
+                cout << "What is your action?" << endl;
+                cin >> action;
+                if (action == 1){
+                    dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+                    if (playerOneTotal > BLACKJACK){
+                        foldem = true;
+                    }
+                }else if (action == 2){
+                    stand();
+                }else if (action == 3){
+                    Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
+                //May need a function to end game-since the player doubledown  or use a boolean flag?
+                }else if (action == 4){
+                    surrender(arrayForBets, players);
+                }
+            }
+            
+            
+//            BlackJack = true;
+//            foldem = true;
         
         }
         
         //The player can keep on hitting until they lose
         
-        cout << "1. Hit" << endl;
-        cout << "2. Stand" << endl;
-        cout << "3. Double Down" << endl;
-        cout << "4. Surrender" << endl;
-        cout << "What is your action?" << endl;
-        cin >> action;
-        if (action == 1){
-            dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
-        }else if (action == 2){
-            stand();
-        }else if (action == 3){
-            Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
-            //May need a function to end game-since the player doubledown  or use a boolean flag?
-        }else if (action == 4){
-            surrender(arrayForBets, players);
-        }
+//        cout << "1. Hit" << endl;
+//        cout << "2. Stand" << endl;
+//        cout << "3. Double Down" << endl;
+//        cout << "4. Surrender" << endl;
+//        cout << "What is your action?" << endl;
+//        cin >> action;
+//        if (action == 1){
+//            dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+//        }else if (action == 2){
+//            stand();
+//        }else if (action == 3){
+//            Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
+//            //May need a function to end game-since the player doubledown  or use a boolean flag?
+//        }else if (action == 4){
+//            surrender(arrayForBets, players);
+//        }
         
         
         
@@ -384,27 +407,6 @@ void surrender(int *arrayForBets, int players){
     cout << "You now have " << arrayForBets[0] << endl;
 
 }//End of surrender function
-
-
-//This function will run the main aspect of the game.
-void game(int players, Card deck[], int DECKSIZE){
-
-    
-//    arrayForBets = new int[players];
-//    
-//    //This loop will ask the players to make their bets.
-//    for (int i = 0; i < players; i ++){
-//        cout << "Player " << i + 1 << " please place your bet: " << endl;
-//        cout << "The bet must be between 10 and 500" << endl;
-//        cin >> arrayForBets[i];
-//        while ((arrayForBets[i] < 10) || (arrayForBets[i] > 500) ){
-//            cout << "The bets must be between 10 and 500" << endl;
-//            cin >> arrayForBets[i];
-//        }
-//    }
-    
-
-}//End of Game Function
 
 //This function will simply alert the user that they have decided to stand
 //meaning that they will no longer take any cards.
@@ -854,7 +856,12 @@ bool validAgain(int value){
 //}
 
 
-
+//This function will run the main aspect of the game.
+//void game(int players, Card deck[], int DECKSIZE){
+//    
+//    
+//    
+//}//End of Game Function
 
 
 
