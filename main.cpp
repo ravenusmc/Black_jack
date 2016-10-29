@@ -38,6 +38,7 @@ struct Card
 
 const int DECKSIZE = 52;
 const int MAXDECK = 11;
+const int BLACKJACK = 21;
 
 //*******************************
 //Prototype Functions
@@ -55,11 +56,18 @@ int playAgain();
 void stand();
 
 void dealTwoCards(Card [], int, Card [], int, int &, int &);
+void dealTwoCardsTwo(Card [], int, Card [], int, int &, int &);
+
 void dealOneCard(Card [], int, Card [], int, int &, int &);
 void makeBets(int *, int);
 void surrender(int *, int);
 void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
-void getDealersCards(Card [], int, int &, int&);
+
+void getDealersCards(Card [], int, Card [], int, int &, int &);
+
+bool Winner(bool, int playerOneTotal, int *, int);
+bool WinnerTwo(bool, int playerOneTotal, int *, int);
+
 
 //******************************
 //Main Function
@@ -68,8 +76,10 @@ void getDealersCards(Card [], int, int &, int&);
 int main(){
     
     //Declaring variables
-    int players, again, action, cardLocation, playerOneTotal, dealerTotal;
+    int players, again, action, cardLocation, playerOneTotal, playerTwoTotal, dealerTotal;
     int *arrayForBets;
+    bool BlackJack = false;
+    bool foldem = false;
     
     
     //Creating the deck of cards
@@ -96,24 +106,49 @@ int main(){
         //These variables must be returned to zero at the end of every round.
         cardLocation = 0;
         playerOneTotal = 0;
+        playerTwoTotal = 0;
         dealerTotal = 0;
+        
+        //This will shuffle the deck of cards
+        shuffle(deck, DECKSIZE);
         
         //This line sets up the array for the players bets
         arrayForBets = new int[players];
         //Calling the function allow the player to see their bets
         makeBets(arrayForBets, players);
-        
-        //This will shuffle the deck of cards
-        shuffle(deck, DECKSIZE);
-        
-        //Show dealers hand here????
-        getDealersCards(deck, DECKSIZE, cardLocation, dealerTotal);
-
     
-        dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+        //This conditional statement will deal the initial first two cards based on how many players
+        //There are playing the game.
+        if (players == 1){
+            
+            dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+            
+        }else if (players == 2){
+            dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+            cout << endl;
+            dealTwoCardsTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal);
+        }
         
-
-        cout << "Your total is: " << playerOneTotal << endl;
+        //These functions check to see if player one or two has BLACKJACK on the initial round.
+        BlackJack = Winner(BlackJack, playerOneTotal, arrayForBets, players);
+        BlackJack = WinnerTwo(BlackJack, playerTwoTotal, arrayForBets, players);
+        
+        //This is a line break to help with output
+        cout << endl;
+        //This function will get the dealers hand.
+        getDealersCards(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
+        cout << endl;
+        
+        while (BlackJack == false){
+            cout << "game continues!" << endl;
+            
+            BlackJack = true;
+            foldem = true;
+        
+        }
+        
+        //The player can keep on hitting until they lose
+        
         cout << "1. Hit" << endl;
         cout << "2. Stand" << endl;
         cout << "3. Double Down" << endl;
@@ -193,11 +228,20 @@ void makeBets(int *arrayForBets, int players){
 }//End of makeBets function
 
 //This function will deal two cards to the dealer.
-void getDealersCards(Card deck[], int DECKSIZE, int &cardLocation, int &playerOneTotal){
+void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
     
-    //look at my array of structures for the dealers cards
+    for (int i = 0; i < 2; i++){
+        
+        dealer[i].valueOne = deck[cardLocation].valueOne;
+        dealer[i].valueTwo = deck[cardLocation].valueTwo;
+        dealer[i].suite = deck[cardLocation].suite;
+        dealer[i].face = deck[cardLocation].face;
+        dealerTotal = dealerTotal + deck[cardLocation].valueOne;
+        cardLocation++;
+    }
     
-    cardLocation++;
+    cout << "The dealers top card is a " << dealer[1].valueOne << " " << "of " << dealer[1].suite << endl;
+
 }//End of getDealersCards function
 
 
@@ -206,9 +250,11 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
     
     int aceValue;
     
+    cout << "Player One here are your first two cards: " << endl;
+    
     for (int i = 0; i < 2; i++)
     {
-        cout << "your " << cardLocation + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
+        cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
         if (deck[cardLocation].valueTwo == 11){
             cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
             cin >> aceValue;
@@ -220,8 +266,62 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         //repeated.
         cardLocation++;
     }
+    cout << endl;
+    cout << "Player One your total is: " << playerOneTotal << endl;
     
 }//End of dealTwoCars
+
+
+//This function deals the cards for the second player.
+void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, int &cardLocation, int &playerTwoTotal){
+    
+    int aceValue;
+    
+    cout << "Player Two here are your first two cards: " << endl;
+    
+    for (int i = 0; i < 2; i++)
+    {
+        cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
+        if (deck[cardLocation].valueTwo == 11){
+            cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+            cin >> aceValue;
+            deck[cardLocation].valueOne = aceValue;
+        }
+        playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
+        playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        //I have to increment the cardLocation after each hand to ensure that the cards are not
+        //repeated.
+        cardLocation++;
+    }
+    
+    cout << endl;
+    cout << "Player Two your total is: " << playerTwoTotal << endl;
+
+}//End of dealTwoCardsTwo
+
+//This function will detect if there is a winner in the game
+bool Winner(bool BlackJack, int playerOneTotal, int *arrayForBets, int players){
+    if (playerOneTotal == BLACKJACK){
+        cout << "Player one Won" << endl;
+        arrayForBets[0] = arrayForBets[0] * 2;
+        cout << "Player One won " << arrayForBets[0] << endl;
+        return BlackJack = true;
+    }else {
+        return BlackJack = false;
+    }
+}//End of Winner Function
+
+//This function will detect if there is a winner in the game
+bool WinnerTwo(bool BlackJack, int playerTwoTotal, int *arrayForBets, int players){
+    if (playerTwoTotal == BLACKJACK){
+        cout << "Player Two Won" << endl;
+        arrayForBets[1] = arrayForBets[1] * 2;
+        cout << "Player Two won " << arrayForBets[1] << endl;
+        return BlackJack = true;
+    }else {
+        return BlackJack = false;
+    }
+}//End of Winner Function
 
 
 //This function will deal one card to the player(s) when they do the hit action
