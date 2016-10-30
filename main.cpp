@@ -85,6 +85,8 @@ int main(){
     bool BlackJack = false;
     bool Break = false;
     bool Surrender = false;
+    bool SurrenderOne = false;
+    bool SurrenderTwo = false;
     bool breakOne = false;
     bool breakTwo = false;
     
@@ -117,6 +119,8 @@ int main(){
         dealerTotal = 0;
         Break = false;
         Surrender = false;
+        SurrenderOne = false;
+        SurrenderTwo = false;
         breakOne = false;
         breakTwo = false;
         
@@ -209,7 +213,7 @@ int main(){
                     }else if (action == 4){
                         surrender(arrayForBets, players);
                         breakOne = true;
-                        Surrender = true;
+                        SurrenderOne = true;
                     }
                 }
                 if (breakTwo == false){
@@ -238,7 +242,7 @@ int main(){
                     }else if (action == 4){
                         surrenderTwo(arrayForBets, players);
                         breakTwo = true;
-                        Surrender = true;
+                        SurrenderTwo = true;
                     }
                 
                 }
@@ -249,9 +253,8 @@ int main(){
         int dealerDeckSize;
         //This function will add more cards to the computer if their total is 16 or below.
         dealerDeckSize = dealerAddCard(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
+        //This function call will show the dealers hands right before the winners are announced.
         dealerShowCards(dealerDeckSize, dealer, MAXDECK);
-        
-
         
         //This is another line which will help with output.
         cout << endl;
@@ -259,7 +262,8 @@ int main(){
         //Writing the function for the below if then statement.
 //        void determineWinnerOne(int playerOneTotal, int dealerTotal,int *arrayForBets, int players, int dealerWinnings);
         
-        if (players == 1 && Surrender == false){
+        if (SurrenderOne == false){
+        //if (players == 1 && Surrender == false){
             if ((playerOneTotal > dealerTotal) && (playerOneTotal <= 21)){
                 cout << "The players total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
@@ -296,7 +300,8 @@ int main(){
                 playerOneEarnings -= arrayForBets[0];
                 cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             }
-        }else if (players == 1 && Surrender == true){
+          }else if (SurrenderOne == true){
+//        }else if (players == 1 && Surrender == true){
             cout << "You choose to surrender!" << endl;
             cout << "You now have " << arrayForBets[0] << endl;
             playerOneEarnings -= arrayForBets[0];
@@ -304,19 +309,28 @@ int main(){
             
         }
         
-//        if (players == 1){
-//            playerOneEarnings += arrayForBets[0];
-//            cout << "Player one your total earnings are $" << playerOneEarnings << endl;
-//        }
+        if(SurrenderTwo == false){
+            if ((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
+                cout << "The players total was: " << playerTwoTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "Player one Wins!" << endl;
+                arrayForBets[1] = arrayForBets[1] * 2;
+                cout << "You won $" << arrayForBets[1] << endl;
+                //FIX BELOW TWO LINES FOR PLAYER TWO
+                //playerOneEarnings += arrayForBets[0];
+                //cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+            }
+        }
+        
+        //The players are only playing against the dealer NOT each other.
+        
+
+    
+        
 
         //Asking the player(s) if they want to play again.
         again = playAgain();
         cardLocation++;
-        
-        //This will automatically end the program if the last card is reached. THIS FUNCTION MAY
-        //NOT BEEN NEEDED BECAUSE THE PROGRAM ALWAYS RESHUFFLES THE CARD DECK AND CARD LOCATION TO
-        //ZERO THROUGH EVERY ROUND.
-        //again = cardCheck(cardLocation, DECKSIZE, again);
 
 
     } while (again != 2);
