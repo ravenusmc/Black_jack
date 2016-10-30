@@ -65,6 +65,8 @@ void surrenderTwo(int *, int);
 void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
 void DoubleDownTwo(Card [], int, Card [],int, int &, int &, int *, int);
 void getDealersCards(Card [], int, Card [], int, int &, int &);
+int dealerAddCard(Card [], int, Card [], int, int &, int &);
+void dealerShowCards(int, Card [], int);
 bool Winner(bool, int playerOneTotal, int *, int);
 bool WinnerTwo(bool, int playerOneTotal, int *, int);
 
@@ -244,8 +246,12 @@ int main(){
             }
         }
         
-        //Do need to write a function for the computer to add one more card based on its
-        //current total.
+        int dealerDeckSize;
+        //This function will add more cards to the computer if their total is 16 or below.
+        dealerDeckSize = dealerAddCard(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
+        dealerShowCards(dealerDeckSize, dealer, MAXDECK);
+        
+
         
         //This is another line which will help with output.
         cout << endl;
@@ -383,6 +389,32 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
     cout << "The dealers top card is a " << dealer[1].valueOne << " " << "of " << dealer[1].suite << endl;
 
 }//End of getDealersCards function
+
+//This function will continue to deal cards to the dealer until they get over 17.
+int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
+    
+    int i = 2;
+    
+    while (dealerTotal <= 16){
+        dealer[i].valueOne = deck[cardLocation].valueOne;
+        dealer[i].valueTwo = deck[cardLocation].valueTwo;
+        dealer[i].suite = deck[cardLocation].suite;
+        dealer[i].face = deck[cardLocation].face;
+        dealerTotal = dealerTotal + deck[cardLocation].valueOne;
+        cardLocation++;
+        i++;
+    }
+    return i;
+}//End of dealerAddCard Function
+
+//This function will reveal the dealers cards.
+void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
+    cout << "The dealer has the following cards: " << endl;
+    for (int i = 0; i < dealerDeckSize; i++){
+        cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
+        
+    }
+}//END of dealerShowCards function
 
 
 //This function will deal the first two cards to the player(s)
