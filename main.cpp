@@ -61,7 +61,9 @@ void dealOneCard(Card [], int, Card [], int, int &, int &);
 void dealOneCardTwo(Card [], int, Card [], int, int &, int &);
 void makeBets(int *, int);
 void surrender(int *, int);
+void surrenderTwo(int *, int);
 void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
+void DoubleDownTwo(Card [], int, Card [],int, int &, int &, int *, int);
 void getDealersCards(Card [], int, Card [], int, int &, int &);
 bool Winner(bool, int playerOneTotal, int *, int);
 bool WinnerTwo(bool, int playerOneTotal, int *, int);
@@ -83,9 +85,6 @@ int main(){
     bool Surrender = false;
     bool breakOne = false;
     bool breakTwo = false;
-    
-    bool foldem = false;
-    bool hold = false;
     
     
     //Creating the deck of cards
@@ -231,11 +230,11 @@ int main(){
                         stand();
                         breakTwo = true;
                     }else if (action == 3){
-                        Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
-                        breakOne = true;
+                        DoubleDownTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal, arrayForBets, players);
+                        breakTwo = true;
                         //May need a function to end game-since the player doubledown  or use a boolean flag?
                     }else if (action == 4){
-                        surrender(arrayForBets, players);
+                        surrenderTwo(arrayForBets, players);
                         breakTwo = true;
                         Surrender = true;
                     }
@@ -509,6 +508,7 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
 //This function is where the player will doubledown.
 void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal, int *arrayForBets, int players){
     
+    //LOOK AT WHAT TO DO WITH THE BET INCREASE
     float betIncrease;
     //Again may need to do something with a second player-see notes in surrender function
     
@@ -532,27 +532,61 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     
 }//End of Doubledown function
 
+//This function is where the second player will doubledown.
+void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int &cardLocation, int &playerTwoTotal, int *arrayForBets, int players){
+    
+    //LOOK AT WHAT TO DO WITH THE BET INCREASE
+    float betIncrease;
+    
+    cout << "Please enter in a percentage of how much you would like to increase the bet by: " << endl;
+    cin >> betIncrease;
+    
+    int aceValue;
+    
+    cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    if (deck[cardLocation].valueTwo == 11){
+        cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+        cin >> aceValue;
+        deck[cardLocation].valueOne = aceValue;
+    }
+    playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
+    playerTwo[cardLocation] = deck[cardLocation];
+    
+    
+    //I have to increment the cardLocation after each hand to ensure that the cards are not
+    //repeated.
+    cardLocation++;
+
+}//End of DoubleDown Function
+
+
 //This function will take care of the player surrendering.
 void surrender(int *arrayForBets, int players){
     
     int loss;
     
-    //May need a marker in here to id which player it is 1 or 2 I will also probably need an if then
-    //statement to go into a certain field depending on the player. Best bet may be to use a Boolean
-    //flag.
-    //cout << "You choose to surrender!" << endl;
-    //cout << "You will lose half your earnings" << endl;
     loss = arrayForBets[0] * .50;
     arrayForBets[0] = loss;
 
 }//End of surrender function
+
+//This function will take care of the second player surrendering.
+void surrenderTwo(int *arrayForBets, int players){
+    
+    int loss;
+    
+    loss = arrayForBets[1] * .50;
+    arrayForBets[1] = loss;
+    
+
+}//End of Surrender function
 
 //This function will simply alert the user that they have decided to stand
 //meaning that they will no longer take any cards.
 void stand(){
     cout << "You choose to stand" << endl;
     cout << "This means you are not asking for any more cards!" << endl;
-}
+}//End of stand function
 
 
 //This function will ask the player if they want to play again
@@ -574,12 +608,14 @@ int playAgain(){
 //This function checks to see if the card deck is almost used up. If it is, it will force the
 //players to end the game and reshuffle the deck.
 int cardCheck(int cardLocation, int DECKSIZE, int again){
+    
     if (cardLocation == DECKSIZE){
         again = 2;
         return again;
     }else {
         return again;
     }
+    
 }//End of cardCheck Function
 
 //This function will initialize the deck of cards.
