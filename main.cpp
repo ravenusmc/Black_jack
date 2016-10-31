@@ -54,6 +54,11 @@ bool validBets(int);
 void game(int, Card [], int);
 int playAgain();
 void stand();
+int playerChoices();
+void playerOneInfo(int);
+void playerTwoInfo(int);
+
+
 int cardCheck(int, int, int);
 void dealTwoCards(Card [], int, Card [], int, int &, int &);
 void dealTwoCardsTwo(Card [], int, Card [], int, int &, int &);
@@ -82,6 +87,7 @@ int main(){
     int *arrayForBets;
     int dealerWinnings = 0;
     int playerOneEarnings = 0;
+    int playerTwoEarnings = 0;
     bool BlackJack = false;
     bool Break = false;
     bool Surrender = false;
@@ -113,6 +119,7 @@ int main(){
     do {
         
         //These variables must be returned to zero, initial condition at the end of every round.
+        //TURN THIS IS INTO A FUNCTION??
         cardLocation = 0;
         playerOneTotal = 0;
         playerTwoTotal = 0;
@@ -135,9 +142,7 @@ int main(){
         //This conditional statement will deal the initial first two cards based on how many players
         //There are playing the game.
         if (players == 1){
-            
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
-            
         }else if (players == 2){
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
             cout << endl;
@@ -151,7 +156,6 @@ int main(){
         //This is a line break to help with output
         cout << endl;
         
-        
         //This function will get the dealers hand. May need to move it into the if statements
         //below.
         getDealersCards(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
@@ -160,12 +164,8 @@ int main(){
         //if (players == 1 && (foldem == false && BlackJack == false && hold == false) ){
         if (players == 1 && Break == false){
             while (Break == false){
-                cout << "1. Hit" << endl;
-                cout << "2. Stand" << endl;
-                cout << "3. Double Down" << endl;
-                cout << "4. Surrender" << endl;
-                cout << "Player one, what is your action: " << endl;
-                cin >> action;
+                playerOneInfo(playerOneTotal);
+                action = playerChoices();
                 if (action == 1){
                     dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
                     if (playerOneTotal > BLACKJACK){
@@ -179,7 +179,6 @@ int main(){
                 }else if (action == 3){
                     Doubledown(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, arrayForBets, players);
                     Break = true;
-                //May need a function to end game-since the player doubledown  or use a boolean flag?
                 }else if (action == 4){
                     surrender(arrayForBets, players);
                     Break = true;
@@ -189,13 +188,8 @@ int main(){
         } else if (players == 2 && Break == false){
             while (breakOne == false || breakTwo == false){
                 if (breakOne == false){
-                    cout << "1. Hit" << endl;
-                    cout << "2. Stand" << endl;
-                    cout << "3. Double Down" << endl;
-                    cout << "4. Surrender" << endl;
-                    cout << "Player One your total is: " << playerOneTotal << endl;
-                    cout << "Player one, what is your action: " << endl;
-                    cin >> action;
+                    playerOneInfo(playerOneTotal);
+                    action = playerChoices();
                     if (action == 1){
                         dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
                         if (playerOneTotal > BLACKJACK){
@@ -217,14 +211,8 @@ int main(){
                     }
                 }
                 if (breakTwo == false){
-                    cout << endl;
-                    cout << "1. Hit" << endl;
-                    cout << "2. Stand" << endl;
-                    cout << "3. Double Down" << endl;
-                    cout << "4. Surrender" << endl;
-                    cout << "Player Two your total is: " << playerTwoTotal << endl;
-                    cout << "Player two, what is your action: " << endl;
-                    cin >> action;
+                    playerTwoInfo(playerTwoTotal);
+                    action = playerChoices();
                     if (action == 1){
                         dealOneCardTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal);
                         if (playerTwoTotal > BLACKJACK){
@@ -263,17 +251,24 @@ int main(){
 //        void determineWinnerOne(int playerOneTotal, int dealerTotal,int *arrayForBets, int players, int dealerWinnings);
         
         if (SurrenderOne == false){
-        //if (players == 1 && Surrender == false){
             if ((playerOneTotal > dealerTotal) && (playerOneTotal <= 21)){
-                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "Player one Wins!" << endl;
                 arrayForBets[0] = arrayForBets[0] * 2;
                 cout << "You won $" << arrayForBets[0] << endl;
                 playerOneEarnings += arrayForBets[0];
                 cout << "Player one your total earnings are $" << playerOneEarnings << endl;
-            }else if (playerOneTotal < dealerTotal){
-                cout << "The players total was: " << playerOneTotal << endl;
+            }else if (playerOneTotal < dealerTotal && (dealerTotal > 21)){
+                cout << "Player One your total was: " << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "Player one Wins!" << endl;
+                arrayForBets[0] = arrayForBets[0] * 2;
+                cout << "You won $" << arrayForBets[0] << endl;
+                playerOneEarnings += arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
+            }else if (playerOneTotal < dealerTotal && (dealerTotal <= 21)){
+                cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "The dealer wins!" << endl;
                 cout << "The dealer won $" << arrayForBets[0] << endl;
@@ -284,7 +279,7 @@ int main(){
                 cout << "The dealer and player have the same values" << endl;
                 cout << "The game is a tie and no one wins anything" << endl;
             }else if (playerOneTotal > 21 && dealerTotal <= 21){
-                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "The dealer won!" << endl;
                 cout << "The dealer won $" << arrayForBets[0] << endl;
@@ -292,7 +287,7 @@ int main(){
                 cout << "Player one your total earnings are $" << playerOneEarnings << endl;
                 dealerWinnings += arrayForBets[0];
             }else{
-                cout << "The players total was: " << playerOneTotal << endl;
+                cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "The dealer won!" << endl;
                 cout << "The dealer won $" << arrayForBets[0] << endl;
@@ -301,33 +296,72 @@ int main(){
                 cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             }
           }else if (SurrenderOne == true){
-//        }else if (players == 1 && Surrender == true){
-            cout << "You choose to surrender!" << endl;
+            cout << "Player One you choose to surrender!" << endl;
             cout << "You now have " << arrayForBets[0] << endl;
             playerOneEarnings -= arrayForBets[0];
             cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             
         }
         
-        if(SurrenderTwo == false){
+        if(SurrenderTwo == false && players == 2){
+            cout << endl;
             if ((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
-                cout << "The players total was: " << playerTwoTotal << endl;
+                cout << "Player Two your total was: " << playerTwoTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
-                cout << "Player one Wins!" << endl;
+                cout << "Player Two Wins!" << endl;
                 arrayForBets[1] = arrayForBets[1] * 2;
                 cout << "You won $" << arrayForBets[1] << endl;
-                //FIX BELOW TWO LINES FOR PLAYER TWO
-                //playerOneEarnings += arrayForBets[0];
-                //cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+                playerTwoEarnings += arrayForBets[1];
+                cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+            }else if (playerTwoTotal < dealerTotal && (dealerTotal > 21)){
+                cout << "Player Two your total was: " << playerTwoTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "Player Two Wins!" << endl;
+                arrayForBets[0] = arrayForBets[0] * 2;
+                cout << "You won $" << arrayForBets[0] << endl;
+                playerTwoEarnings += arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerTwoEarnings << endl;
+            }else if (playerTwoTotal < dealerTotal && (dealerTotal <= 21)){
+                cout << "Player Two your total was:" << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "The dealer wins!" << endl;
+                cout << "The dealer won $" << arrayForBets[1] << endl;
+                playerTwoEarnings -= arrayForBets[1];
+                cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+                dealerWinnings += arrayForBets[1];
+            }else if (playerTwoTotal == dealerTotal){
+                cout << "The dealer and player Two have the same values" << endl;
+                cout << "Neither Player Two or the dealer wins anything" << endl;
+            }else if (playerTwoTotal > 21 && dealerTotal <= 21){
+                cout << "Player Two your total was: " << playerTwoTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "The dealer won!" << endl;
+                cout << "The dealer won $" << arrayForBets[1] << endl;
+                playerTwoEarnings -= arrayForBets[1];
+                cout << "Player Two your total earnings are $" << playerTwoEarnings << endl;
+                dealerWinnings += arrayForBets[1];
+            }else{
+                cout << "Player Two's total was: " << playerTwoTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "The dealer won!" << endl;
+                cout << "The dealer won $" << arrayForBets[1] << endl;
+                dealerWinnings += arrayForBets[1];
+                playerTwoEarnings -= arrayForBets[1];
+                cout << "Player Two your total earnings are $" << playerTwoEarnings << endl;
+                }
             }
+        else if (SurrenderTwo == true){
+                cout << "Player Two you choose to surrender!" << endl;
+                cout << "You now have " << arrayForBets[1] << endl;
+                playerTwoEarnings -= arrayForBets[1];
+                cout << "Player Two your total earnings are $" << playerTwoEarnings << endl;
+            
         }
         
-        //The players are only playing against the dealer NOT each other.
+        //REMOVE THESE LINES FOR TESTING PURPOSES:
+        cout << "One's Earnings are: " << playerOneEarnings << endl;
+        //cout << "Two's Earnings are: " << playerTwoEarnings << endl;
         
-
-    
-        
-
         //Asking the player(s) if they want to play again.
         again = playAgain();
         cardLocation++;
@@ -403,6 +437,38 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
     cout << "The dealers top card is a " << dealer[1].valueOne << " " << "of " << dealer[1].suite << endl;
 
 }//End of getDealersCards function
+
+//This function simply displays information for player one.
+void playerOneInfo(int playerOneTotal){
+    cout << endl;
+    cout << "Player One your total is: " << playerOneTotal << endl;
+    cout << "Player one, what is your action: " << endl;
+}//End of playerOneInfo function
+
+//This function simply displays information for player two.
+void playerTwoInfo(int playerTwoTotal){
+    cout << endl;
+    cout << "Player Two your total is: " << playerTwoTotal << endl;
+    cout << "Player Two, what is your action: " << endl;
+}//End of playerOneInfo function
+
+//This function provides the menu for the options on what the player can do.
+int playerChoices(){
+    int action;
+    cout << "1. Hit" << endl;
+    cout << "2. Stand" << endl;
+    cout << "3. Double Down" << endl;
+    cout << "4. Surrender" << endl;
+    cout << "What is your action: " << endl;
+    cin >> action;
+    while (action < 1 or action > 4){
+        cout << "That is not a valid selection" << endl;
+        cout << "Please enter in 1 - 4 for your choice" << endl;
+        cin >> action;
+    }
+    return action;
+    
+}//End of playerOneAction function
 
 //This function will continue to deal cards to the dealer until they get over 17.
 int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){

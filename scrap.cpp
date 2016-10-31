@@ -30,3 +30,14 @@ if (players == 2 && SurrenderOne == false && SurrenderTwo == false){
   }
 
 }
+
+cout << "1. Hit" << endl;
+cout << "2. Stand" << endl;
+cout << "3. Double Down" << endl;
+cout << "4. Surrender" << endl;
+cout << "Player one, what is your action: " << endl;
+cin >> action;
+
+cout << endl;
+cout << "Player One your total is: " << playerOneTotal << endl;
+cout << "Player one, what is your action: " << endl;
