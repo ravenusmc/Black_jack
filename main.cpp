@@ -161,7 +161,6 @@ int main(){
         getDealersCards(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
         cout << endl;
         
-        //if (players == 1 && (foldem == false && BlackJack == false && hold == false) ){
         if (players == 1 && Break == false){
             while (Break == false){
                 playerOneInfo(playerOneTotal);
@@ -249,9 +248,20 @@ int main(){
         
         //Writing the function for the below if then statement.
 //        void determineWinnerOne(int playerOneTotal, int dealerTotal,int *arrayForBets, int players, int dealerWinnings);
-        
         if (SurrenderOne == false){
-            if ((playerOneTotal > dealerTotal) && (playerOneTotal <= 21)){
+            if (playerTwoTotal == 21){
+                cout << "Player One your total was: " << playerOneTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "Player one Wins!" << endl;
+                arrayForBets[0] = arrayForBets[0] * 2;
+                cout << "You won $" << arrayForBets[0] << endl;
+                playerOneEarnings += arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
+            }else if (playerOneTotal > 21 && dealerTotal > 21){
+                cout << "No one wins!" << endl;
+                //MADE NEED MORE CONDITIONS IN HERE
+            
+            }else if ((playerOneTotal > dealerTotal) && (playerOneTotal <= 21)){
                 cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "Player one Wins!" << endl;
@@ -305,7 +315,19 @@ int main(){
         
         if(SurrenderTwo == false && players == 2){
             cout << endl;
-            if ((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
+            if (playerTwoTotal == 21){
+                cout << "Player Two your total was: " << playerTwoTotal << endl;
+                cout << "The Dealers total was: " << dealerTotal << endl;
+                cout << "Player Two Wins!" << endl;
+                arrayForBets[1] = arrayForBets[1] * 2;
+                cout << "You won $" << arrayForBets[1] << endl;
+                playerTwoEarnings += arrayForBets[1];
+                cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+            }else if (playerOneTotal > 21 && dealerTotal > 21){
+                cout << "No one wins!" << endl;
+                //MADE NEED MORE CONDITIONS IN HERE
+                
+            }else if((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
                 cout << "Player Two your total was: " << playerTwoTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "Player Two Wins!" << endl;
@@ -322,7 +344,7 @@ int main(){
                 playerTwoEarnings += arrayForBets[0];
                 cout << "Player one your total earnings are $" << playerTwoEarnings << endl;
             }else if (playerTwoTotal < dealerTotal && (dealerTotal <= 21)){
-                cout << "Player Two your total was:" << playerOneTotal << endl;
+                cout << "Player Two your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "The dealer wins!" << endl;
                 cout << "The dealer won $" << arrayForBets[1] << endl;
@@ -360,8 +382,10 @@ int main(){
         
         //REMOVE THESE LINES FOR TESTING PURPOSES:
         cout << "One's Earnings are: " << playerOneEarnings << endl;
-        //cout << "Two's Earnings are: " << playerTwoEarnings << endl;
+        cout << "Two's Earnings are: " << playerTwoEarnings << endl;
         
+        //line break
+        cout << endl;
         //Asking the player(s) if they want to play again.
         again = playAgain();
         cardLocation++;
@@ -494,7 +518,7 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
         cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
         
     }
-}//END of dealerShowCards function
+}//End of dealerShowCards function
 
 
 //This function will deal the first two cards to the player(s)
@@ -512,8 +536,10 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
             cin >> aceValue;
             deck[cardLocation].valueOne = aceValue;
         }
+        
         playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
         playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        
         //I have to increment the cardLocation after each hand to ensure that the cards are not
         //repeated.
         cardLocation++;
@@ -541,6 +567,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         }
         playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
         playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        
         //I have to increment the cardLocation after each hand to ensure that the cards are not
         //repeated.
         cardLocation++;
@@ -620,22 +647,28 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
 //This function is where the player will doubledown.
 void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal, int *arrayForBets, int players){
     
-    //LOOK AT WHAT TO DO WITH THE BET INCREASE
     float betIncrease;
-    //Again may need to do something with a second player-see notes in surrender function
-    
-    cout << "Please enter in a percentage of how much you would like to increase the bet by: " << endl;
-    cin >> betIncrease;
     int aceValue;
     
-    cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    cout << "Player One, please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
+    cin >> betIncrease;
+    while (betIncrease < 0 || betIncrease > 1){
+        cout << "Please enter a value between 0 and 1" << endl;
+        cin >> betIncrease;
+    }
+    
+    cout << "Player One you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
+    arrayForBets[0] = (arrayForBets[0] * betIncrease) + arrayForBets[0];
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
     playerOne[cardLocation] = deck[cardLocation];
+    
+    cout << "Your bet is now at " << arrayForBets[0] << endl;
+    cout << endl;
     
     
     //I have to increment the cardLocation after each hand to ensure that the cards are not
@@ -647,13 +680,16 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
 //This function is where the second player will doubledown.
 void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int &cardLocation, int &playerTwoTotal, int *arrayForBets, int players){
     
-    //LOOK AT WHAT TO DO WITH THE BET INCREASE
     float betIncrease;
-    
-    cout << "Please enter in a percentage of how much you would like to increase the bet by: " << endl;
-    cin >> betIncrease;
-    
     int aceValue;
+    
+    cout << "Player Two, Please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
+    cin >> betIncrease;
+    while (betIncrease < 0 || betIncrease > 1){
+        cout << "Please enter a value between 0 and 1" << endl;
+        cin >> betIncrease;
+    }
+
     
     cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
     if (deck[cardLocation].valueTwo == 11){
@@ -661,9 +697,11 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
+    arrayForBets[1] = (arrayForBets[1] * betIncrease) + arrayForBets[1];
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
     playerTwo[cardLocation] = deck[cardLocation];
-    
+    cout << "Your bet is now at " << arrayForBets[1] << endl;
+    cout << endl;
     
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
