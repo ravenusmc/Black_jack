@@ -225,7 +225,6 @@ int main(){
                     }else if (action == 3){
                         DoubleDownTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal, arrayForBets, players);
                         breakTwo = true;
-                        //May need a function to end game-since the player doubledown  or use a boolean flag?
                     }else if (action == 4){
                         surrenderTwo(arrayForBets, players);
                         breakTwo = true;
@@ -249,7 +248,7 @@ int main(){
         //Writing the function for the below if then statement.
 //        void determineWinnerOne(int playerOneTotal, int dealerTotal,int *arrayForBets, int players, int dealerWinnings);
         if (SurrenderOne == false){
-            if (playerTwoTotal == 21){
+            if (playerOneTotal == 21){
                 cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
                 cout << "Player one Wins!" << endl;
@@ -258,9 +257,12 @@ int main(){
                 playerOneEarnings += arrayForBets[0];
                 cout << "Player one your total earnings are $" << playerOneEarnings << endl;
             }else if (playerOneTotal > 21 && dealerTotal > 21){
-                cout << "No one wins!" << endl;
-                //MADE NEED MORE CONDITIONS IN HERE
-            
+                cout << "BUST" << endl;
+                cout << "Dealer wins!" << endl;
+                cout << "The dealer won $" << arrayForBets[0] << endl;
+                playerOneEarnings -= arrayForBets[0];
+                cout << "Player one your total earnings are $" << playerOneEarnings << endl;
+                dealerWinnings += arrayForBets[0];
             }else if ((playerOneTotal > dealerTotal) && (playerOneTotal <= 21)){
                 cout << "Player One your total was: " << playerOneTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
@@ -323,10 +325,13 @@ int main(){
                 cout << "You won $" << arrayForBets[1] << endl;
                 playerTwoEarnings += arrayForBets[1];
                 cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
-            }else if (playerOneTotal > 21 && dealerTotal > 21){
-                cout << "No one wins!" << endl;
-                //MADE NEED MORE CONDITIONS IN HERE
-                
+            }else if (playerTwoTotal > 21 && dealerTotal > 21){
+                cout << "BUST" << endl;
+                cout << "Dealer wins!" << endl;
+                cout << "The dealer won $" << arrayForBets[1] << endl;
+                playerTwoEarnings -= arrayForBets[1];
+                cout << "Player one your total earnings are $" << playerTwoEarnings << endl;
+                dealerWinnings += arrayForBets[1];
             }else if((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
                 cout << "Player Two your total was: " << playerTwoTotal << endl;
                 cout << "The Dealers total was: " << dealerTotal << endl;
@@ -743,7 +748,6 @@ void stand(){
 int playAgain(){
     
     int again;
-    cout << "Do you want to play again? " << endl;
     cout << "1. Play Again" << endl;
     cout << "2. Stop Playing" << endl;
     cout << "Do you want to play again? " << endl;
