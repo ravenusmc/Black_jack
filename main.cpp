@@ -121,7 +121,6 @@ int main(){
     do {
         
         //These variables must be returned to zero, initial condition at the end of every round.
-        //TURN THIS IS INTO A FUNCTION??
         cardLocation = 0;
         playerOneTotal = 0;
         playerTwoTotal = 0;
@@ -415,29 +414,27 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
 }//End of dealerShowCards function
 
 
-//This function will deal the first two cards to the player(s)
+//This function will deal the first two cards to the player(s). All of the comments below also
+//apply to dealTwoCardsTwo.
 void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal){
-    
-    int aceValue;
     
     cout << "Player One here are your first two cards: " << endl;
     
     for (int i = 0; i < 2; i++)
     {
         cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
-//        if (deck[cardLocation].valueTwo == 11){
-//            cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
-//            cin >> aceValue;
-//            deck[cardLocation].valueOne = aceValue;
-//        }
         
+        //I am getting the total for the player by adding togather is current total to the value
+        //of the card.
         playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
-        //playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        
+        //These lines here I am filling in the players deck structure
         playerOne[i].valueOne = deck[cardLocation].valueOne;
         playerOne[i].valueTwo = deck[cardLocation].valueTwo;
         playerOne[i].suite = deck[cardLocation].suite;
         playerOne[i].face = deck[cardLocation].face;
    
+        //playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
         
         //I have to increment the cardLocation after each hand to ensure that the cards are not
         //repeated.
@@ -446,14 +443,17 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
     
     int points;
     
+    //This conditional black will check to see if the player has an ace value. It was done above in
+    //the for loop but the player could not see their total value if I did it there. Thus, the player,
+    //would not now what value to choose-a 1 or an 11.
     if (playerOne[0].valueTwo == 11){
         cout << endl;
         cout << "Player one, one of your cards is an 'ACE'" << endl;
         cout << "This card may be worth either 1 or 11 points " << endl;
         cout << "You currenty have a total of " << playerOneTotal << endl;
-        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
+        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
         if (points == 1){
             playerOne[0].valueOne = 1;
@@ -467,9 +467,9 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "Player one, one of your cards is an 'ACE'" << endl;
         cout << "This card may be worth either 1 or 11 points " << endl;
         cout << "You currenty have a total of " << playerOneTotal << endl;
-        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
+        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
         if (points == 1){
             playerOne[1].valueOne = 1;
@@ -482,24 +482,6 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << endl;
         cout << "Player One your total is: " << playerOneTotal << endl;
     }
-        
-        
-    deck[0].valueOne = 1;
-    deck[0].valueTwo = 11;
-    deck[0].suite = "Spade";
-    deck[0].face = "ACE ";
-    
-//    cout << playerOne[0].valueOne << endl;
-//    cout << playerOne[0].valueTwo << endl;
-//    cout << playerOne[0].suite << endl;
-//    cout << playerOne[0].face << endl;
-//    
-//    cout << playerOne[1].valueOne << endl;
-//    cout << playerOne[1].valueTwo << endl;
-//    cout << playerOne[1].suite << endl;
-//    cout << playerOne[1].face << endl;
-    
-    
     
     
 }//End of dealTwoCars
@@ -508,28 +490,62 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
 //This function deals the cards for the second player.
 void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, int &cardLocation, int &playerTwoTotal){
     
-    int aceValue;
-    
     cout << "Player Two here are your first two cards: " << endl;
     
     for (int i = 0; i < 2; i++)
     {
         cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
-        if (deck[cardLocation].valueTwo == 11){
-            cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
-            cin >> aceValue;
-            deck[cardLocation].valueOne = aceValue;
-        }
         playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
-        playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
+        
+        playerTwo[i].valueOne = deck[cardLocation].valueOne;
+        playerTwo[i].valueTwo = deck[cardLocation].valueTwo;
+        playerTwo[i].suite = deck[cardLocation].suite;
+        playerTwo[i].face = deck[cardLocation].face;
         
         //I have to increment the cardLocation after each hand to ensure that the cards are not
         //repeated.
         cardLocation++;
     }
     
-    cout << endl;
-    cout << "Player Two your total is: " << playerTwoTotal << endl;
+    int points;
+    
+    if (playerTwo[0].valueTwo == 11){
+        cout << endl;
+        cout << "Player Two, one of your cards is an 'ACE'" << endl;
+        cout << "This card may be worth either 1 or 11 points " << endl;
+        cout << "You currenty have a total of " << playerTwoTotal << endl;
+        cout << "1. 1 point" << endl;
+        cout << "2. 11 points" << endl;
+        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
+        cin >> points;
+        if (points == 1){
+            playerTwo[0].valueOne = 1;
+        }else if (points == 2){
+            playerTwo[0].valueOne = 11;
+        }
+        playerTwoTotal = playerTwo[0].valueOne + playerTwo[1].valueOne;
+        cout << "Your new total is " << playerTwoTotal << endl;
+    }else if (playerTwo[1].valueTwo == 11){
+        cout << endl;
+        cout << "Player Two, one of your cards is an 'ACE'" << endl;
+        cout << "This card may be worth either 1 or 11 points " << endl;
+        cout << "You currenty have a total of " << playerTwoTotal << endl;
+        cout << "1. 1 point" << endl;
+        cout << "2. 11 points" << endl;
+        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
+        cin >> points;
+        if (points == 1){
+            playerTwo[1].valueOne = 1;
+        }else if (points == 2){
+            playerTwo[1].valueOne = 11;
+        }
+        playerTwoTotal = playerTwo[0].valueOne + playerTwo[1].valueOne;
+        cout << "Your new total is " << playerTwoTotal << endl;
+    }else {
+        cout << endl;
+        cout << "Player Two your total is: " << playerTwoTotal << endl;
+    }
 
 }//End of dealTwoCardsTwo
 

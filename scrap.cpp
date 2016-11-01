@@ -1,6 +1,25 @@
 //The code in here is all code that I was using at one point in my program but then realized that I may not need it.
 //I place it in here in case I do need it again.
 
+
+//CHECKING FOR AN ACE 
+
+//        if (deck[cardLocation].valueTwo == 11){
+//            cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+//            cin >> aceValue;
+//            deck[cardLocation].valueOne = aceValue;
+//        }
+
+//        if (deck[cardLocation].valueTwo == 11){
+//            cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
+//            cin >> aceValue;
+//            deck[cardLocation].valueOne = aceValue;
+//        }
+
+//END OF CHECKING FOR AN ACE
+
+
+
 if (players == 1){
    playerOneEarnings += arrayForBets[0];
    cout << "Player one your total earnings are $" << playerOneEarnings << endl;
