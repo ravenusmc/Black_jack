@@ -41,3 +41,158 @@ cin >> action;
 cout << endl;
 cout << "Player One your total is: " << playerOneTotal << endl;
 cout << "Player one, what is your action: " << endl;
+
+void determineWinnerOne(int, int, int *, int, int &, int &);
+
+determineWinnerOne(playerOneTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerOneEarnings);
+
+void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings){
+
+void determineWinnerTwo(int, int, int *, int, int &, int &);
+
+void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerTwoEarnings){
+  cout << endl;
+  if (playerTwoTotal == 21){
+      cout << "Player Two your total was: " << playerTwoTotal << endl;
+      cout << "The Dealers total was: " << dealerTotal << endl;
+      cout << "Player Two Wins!" << endl;
+      arrayForBets[1] = arrayForBets[1] * 2;
+      cout << "You won $" << arrayForBets[1] << endl;
+      playerTwoEarnings += arrayForBets[1];
+      cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+  }else if (playerTwoTotal > 21 && dealerTotal > 21){
+      cout << "BUST" << endl;
+      cout << "Dealer wins!" << endl;
+      cout << "The dealer won $" << arrayForBets[1] << endl;
+      playerTwoEarnings -= arrayForBets[1];
+      cout << "Player one your total earnings are $" << playerTwoEarnings << endl;
+      dealerWinnings += arrayForBets[1];
+  }else if((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
+      cout << "Player Two your total was: " << playerTwoTotal << endl;
+      cout << "The Dealers total was: " << dealerTotal << endl;
+      cout << "Player Two Wins!" << endl;
+      arrayForBets[1] = arrayForBets[1] * 2;
+      cout << "You won $" << arrayForBets[1] << endl;
+      playerTwoEarnings += arrayForBets[1];
+      cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+  }else if (playerTwoTotal < dealerTotal && (dealerTotal > 21)){
+      cout << "Player Two your total was: " << playerTwoTotal << endl;
+      cout << "The Dealers total was: " << dealerTotal << endl;
+      cout << "Player Two Wins!" << endl;
+      arrayForBets[0] = arrayForBets[0] * 2;
+      cout << "You won $" << arrayForBets[0] << endl;
+      playerTwoEarnings += arrayForBets[0];
+      cout << "Player one your total earnings are $" << playerTwoEarnings << endl;
+  }else if (playerTwoTotal < dealerTotal && (dealerTotal <= 21)){
+      cout << "Player Two your total was: " << playerOneTotal << endl;
+      cout << "The Dealers total was: " << dealerTotal << endl;
+      cout << "The dealer wins!" << endl;
+      cout << "The dealer won $" << arrayForBets[1] << endl;
+      playerTwoEarnings -= arrayForBets[1];
+      cout << "Player two your total earnings are $" << playerTwoEarnings << endl;
+      dealerWinnings += arrayForBets[1];
+  }else if (playerTwoTotal == dealerTotal){
+      cout << "The dealer and player Two have the same values" << endl;
+      cout << "Neither Player Two or the dealer wins anything" << endl;
+  }else if (playerTwoTotal > 21 && dealerTotal <= 21){
+      cout << "Player Two your total was: " << playerTwoTotal << endl;
+      cout << "The Dealers total was: " << dealerTotal << endl;
+      cout << "The dealer won!" << endl;
+      cout << "The dealer won $" << arrayForBets[1] << endl;
+      playerTwoEarnings -= arrayForBets[1];
+      cout << "Player Two your total earnings are $" << playerTwoEarnings << endl;
+      dealerWinnings += arrayForBets[1];
+  }else{
+      cout << "Player Two's total was: " << playerTwoTotal << endl;
+      cout << "The Dealers total was: " << dealerTotal << endl;
+      cout << "The dealer won!" << endl;
+      cout << "The dealer won $" << arrayForBets[1] << endl;
+      dealerWinnings += arrayForBets[1];
+      playerTwoEarnings -= arrayForBets[1];
+      cout << "Player Two your total earnings are $" << playerTwoEarnings << endl;
+      }
+}
+
+
+
+//int getNum(){
+//
+//    int value;
+//
+//    //Getting the system time for random number generator
+//    unsigned seed = time(0);
+//    //Seeding the random number generator
+//    srand(seed);
+//
+//    value = (rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
+//    
+//    return value;
+//}
+
+//int random;
+
+//
+//srand(time(0));
+//random = rand()%MAX_VALUE;
+//random = getNum();
+//cout << random  << endl;
+
+//int x = 0;
+//
+//while (x < 4){
+//    
+//    random = rand()%MAX_VALUE;
+//    cout << random  << endl;
+//    x++;
+//    }
+
+//This function will run the main aspect of the game.
+//void game(int players, Card deck[], int DECKSIZE){
+//    
+//    
+//    
+//}//End of Game Function
+
+
+    //This function will be the actual game function
+    //game(players, deck, DECKSIZE); NOT USING AS OF NOW
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
