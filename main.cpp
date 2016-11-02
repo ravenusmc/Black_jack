@@ -112,7 +112,7 @@ int main(){
     Card playerTwo[MAXDECK];
     Card dealer[MAXDECK];
     
-    //welcome();
+    welcome();
     //mainMenu():
     players = numberOfPlayers();
     //Line break
@@ -292,9 +292,19 @@ int main(){
 //This function is the title menu and greets the user(s)
 void welcome(){
     
-    cout << "----------------------" << endl;
-    cout << "Welcome to Black Jack" << endl;
-    cout << "----------------------" << endl;
+    cout << "***********************" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*----Cuddy Casino-----*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*Welcome to Black Jack*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*-------Where---------*" << endl;
+    cout << "*------You Lose-------*" << endl;
+    cout << "*-------We Win--------*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "***********************" << endl;
+    cout << endl;
 
 
 }//End of welcome function
@@ -305,7 +315,7 @@ int numberOfPlayers(){
     //Declaring variables
     int players;
     
-    cout << "Please enter the number of players, between 1 or 2: " << endl;
+    cout << "Please enter the number of players (1 or 2): " << endl;
     cin >> players;
     while (!validPlayers(players)) {
         cout << "The amount of players may only be between 1 or 2" << endl;
@@ -358,7 +368,7 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
 void playerOneInfo(int playerOneTotal){
     cout << endl;
     cout << "Player One your total is: " << playerOneTotal << endl;
-    cout << "Player one, what is your action: " << endl;
+    cout << "Player One, what is your action: " << endl;
 }//End of playerOneInfo function
 
 //This function simply displays information for player two.
@@ -434,7 +444,8 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         //of the card.
         playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
         
-        //These lines here I am filling in the players deck structure
+        //These lines are where the players deck structure is loaded with what they were given. This will be useful
+        //further down in this function when an ace is given to the player.
         playerOne[i].valueOne = deck[cardLocation].valueOne;
         playerOne[i].valueTwo = deck[cardLocation].valueTwo;
         playerOne[i].suite = deck[cardLocation].suite;
@@ -461,7 +472,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
-        while (points < 1 or points > 2){
+        while (points < 1 || points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -481,7 +492,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
-        while (points < 1 or points > 2){
+        while (points < 1 || points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -522,8 +533,11 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
     {
         cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
         playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
+        
         //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
         
+        //These lines are where the players deck structure is loaded with what they were given. This will be useful
+        //further down in this function when an ace is given to the player.
         playerTwo[i].valueOne = deck[cardLocation].valueOne;
         playerTwo[i].valueTwo = deck[cardLocation].valueTwo;
         playerTwo[i].suite = deck[cardLocation].suite;
@@ -660,6 +674,9 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
     cardLocation++;
+    
+    //This line pauses the program and waits for user input to continue.
+    void pauseProgram();
 
 
 }// End of dealOneCardTwo Function
@@ -695,6 +712,9 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     //repeated.
     cardLocation++;
     
+    //This line pauses the program and waits for user input to continue.
+    void pauseProgram();
+    
 }//End of Doubledown function
 
 //This function is where the second player will doubledown.
@@ -726,6 +746,9 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
     cardLocation++;
+    
+    //This line pauses the program and waits for user input to continue.
+    void pauseProgram();
 
 }//End of DoubleDown Function
 
@@ -754,8 +777,13 @@ void surrenderTwo(int *arrayForBets, int players){
 //This function will simply alert the user that they have decided to stand
 //meaning that they will no longer take any cards.
 void stand(){
+    
     cout << "You choose to stand" << endl;
     cout << "This means you are not asking for any more cards!" << endl;
+    
+    //This line pauses the program and waits for user input to continue.
+    void pauseProgram();
+    
 }//End of stand function
 
 
@@ -794,54 +822,66 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
             deck[0].valueTwo = 11;
             deck[0].suite = "Spade";
             deck[0].face = "ACE ";
-            deck[1].valueOne = 2;
-            deck[1].valueTwo = 2;
+            
+            deck[1].valueOne = 1;
+            deck[1].valueTwo = 11;
             deck[1].suite = "Spade";
-            deck[1].face = "";
-            deck[2].valueOne = 3;
-            deck[2].valueTwo = 3;
+            deck[1].face = "ACE ";
+            
+            deck[2].valueOne = 1;
+            deck[2].valueTwo = 11;
             deck[2].suite = "Spade";
-            deck[2].face = "";
-            deck[3].valueOne = 4;
-            deck[3].valueTwo = 4;
+            deck[2].face = "ACE ";
+            
+            deck[3].valueOne = 1;
+            deck[3].valueTwo = 11;
             deck[3].suite = "Spade";
-            deck[3].face = "";
-            deck[4].valueOne = 5;
-            deck[4].valueTwo = 5;
+            deck[3].face = "ACE ";
+            
+            deck[4].valueOne = 1;
+            deck[4].valueTwo = 11;
             deck[4].suite = "Spade";
-            deck[4].face = "";
-            deck[5].valueOne = 6;
-            deck[5].valueTwo = 6;
+            deck[4].face = "ACE ";
+            
+            deck[5].valueOne = 1;
+            deck[5].valueTwo = 11;
             deck[5].suite = "Spade";
-            deck[5].face = "";
-            deck[6].valueOne = 7;
-            deck[6].valueTwo = 7;
+            deck[5].face = "ACE ";
+            
+            deck[6].valueOne = 1;
+            deck[6].valueTwo = 11;
             deck[6].suite = "Spade";
-            deck[6].face = "";
-            deck[7].valueOne = 8;
-            deck[7].valueTwo = 8;
+            deck[6].face = "ACE ";
+            
+            deck[7].valueOne = 1;
+            deck[7].valueTwo = 11;
             deck[7].suite = "Spade";
-            deck[7].face = "";
-            deck[8].valueOne = 9;
-            deck[8].valueTwo = 9;
+            deck[7].face = "ACE ";
+            
+            deck[8].valueOne = 1;
+            deck[8].valueTwo = 11;
             deck[8].suite = "Spade";
-            deck[8].face = "";
-            deck[9].valueOne = 10;
-            deck[9].valueTwo = 10;
+            deck[8].face = "ACE ";
+            
+            deck[9].valueOne = 1;
+            deck[9].valueTwo = 11;
             deck[9].suite = "Spade";
-            deck[9].face = "";
-            deck[10].valueOne = 10;
-            deck[10].valueTwo = 10;
+            deck[9].face = "ACE ";
+            
+            deck[10].valueOne = 1;
+            deck[10].valueTwo = 11;
             deck[10].suite = "Spade";
-            deck[10].face = "Jack";
-            deck[11].valueOne = 10;
-            deck[11].valueTwo = 10;
+            deck[10].face = "ACE ";
+            
+            deck[11].valueOne = 1;
+            deck[11].valueTwo = 11;
             deck[11].suite = "Spade";
-            deck[11].face = "Queen";
-            deck[12].valueOne = 10;
-            deck[12].valueTwo = 10;
+            deck[11].face = "ACE ";
+            
+            deck[12].valueOne = 1;
+            deck[12].valueTwo = 11;
             deck[12].suite = "Spade";
-            deck[12].face = "King";
+            deck[12].face = "ACE ";
             
             deck[13].valueOne = 1;
             deck[13].valueTwo = 11;

@@ -179,6 +179,129 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
 
 
 
+deck[0].valueOne = 1;
+            deck[0].valueTwo = 11;
+            deck[0].suite = "Spade";
+            deck[0].face = "ACE ";
+            deck[1].valueOne = 2;
+            deck[1].valueTwo = 2;
+            deck[1].suite = "Spade";
+            deck[1].face = "";
+            deck[2].valueOne = 3;
+            deck[2].valueTwo = 3;
+            deck[2].suite = "Spade";
+            deck[2].face = "";
+            deck[3].valueOne = 4;
+            deck[3].valueTwo = 4;
+            deck[3].suite = "Spade";
+            deck[3].face = "";
+            deck[4].valueOne = 5;
+            deck[4].valueTwo = 5;
+            deck[4].suite = "Spade";
+            deck[4].face = "";
+            deck[5].valueOne = 6;
+            deck[5].valueTwo = 6;
+            deck[5].suite = "Spade";
+            deck[5].face = "";
+            deck[6].valueOne = 7;
+            deck[6].valueTwo = 7;
+            deck[6].suite = "Spade";
+            deck[6].face = "";
+            deck[7].valueOne = 8;
+            deck[7].valueTwo = 8;
+            deck[7].suite = "Spade";
+            deck[7].face = "";
+            deck[8].valueOne = 9;
+            deck[8].valueTwo = 9;
+            deck[8].suite = "Spade";
+            deck[8].face = "";
+            deck[9].valueOne = 10;
+            deck[9].valueTwo = 10;
+            deck[9].suite = "Spade";
+            deck[9].face = "";
+            deck[10].valueOne = 10;
+            deck[10].valueTwo = 10;
+            deck[10].suite = "Spade";
+            deck[10].face = "Jack";
+            deck[11].valueOne = 10;
+            deck[11].valueTwo = 10;
+            deck[11].suite = "Spade";
+            deck[11].face = "Queen";
+            deck[12].valueOne = 10;
+            deck[12].valueTwo = 10;
+            deck[12].suite = "Spade";
+            deck[12].face = "King";
+
+
+
+            deck[0].valueOne = 1;
+            deck[0].valueTwo = 11;
+            deck[0].suite = "Spade";
+            deck[0].face = "ACE ";
+
+            deck[1].valueOne = 1;
+            deck[1].valueTwo = 11;
+            deck[1].suite = "Spade";
+            deck[1].face = "ACE ";
+
+            deck[2].valueOne = 1;
+            deck[2].valueTwo = 11;
+            deck[2].suite = "Spade";
+            deck[2].face = "ACE ";
+
+            deck[3].valueOne = 1;
+            deck[3].valueTwo = 11;
+            deck[3].suite = "Spade";
+            deck[3].face = "ACE ";
+
+            deck[4].valueOne = 1;
+            deck[4].valueTwo = 11;
+            deck[4].suite = "Spade";
+            deck[4].face = "ACE ";
+
+            deck[5].valueOne = 1;
+            deck[5].valueTwo = 11;
+            deck[5].suite = "Spade";
+            deck[5].face = "ACE ";
+
+            deck[6].valueOne = 1;
+            deck[6].valueTwo = 11;
+            deck[6].suite = "Spade";
+            deck[6].face = "ACE ";
+
+            deck[7].valueOne = 1;
+            deck[7].valueTwo = 11;
+            deck[7].suite = "Spade";
+            deck[7].face = "ACE ";
+
+            deck[8].valueOne = 1;
+            deck[8].valueTwo = 11;
+            deck[8].suite = "Spade";
+            deck[8].face = "ACE ";
+
+            deck[9].valueOne = 1;
+            deck[9].valueTwo = 11;
+            deck[9].suite = "Spade";
+            deck[9].face = "ACE ";
+
+            deck[10].valueOne = 1;
+            deck[10].valueTwo = 11;
+            deck[10].suite = "Spade";
+            deck[10].face = "ACE ";
+
+            deck[11].valueOne = 1;
+            deck[11].valueTwo = 11;
+            deck[11].suite = "Spade";
+            deck[11].face = "ACE ";
+
+            deck[12].valueOne = 1;
+            deck[12].valueTwo = 11;
+            deck[12].suite = "Spade";
+            deck[12].face = "ACE ";
+
+
+
+
 
 
 
