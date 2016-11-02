@@ -580,6 +580,9 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << endl;
         cout << "Player Two your total is: " << playerTwoTotal << endl;
     }
+    
+    //This line pauses the program and waits for user input to continue.
+    pauseProgram();
 
 }//End of dealTwoCardsTwo
 
@@ -605,6 +608,7 @@ bool WinnerTwo(bool BlackJack, int playerTwoTotal, int *arrayForBets, int player
     }else {
         return BlackJack = false;
     }
+    
 }//End of Winner Function
 
 
@@ -629,6 +633,9 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
     cardLocation++;
+    
+    //This line pauses the program and waits for user input to continue.
+    pauseProgram();
     
 }//End of dealOneCard function
 
