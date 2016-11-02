@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include <ctime>
 
+
 using namespace std;
 
 //*******************************
@@ -43,7 +44,6 @@ const int BLACKJACK = 21;
 //*******************************
 //Prototype Functions
 //*******************************
-
 
 void welcome();
 void createDeck(Card [], int);
@@ -73,11 +73,11 @@ int dealerAddCard(Card [], int, Card [], int, int &, int &);
 void dealerShowCards(int, Card [], int);
 bool Winner(bool, int playerOneTotal, int *, int);
 bool WinnerTwo(bool, int playerOneTotal, int *, int);
-
 void determineWinnerOne(int, int, int *, int, int &, int &);
 void determineWinnerTwo(int, int, int *, int, int &, int &);
 void playerOneSurrendered(int *, int , int &, int &);
 void playerTwoSurredndered(int *, int, int &,int &);
+void pauseProgram();
 
 
 //******************************
@@ -115,6 +115,8 @@ int main(){
     //welcome();
     //mainMenu():
     players = numberOfPlayers();
+    //Line break
+    cout << endl;
     //This will actually create the deck of cards
     createDeck(deck, DECKSIZE);
     
@@ -139,9 +141,12 @@ int main(){
         arrayForBets = new int[players];
         //Calling the function allow the player to see their bets
         makeBets(arrayForBets, players);
-    
+        
+        //Line breaks
+        cout << endl;
+        
         //This conditional statement will deal the initial first two cards based on how many players
-        //There are playing the game.
+        //That are playing the game.
         if (players == 1){
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
         }else if (players == 2){
@@ -402,6 +407,7 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
         i++;
     }
     return i;
+    
 }//End of dealerAddCard Function
 
 //This function will reveal the dealers cards.
@@ -455,6 +461,10 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
+        while (points < 1 or points > 2){
+            cout << "That value is not allowed. Please enter 1 or 2" << endl;
+            cin >> points;
+        }
         if (points == 1){
             playerOne[0].valueOne = 1;
         }else if (points == 2){
@@ -471,6 +481,10 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
+        while (points < 1 or points > 2){
+            cout << "That value is not allowed. Please enter 1 or 2" << endl;
+            cin >> points;
+        }
         if (points == 1){
             playerOne[1].valueOne = 1;
         }else if (points == 2){
@@ -483,8 +497,20 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "Player One your total is: " << playerOneTotal << endl;
     }
     
-    
+    //This line pauses the program and waits for user input to continue.
+    pauseProgram();
+
 }//End of dealTwoCars
+
+//This function will pause the program to allow the players to review information.
+void pauseProgram(){
+    
+    char temp;
+    cout << endl;
+    cout << "Press any letter to continue" << endl;
+    cin >> temp;
+    
+}//End of PuaseProgram function
 
 
 //This function deals the cards for the second player.
@@ -519,6 +545,10 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
+        while (points < 1 or points > 2){
+            cout << "That value is not allowed. Please enter 1 or 2" << endl;
+            cin >> points;
+        }
         if (points == 1){
             playerTwo[0].valueOne = 1;
         }else if (points == 2){
@@ -535,6 +565,10 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
+        while (points < 1 or points > 2){
+            cout << "That value is not allowed. Please enter 1 or 2" << endl;
+            cin >> points;
+        }
         if (points == 1){
             playerTwo[1].valueOne = 1;
         }else if (points == 2){
@@ -583,6 +617,10 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
+        while (aceValue != 1 && aceValue != 11){
+            cout << "Please enter in the correct value, 1 or 11" << endl;
+            cin >> aceValue;
+        }
         deck[cardLocation].valueOne = aceValue;
     }
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
@@ -603,6 +641,10 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
+        while (aceValue != 1 && aceValue != 11){
+            cout << "Please enter in the correct value, 1 or 11" << endl;
+            cin >> aceValue;
+        }
         deck[cardLocation].valueOne = aceValue;
     }
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
