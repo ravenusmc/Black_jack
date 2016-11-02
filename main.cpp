@@ -107,16 +107,20 @@ int main(){
     
     //These structures will be used to hold the cards that dealer, playerOne and playerTwo have
     //The constanst is set to 11 because that is the maximun number of cards that someone can have
-    //before Black Jack or 21 may arise.
+    //before Black Jack or 21 may arise. However, the main reason why these structures were created
+    //was to allow me to have a place to hold cards, if I needed them. Which became quite useful in dealing
+    //with aces.
     Card playerOne[MAXDECK];
     Card playerTwo[MAXDECK];
     Card dealer[MAXDECK];
     
     welcome();
-    //mainMenu():
+    //mainMenu();
     players = numberOfPlayers();
+    
     //Line break
     cout << endl;
+    
     //This will actually create the deck of cards
     createDeck(deck, DECKSIZE);
     
@@ -1200,6 +1204,7 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         playerTwoEarnings -= arrayForBets[1];
         cout << "Player Two your total earnings are $" << playerTwoEarnings << endl;
     }
+    
 }//End of determineWinnerTwo Function
 
 
