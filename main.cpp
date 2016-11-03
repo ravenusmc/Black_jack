@@ -94,7 +94,7 @@ int main(){
     int playerOneEarnings = 0;
     int playerTwoEarnings = 0;
     bool BlackJack = false;
-    bool Break = false;
+    //bool Break = false;
     bool Surrender = false;
     bool SurrenderOne = false;
     bool SurrenderTwo = false;
@@ -115,8 +115,9 @@ int main(){
     Card dealer[MAXDECK];
     
     welcome();
-    //mainMenu();
     players = numberOfPlayers();
+    createId();
+    
     
     //Line break
     cout << endl;
@@ -131,7 +132,7 @@ int main(){
         playerOneTotal = 0;
         playerTwoTotal = 0;
         dealerTotal = 0;
-        Break = false;
+        //Break = false;
         Surrender = false;
         SurrenderOne = false;
         SurrenderTwo = false;
@@ -275,6 +276,10 @@ int main(){
         
         //line break
         cout << endl;
+        
+        displayStats();
+        
+        
         //Asking the player(s) if they want to play again.
         again = playAgain();
         cardLocation++;
