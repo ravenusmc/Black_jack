@@ -79,6 +79,9 @@ void playerOneSurrendered(int *, int , int &, int &);
 void playerTwoSurredndered(int *, int, int &,int &);
 void pauseProgram();
 
+void displayStats();
+void createId();
+
 
 //******************************
 //Main Function
