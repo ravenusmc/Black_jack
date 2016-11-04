@@ -87,9 +87,9 @@ void determineWinnerTwo(int, int, int *, int, int &, int &);
 void playerOneSurrendered(int *, int , int &, int &);
 void playerTwoSurredndered(int *, int, int &,int &);
 void pauseProgram();
-
-void displayStats();
 void createId(int, PlayerInfo &, PlayerInfo &);
+void displayStats(int, int, int, PlayerInfo, PlayerInfo, int);
+
 
 
 //******************************
@@ -290,8 +290,7 @@ int main(){
         //line break
         cout << endl;
         
-        //displayStats();
-        
+        displayStats(players, playerOneEarnings, playerTwoEarnings, pOne, pTwo, dealerTotal);
         
         //Asking the player(s) if they want to play again.
         again = playAgain();
@@ -407,6 +406,21 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
     
 }//End of createId function
+
+//This function will display the earnings of the players.
+void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, PlayerInfo pOne, PlayerInfo pTwo, int dealerTotal){
+    
+    if (players ==1 ){
+        cout << "Here are the winnings" << endl;
+        cout << pOne.username << " has a total of: $" << playerOneEarnings << endl;
+    
+    
+    }
+    
+    
+    
+    
+}//end of displayStats function
 
 //This function will deal two cards to the dealer.
 void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
