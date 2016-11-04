@@ -145,7 +145,7 @@ int main(){
         playerOneTotal = 0;
         playerTwoTotal = 0;
         dealerTotal = 0;
-        //Break = false;
+        //Break = false; //I may need to use this variable again if a player gets Black Jack on the initial 21.
         Surrender = false;
         SurrenderOne = false;
         SurrenderTwo = false;
@@ -292,6 +292,9 @@ int main(){
         
         displayStats(players, playerOneEarnings, playerTwoEarnings, pOne, pTwo, dealerTotal);
         
+        //line break to help with output.
+        cout << endl;
+        
         //Asking the player(s) if they want to play again.
         again = playAgain();
         cardLocation++;
@@ -382,13 +385,13 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> username;
         pOne.username = username;
     }else if (players == 2){
-        cout << "Player Two please enter your name: " << endl;
+        cout << "Player One please enter your name: " << endl;
         cin >> name;
         pOne.name = name;
-        cout << "Player Two please enter your email: " << endl;
+        cout << "Player One please enter your email: " << endl;
         cin >> email;
         pOne.emailAddress = email;
-        cout << "Player Two please enter a username: " << endl;
+        cout << "Player One please enter a username: " << endl;
         cin >> username;
         pOne.username = username;
         cout << endl;
@@ -410,15 +413,17 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
 //This function will display the earnings of the players.
 void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, PlayerInfo pOne, PlayerInfo pTwo, int dealerTotal){
     
-    if (players ==1 ){
-        cout << "Here are the winnings" << endl;
+    if (players == 1){
+        cout << "Here are the stats for the amount of money and wins each player has: " << endl;
         cout << pOne.username << " has a total of: $" << playerOneEarnings << endl;
-    
-    
+
+    }else if (players == 2){
+        cout << "Here are the winnings" << endl;
+        cout << endl;
+        cout << pOne.username << " has a total of: $" << playerOneEarnings << endl;
+        cout << pTwo.username << " has a total of: $" << playerTwoEarnings << endl;
     }
-    
-    
-    
+
     
 }//end of displayStats function
 
