@@ -32,6 +32,15 @@ struct Card
     string face;
 };
 
+struct PlayerInfo
+{
+    string name;
+    string emailAddress;
+    string username;
+    int winnings;
+
+};
+
 
 //*******************************
 //Global Variables/constants
@@ -80,7 +89,7 @@ void playerTwoSurredndered(int *, int, int &,int &);
 void pauseProgram();
 
 void displayStats();
-void createId();
+void createId(int, PlayerInfo &, PlayerInfo &);
 
 
 //******************************
@@ -103,6 +112,8 @@ int main(){
     bool SurrenderTwo = false;
     bool breakOne = false;
     bool breakTwo = false;
+    PlayerInfo pOne;
+    PlayerInfo pTwo;
     
     
     //Creating the deck of cards
@@ -119,8 +130,7 @@ int main(){
     
     welcome();
     players = numberOfPlayers();
-    createId();
-    
+    createId(players, pOne, pTwo);
     
     //Line break
     cout << endl;
@@ -280,7 +290,7 @@ int main(){
         //line break
         cout << endl;
         
-        displayStats();
+        //displayStats();
         
         
         //Asking the player(s) if they want to play again.
@@ -351,6 +361,52 @@ void makeBets(int *arrayForBets, int players){
         }
     }
 }//End of makeBets function
+
+
+//This function allows for the players to set up the information about who they are.
+void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
+    
+    //Declaring variables which will be used to set up the user information structures.
+    string name;
+    string email;
+    string username;
+    
+    //This conditional loop will allow the players to set up their user information.
+    if (players == 1){
+        cout << "Player One please enter your name: " << endl;
+        cin >> name;
+        pOne.name = name;
+        cout << "Player One please enter your email: " << endl;
+        cin >> email;
+        pOne.emailAddress = email;
+        cout << "Player One please enter a username: " << endl;
+        cin >> username;
+        pOne.username = username;
+    }else if (players == 2){
+        cout << "Player Two please enter your name: " << endl;
+        cin >> name;
+        pOne.name = name;
+        cout << "Player Two please enter your email: " << endl;
+        cin >> email;
+        pOne.emailAddress = email;
+        cout << "Player Two please enter a username: " << endl;
+        cin >> username;
+        pOne.username = username;
+        cout << endl;
+        cout << "Player Two please enter your name: " << endl;
+        cin >> name;
+        pTwo.name = name;
+        cout << "Player Two please enter your email: " << endl;
+        cin >> email;
+        pTwo.emailAddress = email;
+        cout << "Player TWo please enter a username: " << endl;
+        cin >> username;
+        pTwo.username = username;
+    
+    }
+    
+    
+}//End of createId function
 
 //This function will deal two cards to the dealer.
 void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
