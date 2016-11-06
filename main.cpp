@@ -186,6 +186,8 @@ int main(){
         getDealersCards(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
         cout << endl;
         
+        //This massive conditional statement is what will allow the players to decide what actions they want to take in regards
+        //to taking another card, stand, double down or surrendering. 
         if (players == 1){
             while (breakOne == false){
                 playerOneInfo(playerOneTotal);
@@ -290,7 +292,7 @@ int main(){
         //line break
         cout << endl;
         
-        //This function will display the stats for the players. 
+        //This function will display the stats for the players.
         displayStats(players, playerOneEarnings, playerTwoEarnings, pOne, pTwo, dealerTotal);
         
         //line break to help with output.
