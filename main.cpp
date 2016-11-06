@@ -290,6 +290,7 @@ int main(){
         //line break
         cout << endl;
         
+        //This function will display the stats for the players. 
         displayStats(players, playerOneEarnings, playerTwoEarnings, pOne, pTwo, dealerTotal);
         
         //line break to help with output.
