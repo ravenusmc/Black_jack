@@ -106,7 +106,7 @@ int main(){
     int playerOneEarnings = 0;
     int playerTwoEarnings = 0;
     bool BlackJack = false;
-    //bool Break = false;
+    bool Break = false;
     bool Surrender = false;
     bool SurrenderOne = false;
     bool SurrenderTwo = false;
@@ -145,7 +145,7 @@ int main(){
         playerOneTotal = 0;
         playerTwoTotal = 0;
         dealerTotal = 0;
-        //Break = false; //I may need to use this variable again if a player gets Black Jack on the initial 21.
+        Break = false;
         Surrender = false;
         SurrenderOne = false;
         SurrenderTwo = false;
@@ -176,8 +176,8 @@ int main(){
         //These functions check to see if player one or two has BLACKJACK on the initial round.
         //If they do, they will win twice the amount that they bet and they will not be allowed to
         //take any more cards.
-        breakOne = Winner(BlackJack, playerOneTotal, arrayForBets, players);
-        breakTwo = WinnerTwo(BlackJack, playerTwoTotal, arrayForBets, players);
+        Break = Winner(BlackJack, playerOneTotal, arrayForBets, players);
+        Break = WinnerTwo(BlackJack, playerTwoTotal, arrayForBets, players);
         
         //This is a line break to help with output
         cout << endl;
@@ -187,8 +187,8 @@ int main(){
         cout << endl;
         
         //This massive conditional statement is what will allow the players to decide what actions they want to take in regards
-        //to taking another card, stand, double down or surrendering. 
-        if (players == 1){
+        //to taking another card, stand, double down or surrendering.
+        if (players == 1 && Break == false){
             while (breakOne == false){
                 playerOneInfo(playerOneTotal);
                 action = playerChoices();
@@ -211,7 +211,7 @@ int main(){
                     Surrender = true;
                 }
             }
-        } else if (players == 2){
+        } else if (players == 2 && Break == false){
             while (breakOne == false || breakTwo == false){
                 if (breakOne == false){
                     playerOneInfo(playerOneTotal);
@@ -387,6 +387,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cout << "Player One please enter a username: " << endl;
         cin >> username;
         pOne.username = username;
+        pOne.winnings = 500;
     }else if (players == 2){
         cout << "Player One please enter your name: " << endl;
         cin >> name;
@@ -397,6 +398,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cout << "Player One please enter a username: " << endl;
         cin >> username;
         pOne.username = username;
+        pOne.winnings = 500;
         cout << endl;
         cout << "Player Two please enter your name: " << endl;
         cin >> name;
@@ -407,6 +409,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cout << "Player TWo please enter a username: " << endl;
         cin >> username;
         pTwo.username = username;
+        pTwo.winnings = 500;
     
     }
     
@@ -560,7 +563,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "You currenty have a total of " << playerOneTotal << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
-        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
+        cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
         while (points < 1 || points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
@@ -647,7 +650,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "You currenty have a total of " << playerTwoTotal << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
-        cout << "Would you like the card to be worth 1 or 11 points: " << endl;
+        cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
         while (points < 1 or points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
@@ -908,70 +911,57 @@ int cardCheck(int cardLocation, int DECKSIZE, int again){
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
         {
-            deck[0].valueOne = 1;
             deck[0].valueTwo = 11;
             deck[0].suite = "Spade";
             deck[0].face = "ACE ";
-            
-            deck[1].valueOne = 1;
-            deck[1].valueTwo = 11;
+            deck[1].valueOne = 2;
+            deck[1].valueTwo = 2;
             deck[1].suite = "Spade";
-            deck[1].face = "ACE ";
-            
-            deck[2].valueOne = 1;
-            deck[2].valueTwo = 11;
+            deck[1].face = "";
+            deck[2].valueOne = 3;
+            deck[2].valueTwo = 3;
             deck[2].suite = "Spade";
-            deck[2].face = "ACE ";
-            
-            deck[3].valueOne = 1;
-            deck[3].valueTwo = 11;
+            deck[2].face = "";
+            deck[3].valueOne = 4;
+            deck[3].valueTwo = 4;
             deck[3].suite = "Spade";
-            deck[3].face = "ACE ";
-            
-            deck[4].valueOne = 1;
-            deck[4].valueTwo = 11;
+            deck[3].face = "";
+            deck[4].valueOne = 5;
+            deck[4].valueTwo = 5;
             deck[4].suite = "Spade";
-            deck[4].face = "ACE ";
-            
-            deck[5].valueOne = 1;
-            deck[5].valueTwo = 11;
+            deck[4].face = "";
+            deck[5].valueOne = 6;
+            deck[5].valueTwo = 6;
             deck[5].suite = "Spade";
-            deck[5].face = "ACE ";
-            
-            deck[6].valueOne = 1;
-            deck[6].valueTwo = 11;
+            deck[5].face = "";
+            deck[6].valueOne = 7;
+            deck[6].valueTwo = 7;
             deck[6].suite = "Spade";
-            deck[6].face = "ACE ";
-            
-            deck[7].valueOne = 1;
-            deck[7].valueTwo = 11;
+            deck[6].face = "";
+            deck[7].valueOne = 8;
+            deck[7].valueTwo = 8;
             deck[7].suite = "Spade";
-            deck[7].face = "ACE ";
-            
-            deck[8].valueOne = 1;
-            deck[8].valueTwo = 11;
+            deck[7].face = "";
+            deck[8].valueOne = 9;
+            deck[8].valueTwo = 9;
             deck[8].suite = "Spade";
-            deck[8].face = "ACE ";
-            
-            deck[9].valueOne = 1;
-            deck[9].valueTwo = 11;
+            deck[8].face = "";
+            deck[9].valueOne = 10;
+            deck[9].valueTwo = 10;
             deck[9].suite = "Spade";
-            deck[9].face = "ACE ";
-            
-            deck[10].valueOne = 1;
-            deck[10].valueTwo = 11;
+            deck[9].face = "";
+            deck[10].valueOne = 10;
+            deck[10].valueTwo = 10;
             deck[10].suite = "Spade";
-            deck[10].face = "ACE ";
-            
-            deck[11].valueOne = 1;
-            deck[11].valueTwo = 11;
+            deck[10].face = "Jack";
+            deck[11].valueOne = 10;
+            deck[11].valueTwo = 10;
             deck[11].suite = "Spade";
-            deck[11].face = "ACE ";
-            
-            deck[12].valueOne = 1;
-            deck[12].valueTwo = 11;
+            deck[11].face = "Queen";
+            deck[12].valueOne = 10;
+            deck[12].valueTwo = 10;
             deck[12].suite = "Spade";
-            deck[12].face = "ACE ";
+            deck[12].face = "King";
             
             deck[13].valueOne = 1;
             deck[13].valueTwo = 11;

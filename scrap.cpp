@@ -232,7 +232,7 @@ deck[0].valueOne = 1;
             deck[12].suite = "Spade";
             deck[12].face = "King";
 
-
+///// ACE CARDS FOR TESTING  ///////
 
             deck[0].valueOne = 1;
             deck[0].valueTwo = 11;
