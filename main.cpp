@@ -421,13 +421,16 @@ void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, Pla
     
     if (players == 1){
         cout << "Here are the stats for the amount of money and wins each player has: " << endl;
-        cout << pOne.username << " has a total of: $" << playerOneEarnings << endl;
+        pOne.winnings = pOne.winnings + playerOneEarnings;
+        cout << pOne.username << " has a total of: $" << pOne.winnings << endl;
 
     }else if (players == 2){
-        cout << "Here are the winnings" << endl;
+        cout << "Here are the stats for the amount of money and wins each player has: " << endl;
         cout << endl;
-        cout << pOne.username << " has a total of: $" << playerOneEarnings << endl;
-        cout << pTwo.username << " has a total of: $" << playerTwoEarnings << endl;
+        pOne.winnings = pOne.winnings + playerOneEarnings;
+        pTwo.winnings = pTwo.winnings + playerTwoEarnings;
+        cout << pOne.username << " has a total of: $" << pOne.winnings << endl;
+        cout << pTwo.username << " has a total of: $" << pTwo.winnings << endl;
     }
 
     
