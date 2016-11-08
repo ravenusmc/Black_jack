@@ -88,7 +88,8 @@ void playerOneSurrendered(int *, int , int &, int &);
 void playerTwoSurredndered(int *, int, int &,int &);
 void pauseProgram();
 void createId(int, PlayerInfo &, PlayerInfo &);
-void displayStats(int, int, int, PlayerInfo, PlayerInfo, int);
+void displayStats(int, int, int, PlayerInfo &, PlayerInfo &, int);
+bool bootedOut(PlayerInfo, PlayerInfo);
 
 
 
@@ -112,6 +113,7 @@ int main(){
     bool SurrenderTwo = false;
     bool breakOne = false;
     bool breakTwo = false;
+    bool booted = false;
     PlayerInfo pOne;
     PlayerInfo pTwo;
     
@@ -151,6 +153,7 @@ int main(){
         SurrenderTwo = false;
         breakOne = false;
         breakTwo = false;
+        booted = false;
         
         //This will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
@@ -162,6 +165,14 @@ int main(){
         
         //Line breaks
         cout << endl;
+        
+        //This code will forbid the players from playing the game if they have negative money.
+        booted = bootedOut(pOne, pTwo);
+        //If a player does have a negative balance they will be booted from the game-the while loop will break. 
+        if (booted){
+            break;
+        }
+
         
         //This conditional statement will deal the initial first two cards based on how many players
         //That are playing the game.
@@ -285,9 +296,6 @@ int main(){
             playerTwoSurredndered(arrayForBets, players, playerTwoEarnings, dealerWinnings);
         }
         
-        //REMOVE THESE LINES FOR TESTING PURPOSES:
-        cout << "One's Earnings are: " << playerOneEarnings << endl;
-        cout << "Two's Earnings are: " << playerTwoEarnings << endl;
         
         //line break
         cout << endl;
@@ -420,8 +428,32 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
 }//End of createId function
 
+//This function will determine if the player has enough money to play a round.
+bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
+    
+    bool booted = false;
+    
+    cout << "The winnings are:" << pOne.winnings << endl;
+    
+    if (pOne.winnings < 0){
+        cout << "Player one, you attempted to make bets with money you did not have" << endl;
+        cout << "You are now booted out of the game!" << endl;
+        booted = true;
+        return booted;
+    }else if (pTwo.winnings < 0){
+        cout << "Player Two, you attempted to make bets with money you did not have" << endl;
+        cout << "You are now booted out of the game!" << endl;
+        cout << "Player one is booted as well!" << endl;
+        booted = true;
+        return booted;
+    }
+    
+    return booted;
+    
+}//End of bootedOut function
+
 //This function will display the earnings of the players.
-void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, PlayerInfo pOne, PlayerInfo pTwo, int dealerTotal){
+void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, PlayerInfo &pOne, PlayerInfo &pTwo, int dealerTotal){
     
     if (players == 1){
         cout << "Here are the stats for the amount of money and wins each player has: " << endl;
