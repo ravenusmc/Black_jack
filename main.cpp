@@ -477,7 +477,7 @@ void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, Pla
 //This function will deal two cards to the dealer.
 void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
     
-    //
+    //This for loop will deal the initial two cards to the dealer.
     for (int i = 0; i < 2; i++){
         
         dealer[i].valueOne = deck[cardLocation].valueOne;
@@ -491,10 +491,10 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
         }else{
             dealerTotal = dealerTotal + deck[cardLocation].valueOne;
         }
-        
+        //card location is incremented so a card is not used twice.
         cardLocation++;
     }
-    
+    //This line here will get the dealers top card.
     cout << "The dealers top card is a " << dealer[1].valueOne << " " << "of " << dealer[1].suite << endl;
 
 }//End of getDealersCards function
@@ -515,18 +515,23 @@ void playerTwoInfo(int playerTwoTotal){
 
 //This function provides the menu for the options on what the player can do.
 int playerChoices(){
+    
     int action;
+    //Choices are presented for the players actions
     cout << "1. Hit" << endl;
     cout << "2. Stand" << endl;
     cout << "3. Double Down" << endl;
     cout << "4. Surrender" << endl;
     cout << "What is your action: " << endl;
     cin >> action;
+    //If a correct selection is not made, then the user will enter a while loop that will force the user to make a
+    //valid choice before moving on.
     while (action < 1 or action > 4){
         cout << "That is not a valid selection" << endl;
         cout << "Please enter in 1 - 4 for your choice" << endl;
         cin >> action;
     }
+    
     return action;
     
 }//End of playerOneAction function
@@ -536,6 +541,7 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
     
     int i = 2;
     
+    //If the dealers total is below 16 they get more and more cards added to their total until it is greater than 16.
     while (dealerTotal <= 16){
         dealer[i].valueOne = deck[cardLocation].valueOne;
         dealer[i].valueTwo = deck[cardLocation].valueTwo;
@@ -548,16 +554,23 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
         }else{
             dealerTotal = dealerTotal + deck[cardLocation].valueOne;
         }
+        //Incrementing card location
         cardLocation++;
+        //I keep track of the number of times that the loop increments.
         i++;
     }
+    
+    //I then return the number of times that the deck incremented to use in the dealerShowCards function.
     return i;
     
 }//End of dealerAddCard Function
 
 //This function will reveal the dealers cards.
 void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
+    
     cout << "The dealer has the following cards: " << endl;
+    //The value of i, which is now dealerDeckSize, which was calculated in the dealerAddCard function, will be used
+    //to determine the amount of times to loop through to show all of the dealers cards. 
     for (int i = 0; i < dealerDeckSize; i++){
         cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
         
