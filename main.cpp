@@ -168,12 +168,11 @@ int main(){
         
         //This code will forbid the players from playing the game if they have negative money.
         booted = bootedOut(pOne, pTwo);
-        //If a player does have a negative balance they will be booted from the game-the while loop will break. 
+        //If a player does have a negative balance they will be booted from the game-the while loop will break.
         if (booted){
             break;
         }
 
-        
         //This conditional statement will deal the initial first two cards based on how many players
         //That are playing the game.
         if (players == 1){
@@ -435,11 +434,13 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
     
     cout << "The winnings are:" << pOne.winnings << endl;
     
+    //If player one has no winnings they get booted out of the virtual casino
     if (pOne.winnings < 0){
         cout << "Player one, you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
         booted = true;
         return booted;
+    //If player two has no money then they get booted out of the casino.
     }else if (pTwo.winnings < 0){
         cout << "Player Two, you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
@@ -455,11 +456,12 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
 //This function will display the earnings of the players.
 void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, PlayerInfo &pOne, PlayerInfo &pTwo, int dealerTotal){
     
+    //Showing the game stats for the first player
     if (players == 1){
         cout << "Here are the stats for the amount of money and wins each player has: " << endl;
         pOne.winnings = pOne.winnings + playerOneEarnings;
         cout << pOne.username << " has a total of: $" << pOne.winnings << endl;
-
+    //Showing the game stats for the first and second player.
     }else if (players == 2){
         cout << "Here are the stats for the amount of money and wins each player has: " << endl;
         cout << endl;
@@ -475,6 +477,7 @@ void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, Pla
 //This function will deal two cards to the dealer.
 void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
     
+    //
     for (int i = 0; i < 2; i++){
         
         dealer[i].valueOne = deck[cardLocation].valueOne;
