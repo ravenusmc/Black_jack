@@ -432,8 +432,6 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
     
     bool booted = false;
     
-    cout << "The winnings are:" << pOne.winnings << endl;
-    
     //If player one has no winnings they get booted out of the virtual casino
     if (pOne.winnings < 0){
         cout << "Player one, you attempted to make bets with money you did not have" << endl;
@@ -570,7 +568,7 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
     
     cout << "The dealer has the following cards: " << endl;
     //The value of i, which is now dealerDeckSize, which was calculated in the dealerAddCard function, will be used
-    //to determine the amount of times to loop through to show all of the dealers cards. 
+    //to determine the amount of times to loop through to show all of the dealers cards.
     for (int i = 0; i < dealerDeckSize; i++){
         cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
         
@@ -584,9 +582,10 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
     
     cout << "Player One here are your first two cards: " << endl;
     
+    //This for loop will give the first two cards to the first player.
     for (int i = 0; i < 2; i++)
     {
-        cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
+        cout << "Card " << i + 1 << " is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
         
         //I am getting the total for the player by adding togather is current total to the value
         //of the card.
@@ -677,9 +676,10 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
     
     cout << "Player Two here are your first two cards: " << endl;
     
+    //This for loop will give the first two cards to the second player.
     for (int i = 0; i < 2; i++)
     {
-        cout << "your " << i + 1 << " card is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
+        cout << "Card " << i + 1 << " is the" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
         playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
         
         //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
@@ -1220,7 +1220,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerOneEarnings += arrayForBets[0];
-        cout << "Player one your earnings are $" << playerOneEarnings << endl;
+        //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal > 21 && dealerTotal > 21){
         cout << "BUST" << endl;
         cout << "Dealer wins!" << endl;
@@ -1235,7 +1235,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerOneEarnings += arrayForBets[0];
-        cout << "Player one your earnings are $" << playerOneEarnings << endl;
+        //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal < dealerTotal && (dealerTotal > 21)){
         cout << "Player One your total was: " << playerOneTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1243,14 +1243,14 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerOneEarnings += arrayForBets[0];
-        cout << "Player one your earnings are $" << playerOneEarnings << endl;
+        //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal < dealerTotal && (dealerTotal <= 21)){
         cout << "Player One your total was: " << playerOneTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
         cout << "The dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[0] << endl;
         playerOneEarnings -= arrayForBets[0];
-        cout << "Player one your earnings are $" << playerOneEarnings << endl;
+        cout << "Player one you lost: " << playerOneEarnings << endl;
         dealerWinnings += arrayForBets[0];
     }else if (playerOneTotal == dealerTotal){
         cout << "The dealer and player have the same values" << endl;
@@ -1261,7 +1261,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         cout << "The dealer won!" << endl;
         cout << "The dealer won $" << arrayForBets[0] << endl;
         playerOneEarnings -= arrayForBets[0];
-        cout << "Player one your earnings are $" << playerOneEarnings << endl;
+        cout << "Player one, you lost $" << playerOneEarnings << endl;
         dealerWinnings += arrayForBets[0];
     }else{
         cout << "Player One your total was: " << playerOneTotal << endl;
@@ -1270,7 +1270,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         cout << "The dealer won $" << arrayForBets[0] << endl;
         dealerWinnings += arrayForBets[0];
         playerOneEarnings -= arrayForBets[0];
-        cout << "Player one your earnings are $" << playerOneEarnings << endl;
+        cout << "Player one you lost $" << playerOneEarnings << endl;
     }
 }//End of determineWinnerOne Function
 
@@ -1284,13 +1284,13 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[1] = arrayForBets[1] * 2;
         cout << "You won $" << arrayForBets[1] << endl;
         playerTwoEarnings += arrayForBets[1];
-        cout << "Player two your earnings are $" << playerTwoEarnings << endl;
+        //cout << "Player two your earnings are $" << playerTwoEarnings << endl;
     }else if (playerTwoTotal > 21 && dealerTotal > 21){
         cout << "BUST" << endl;
         cout << "Dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[1] << endl;
         playerTwoEarnings -= arrayForBets[1];
-        cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
+        //cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
         dealerWinnings += arrayForBets[1];
     }else if((playerTwoTotal > dealerTotal) && (playerTwoTotal <= 21)){
         cout << "Player Two your total was: " << playerTwoTotal << endl;
@@ -1299,7 +1299,7 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[1] = arrayForBets[1] * 2;
         cout << "You won $" << arrayForBets[1] << endl;
         playerTwoEarnings += arrayForBets[1];
-        cout << "Player two your earnings are $" << playerTwoEarnings << endl;
+        //cout << "Player two your earnings are $" << playerTwoEarnings << endl;
     }else if (playerTwoTotal < dealerTotal && (dealerTotal > 21)){
         cout << "Player Two your total was: " << playerTwoTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1307,14 +1307,14 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerTwoEarnings += arrayForBets[0];
-        cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
+        //cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
     }else if (playerTwoTotal < dealerTotal && (dealerTotal <= 21)){
         cout << "Player Two your total was: " << playerTwoTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
         cout << "The dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[1] << endl;
         playerTwoEarnings -= arrayForBets[1];
-        cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
+        cout << "Player Two you lost $" << playerTwoEarnings << endl;
         dealerWinnings += arrayForBets[1];
     }else if (playerTwoTotal == dealerTotal){
         cout << "The dealer and player Two have the same values" << endl;
@@ -1325,7 +1325,7 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         cout << "The dealer won!" << endl;
         cout << "The dealer won $" << arrayForBets[1] << endl;
         playerTwoEarnings -= arrayForBets[1];
-        cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
+        cout << "Player Two you lost $" << playerTwoEarnings << endl;
         dealerWinnings += arrayForBets[1];
     }else{
         cout << "Player Two's total was: " << playerTwoTotal << endl;
@@ -1334,7 +1334,7 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         cout << "The dealer won $" << arrayForBets[1] << endl;
         dealerWinnings += arrayForBets[1];
         playerTwoEarnings -= arrayForBets[1];
-        cout << "Player Two your earnings are $" << playerTwoEarnings << endl;
+        cout << "Player Two you lost $" << playerTwoEarnings << endl;
     }
     
 }//End of determineWinnerTwo Function
