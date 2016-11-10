@@ -836,22 +836,28 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     float betIncrease;
     int aceValue;
     
+    //The player is asked what percentage they want to increase their wager by.
     cout << "Player One, please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
+    //If the bet increase is outside of the acceptable range, the player is asked to enter the correct amount.
     while (betIncrease < 0 || betIncrease > 1){
         cout << "Please enter a value between 0 and 1" << endl;
         cin >> betIncrease;
     }
     
+    //The player is given a card.
     cout << "Player One you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    //The card is checked to see whether it is an ace.
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
+    //Calculating the bet increase and changing the initial bet to it.
     arrayForBets[0] = (arrayForBets[0] * betIncrease) + arrayForBets[0];
+    //Calculating the total of the cards.
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
-    playerOne[cardLocation] = deck[cardLocation];
+    //playerOne[cardLocation] = deck[cardLocation]; //May need to get rid of this line.
     
     cout << "Your bet is now at " << arrayForBets[0] << endl;
     cout << endl;
@@ -872,23 +878,28 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     float betIncrease;
     int aceValue;
     
+    //The player is asked what percentage they want to increase their wager by.
     cout << "Player Two, Please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
+    //If the bet increase is outside of the acceptable range, the player is asked to enter the correct amount.
     while (betIncrease < 0 || betIncrease > 1){
         cout << "Please enter a value between 0 and 1" << endl;
         cin >> betIncrease;
     }
 
-    
+    //The player is given a card.
     cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    //The card is checked to see whether it is an ace.
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
+    //Calculating the bet increase and changing the initial bet to it.
     arrayForBets[1] = (arrayForBets[1] * betIncrease) + arrayForBets[1];
+    //Calculating the total of the cards.
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
-    playerTwo[cardLocation] = deck[cardLocation];
+    //playerTwo[cardLocation] = deck[cardLocation]; Line may not be needed since I never used this.
     cout << "Your bet is now at " << arrayForBets[1] << endl;
     cout << endl;
     
@@ -907,6 +918,7 @@ void surrender(int *arrayForBets, int players){
     
     int loss;
     
+    //This line will take half the players bet if they choose to surrender.
     loss = arrayForBets[0] * .50;
     arrayForBets[0] = loss;
 
@@ -917,6 +929,7 @@ void surrenderTwo(int *arrayForBets, int players){
     
     int loss;
     
+    //This line will take half the players bet if they choose to surrender.
     loss = arrayForBets[1] * .50;
     arrayForBets[1] = loss;
     
@@ -944,11 +957,14 @@ int playAgain(){
     cout << "2. Stop Playing" << endl;
     cout << "Do you want to play again? " << endl;
     cin >> again;
+    //Input validation is occuring to ensure that the player chooses the correct option.
     while (!validAgain(again)) {
         cout << "You may only select 1 or 2" << endl;
         cin >> again;
     }
+    
     return again;
+    
 }// End of PlayAgain function
 
 //This function checks to see if the card deck is almost used up. If it is, it will force the
