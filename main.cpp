@@ -72,7 +72,7 @@ void dealTwoCards(Card [], int, Card [], int, int &, int &);
 void dealTwoCardsTwo(Card [], int, Card [], int, int &, int &);
 void dealOneCard(Card [], int, Card [], int, int &, int &);
 void dealOneCardTwo(Card [], int, Card [], int, int &, int &);
-void makeBets(int *, int);
+void makeBets(int *, int, PlayerInfo, PlayerInfo);
 void surrender(int *, int);
 void surrenderTwo(int *, int);
 void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
@@ -146,6 +146,8 @@ int main(){
         cardLocation = 0;
         playerOneTotal = 0;
         playerTwoTotal = 0;
+        playerOneEarnings = 0;
+        playerTwoEarnings = 0;
         dealerTotal = 0;
         Break = false;
         Surrender = false;
@@ -154,17 +156,11 @@ int main(){
         breakOne = false;
         breakTwo = false;
         booted = false;
+        //This line sets up the array for the players bets
+        arrayForBets = new int[players];
         
         //This will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
-        
-        //This line sets up the array for the players bets
-        arrayForBets = new int[players];
-        //Calling the function allow the player to see their bets
-        makeBets(arrayForBets, players);
-        
-        //Line breaks
-        cout << endl;
         
         //This code will forbid the players from playing the game if they have negative money.
         booted = bootedOut(pOne, pTwo);
@@ -172,6 +168,12 @@ int main(){
         if (booted){
             break;
         }
+        
+        //Calling the function allow the player to see their bets
+        makeBets(arrayForBets, players, pOne, pTwo);
+        
+        //Line breaks
+        cout << endl;
 
         //This conditional statement will deal the initial first two cards based on how many players
         //That are playing the game.
@@ -330,6 +332,7 @@ int main(){
 //This function is the title menu and greets the user(s)
 void welcome(){
     
+    //All of these cout statements introduce the user to the game.
     cout << "***********************" << endl;
     cout << "*---------------------*" << endl;
     cout << "*---------------------*" << endl;
@@ -353,8 +356,10 @@ int numberOfPlayers(){
     //Declaring variables
     int players;
     
+    //The user(s) enter the number of players
     cout << "Please enter the number of players (1 or 2): " << endl;
     cin >> players;
+    //If the user(s) enters a value that is not acceptable they go into a validation loop.
     while (!validPlayers(players)) {
         cout << "The amount of players may only be between 1 or 2" << endl;
         cin >> players;
@@ -364,17 +369,30 @@ int numberOfPlayers(){
 }// End of numberOfPlayers function
 
 //This function will allow the players to make their bets
-void makeBets(int *arrayForBets, int players){
+void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
     
     //This loop will ask the players to make their bets.
-    for (int i = 0; i < players; i ++){
-        cout << "Player " << i + 1 << " please place your bet: " << endl;
-        cout << "The bet must be between 10 and 500" << endl;
-        cin >> arrayForBets[i];
-        while ((arrayForBets[i] < 10) || (arrayForBets[i] > 500) ){
-            cout << "The bets must be between 10 and 500" << endl;
+    for (int i = 0; i < players; i++){
+        //This coditional statement will excute depending on what the value of i is. It will ensure that the
+        //users are only able to enter in the amount of money that they have.
+        if (i == 0){
+            cout << "Player " << i + 1 << " please place your bet: " << endl;
+            cout << "The bet must be between 10 and " << pOne.winnings << endl;
             cin >> arrayForBets[i];
+            while ((arrayForBets[i] < 10) || (arrayForBets[i] > pOne.winnings) ){
+                cout << "The bets must be between 10 and " << pOne.winnings << endl;
+                cin >> arrayForBets[i];
+            }
+        }else if (i == 1){
+            cout << "Player " << i + 1 << " please place your bet: " << endl;
+            cout << "The bet must be between 10 and " << pTwo.winnings << endl;
+            cin >> arrayForBets[i];
+            while ((arrayForBets[i] < 10) || (arrayForBets[i] > pTwo.winnings) ){
+                cout << "The bets must be between 10 and " << pTwo.winnings << endl;
+                cin >> arrayForBets[i];
+            }
         }
+        
     }
 }//End of makeBets function
 
@@ -399,6 +417,9 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> username;
         pOne.username = username;
         pOne.winnings = 500;
+        //I add this line because I had a slight bug where the program thought, in one player mode, that the second
+        //player had no money and thus would enter into an endless loop.
+        pTwo.winnings = 500;
     }else if (players == 2){
         cout << "Player One please enter your name: " << endl;
         cin >> name;
@@ -433,13 +454,13 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
     bool booted = false;
     
     //If player one has no winnings they get booted out of the virtual casino
-    if (pOne.winnings < 0){
+    if (pOne.winnings <= 0){
         cout << "Player one, you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
         booted = true;
         return booted;
     //If player two has no money then they get booted out of the casino.
-    }else if (pTwo.winnings < 0){
+    }else if (pTwo.winnings <= 0){
         cout << "Player Two, you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
         cout << "Player one is booted as well!" << endl;
@@ -447,6 +468,7 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
         return booted;
     }
     
+    //returning the boolean variable to determine if the player(s) will be booted by the game.
     return booted;
     
 }//End of bootedOut function
@@ -566,6 +588,7 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
 //This function will reveal the dealers cards.
 void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
     
+    cout << endl;
     cout << "The dealer has the following cards: " << endl;
     //The value of i, which is now dealerDeckSize, which was calculated in the dealerAddCard function, will be used
     //to determine the amount of times to loop through to show all of the dealers cards.
@@ -1238,7 +1261,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         playerOneEarnings += arrayForBets[0];
         //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal > 21 && dealerTotal > 21){
-        cout << "BUST" << endl;
+        cout << "Player One went BUST" << endl;
         cout << "Dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[0] << endl;
         playerOneEarnings -= arrayForBets[0];
@@ -1302,7 +1325,7 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         playerTwoEarnings += arrayForBets[1];
         //cout << "Player two your earnings are $" << playerTwoEarnings << endl;
     }else if (playerTwoTotal > 21 && dealerTotal > 21){
-        cout << "BUST" << endl;
+        cout << "Player Two went BUST!!!" << endl;
         cout << "Dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[1] << endl;
         playerTwoEarnings -= arrayForBets[1];
