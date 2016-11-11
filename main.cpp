@@ -773,6 +773,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
 
 //This function will detect if there is a winner in the game
 bool Winner(bool BlackJack, int playerOneTotal, int *arrayForBets, int players){
+    
     if (playerOneTotal == BLACKJACK){
         cout << "Player one Won" << endl;
         arrayForBets[0] = arrayForBets[0] * 2;
@@ -781,10 +782,12 @@ bool Winner(bool BlackJack, int playerOneTotal, int *arrayForBets, int players){
     }else {
         return BlackJack = false;
     }
+    
 }//End of Winner Function
 
 //This function will detect if there is a winner in the game
 bool WinnerTwo(bool BlackJack, int playerTwoTotal, int *arrayForBets, int players){
+    
     if (playerTwoTotal == BLACKJACK){
         cout << "Player Two Won" << endl;
         arrayForBets[1] = arrayForBets[1] * 2;
@@ -802,18 +805,27 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     
     int aceValue;
     
+    //This line is dealing out the card to the player.
     cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    
+    //This conditional statement will check to see if the card, that the player recieves is an ace.
+    //If the card is an ace, the player will be allowed to choose its value.
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
+        //If the wrong value is entered, the player goes into a validation loop. The program will not move on until
+        //the correct value is entered.
         while (aceValue != 1 && aceValue != 11){
             cout << "Please enter in the correct value, 1 or 11" << endl;
             cin >> aceValue;
         }
         deck[cardLocation].valueOne = aceValue;
     }
+    //The players new total is calculated by adding together the playerOneTotal plus the value of the new card.
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
-    playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
+    
+    //playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand This line probably not needed.
+    //This line displays the new total to the screen.
     cout << "Player one your total is " << playerOneTotal << endl;
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
@@ -829,7 +841,11 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     
     int aceValue;
     
+    //This line is dealing out the card to the player.
     cout << "You just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    
+    //This conditional statement will check to see if the card, that the player recieves is an ace.
+    //If the card is an ace, the player will be allowed to choose its value.
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
@@ -839,8 +855,11 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
         }
         deck[cardLocation].valueOne = aceValue;
     }
+    //The players new total is calculated by adding together the playerOneTotal plus the value of the new card.
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
-    playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
+    //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand Line probably not needed
+    
+    //This line displays the new total to the screen.
     cout << "Player Two your total is " << playerTwoTotal << endl;
     
     //I have to increment the cardLocation after each hand to ensure that the cards are not
@@ -849,7 +868,6 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     
     //This line pauses the program and waits for user input to continue.
     void pauseProgram();
-
 
 }// End of dealOneCardTwo Function
 
@@ -1223,7 +1241,7 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
 void shuffle(Card deck[], int DECKSIZE){
     
     long seed;
-    int k;
+    int a;
     const int TEMPSIZE = 52;
     Card temp[TEMPSIZE];
     time_t * value;
@@ -1235,11 +1253,11 @@ void shuffle(Card deck[], int DECKSIZE){
     
     int random[52];
     
-    k = 0;
-    while(k < 52) //creates an array of 52 intergers (0-51) in random order
+    a = 0;
+    while(a < 52) //creates an array of 52 intergers (0-51) in random order
     {
-        random[k] = rand() % 52;
-        k++;
+        random[a] = rand() % 52;
+        a++;
     }
     
     for (int i = 0; i < 52; i++) //uses random array to shuffle cards
