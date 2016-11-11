@@ -130,14 +130,17 @@ int main(){
     Card playerTwo[MAXDECK];
     Card dealer[MAXDECK];
     
+    //The call to this function will great the users.
     welcome();
+    //This function will allow the user(s) to enter the number of players
     players = numberOfPlayers();
+    //Here the players create an ID for themselves.
     createId(players, pOne, pTwo);
     
     //Line break
     cout << endl;
     
-    //This will actually create the deck of cards
+    //This function call will create the deck of cards.
     createDeck(deck, DECKSIZE);
     
     do {
@@ -159,7 +162,7 @@ int main(){
         //This line sets up the array for the players bets
         arrayForBets = new int[players];
         
-        //This will shuffle the deck of cards
+        //This function call will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
         
         //This code will forbid the players from playing the game if they have negative money.
@@ -172,7 +175,7 @@ int main(){
         //Calling the function allow the player to see their bets
         makeBets(arrayForBets, players, pOne, pTwo);
         
-        //Line breaks
+        //Line breaks-to help with output.
         cout << endl;
 
         //This conditional statement will deal the initial first two cards based on how many players
@@ -274,7 +277,7 @@ int main(){
             }
         }
         
-        //This function will add more cards to the computer if their total is 16 or below.
+        //This function call will add more cards to the computer if their total is 16 or below.
         dealerDeckSize = dealerAddCard(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
         //This function call will show the dealers hands right before the winners are announced.
         dealerShowCards(dealerDeckSize, dealer, MAXDECK);
@@ -282,14 +285,14 @@ int main(){
         //This is another line which will help with output.
         cout << endl;
         
-        //This conditional statement will determine what the first player won.
+        //This conditional statement will determine what the first player won or lost.
         if (SurrenderOne == false){
             determineWinnerOne(playerOneTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerOneEarnings);
           }else if (SurrenderOne == true){
               playerOneSurrendered(arrayForBets, players, playerOneEarnings, dealerWinnings);
         }
         
-        //This conditional statement will determine what the second player won.
+        //This conditional statement will determine what the second player won or lost.
         if(SurrenderTwo == false && players == 2){
             determineWinnerTwo(playerTwoTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerTwoEarnings);
         }
@@ -298,7 +301,7 @@ int main(){
         }
         
         
-        //line break
+        //line break-to help with output.
         cout << endl;
         
         //This function will display the stats for the players.
@@ -309,6 +312,8 @@ int main(){
         
         //Asking the player(s) if they want to play again.
         again = playAgain();
+        //Increasing the card location. Although this does not really need to be done because the cardLocation is reset when the
+        //loop starts over.
         cardLocation++;
 
 
@@ -504,6 +509,9 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
         dealer[i].valueTwo = deck[cardLocation].valueTwo;
         dealer[i].suite = deck[cardLocation].suite;
         dealer[i].face = deck[cardLocation].face;
+        //This conditional statement will determine what the value of an ace is if the dealer gets one. In this case,
+        //if the dealer total is less than or equal to 10, the ace will be worth 11 points. Greater than 10, the ace
+        //will be worth 1 point.
         if (deck[cardLocation].valueTwo == 11 && dealerTotal <= 10){
             dealerTotal = dealerTotal + deck[cardLocation].valueTwo;
         }else if (deck[cardLocation].valueTwo == 11 && dealerTotal > 10){
@@ -521,16 +529,22 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
 
 //This function simply displays information for player one.
 void playerOneInfo(int playerOneTotal){
+    
     cout << endl;
+    //Player ones total is outputed.
     cout << "Player One your total is: " << playerOneTotal << endl;
     cout << "Player One, what is your action: " << endl;
+    
 }//End of playerOneInfo function
 
 //This function simply displays information for player two.
 void playerTwoInfo(int playerTwoTotal){
+    
     cout << endl;
+    //Player two's total is outputted.
     cout << "Player Two your total is: " << playerTwoTotal << endl;
     cout << "Player Two, what is your action: " << endl;
+    
 }//End of playerOneInfo function
 
 //This function provides the menu for the options on what the player can do.
@@ -567,6 +581,8 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
         dealer[i].valueTwo = deck[cardLocation].valueTwo;
         dealer[i].suite = deck[cardLocation].suite;
         dealer[i].face = deck[cardLocation].face;
+        //This conditional statement will check to see if the dealer recieved an ace. If the dealer did then the program will
+        //assign a value of the ace based on the dealers total currently stands at.
         if (deck[cardLocation].valueTwo == 11 && dealerTotal <= 10){
             dealerTotal = dealerTotal + deck[cardLocation].valueTwo;
         }else if (deck[cardLocation].valueTwo == 11 && dealerTotal > 10){
@@ -628,11 +644,13 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cardLocation++;
     }
     
+    //This variable is what will be used to hold the value of what an ace will be worth.
     int points;
     
-    //This conditional black will check to see if the player has an ace value. It was done above in
-    //the for loop but the player could not see their total value if I did it there. Thus, the player,
-    //would not now what value to choose-a 1 or an 11.
+    //This conditional block will check to see if the player has an ace value. I originally has code in the above loop to
+    //determine what an ace value was. The problem was that if an ace was the first card received the user had to decide if they
+    //wanted its value to be an 1 or an 11. Thus, I had to write this much longer line of code to allow the player to
+    //determine the value of an ace after they recieved their two cards.
     if (playerOne[0].valueTwo == 11){
         cout << endl;
         cout << "Player one, one of your cards is an 'ACE'" << endl;
@@ -642,17 +660,22 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
+        //validation loop to ensure that the correct value was entered.
         while (points < 1 || points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
+        //Conditional statement to determine assign the value of the ace-either a 1 or a 11.
         if (points == 1){
             playerOne[0].valueOne = 1;
         }else if (points == 2){
             playerOne[0].valueOne = 11;
         }
+        //Assigning the value for what was selected to the new total.
         playerOneTotal = playerOne[0].valueOne + playerOne[1].valueOne;
+        //Displaying the new total to the screen.
         cout << "Your new total is " << playerOneTotal << endl;
+    //This conditional statement will kick in if the second card is an ace.
     }else if (playerOne[1].valueTwo == 11){
         cout << endl;
         cout << "Player one, one of your cards is an 'ACE'" << endl;
@@ -662,6 +685,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
+        //Validation statement to ensure that the correct value was entered.
         while (points < 1 || points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
@@ -671,7 +695,9 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         }else if (points == 2){
             playerOne[1].valueOne = 11;
         }
+        //assigning the new total
         playerOneTotal = playerOne[0].valueOne + playerOne[1].valueOne;
+        //Displaying the new total.
         cout << "Your new total is " << playerOneTotal << endl;
     }else {
         cout << endl;
@@ -683,7 +709,9 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
 
 }//End of dealTwoCars
 
-//This function will pause the program to allow the players to review information.
+//This function will pause the program to allow the players to review information. In many ways, the only purpose of this
+//function is to pause the program so that the user may review information. Before adding this function, I felt that the program
+//was moving to fast.
 void pauseProgram(){
     
     char temp;
@@ -719,8 +747,13 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cardLocation++;
     }
     
+    //This variable is what will be used to hold the value of what an ace will be worth.
     int points;
-    
+
+    //This conditional block will check to see if the player has an ace value. I originally has code in the above loop to
+    //determine what an ace value was. The problem was that if an ace was the first card received the user had to decide if they
+    //wanted its value to be an 1 or an 11. Thus, I had to write this much longer line of code to allow the player to
+    //determine the value of an ace after they recieved their two cards.
     if (playerTwo[0].valueTwo == 11){
         cout << endl;
         cout << "Player Two, one of your cards is an 'ACE'" << endl;
@@ -730,6 +763,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
+        //Validation loop to ensure that the correct value was entered.
         while (points < 1 or points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
@@ -750,6 +784,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
+        //Validation loop to ensure that the correct value was entered.
         while (points < 1 or points > 2){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
@@ -961,6 +996,7 @@ void surrender(int *arrayForBets, int players){
     
     //This line will take half the players bet if they choose to surrender.
     loss = arrayForBets[0] * .50;
+    //Making the value in the array equal the new loss variable.
     arrayForBets[0] = loss;
 
 }//End of surrender function
@@ -972,6 +1008,7 @@ void surrenderTwo(int *arrayForBets, int players){
     
     //This line will take half the players bet if they choose to surrender.
     loss = arrayForBets[1] * .50;
+    //Making the value in the array equal the new loss variable.
     arrayForBets[1] = loss;
     
 
@@ -1023,7 +1060,11 @@ int cardCheck(int cardLocation, int DECKSIZE, int again){
 
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
-        {
+{
+            //One thing that may not make a lot of sense is that is structure has a a valueTwo. This is really not needed except
+            //for the situation involving an ACE. The value two is how I identify an ace as well as let the user or computer
+            //select if they want the value of the card to be a 1 or an 11. Everything else about the structure should make sense.
+            deck[0].valueOne = 1;
             deck[0].valueTwo = 11;
             deck[0].suite = "Spade";
             deck[0].face = "ACE ";
