@@ -935,6 +935,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
     //playerOne[cardLocation] = deck[cardLocation]; //May need to get rid of this line.
     
+    //Telling the user what their new bet is at. 
     cout << "Your bet is now at " << arrayForBets[0] << endl;
     cout << endl;
     
