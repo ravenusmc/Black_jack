@@ -67,7 +67,7 @@ void stand();
 int playerChoices();
 void playerOneInfo(int);
 void playerTwoInfo(int);
-int cardCheck(int, int, int);
+//int cardCheck(int, int, int); old function that is not really needed.
 void dealTwoCards(Card [], int, Card [], int, int &, int &);
 void dealTwoCardsTwo(Card [], int, Card [], int, int &, int &);
 void dealOneCard(Card [], int, Card [], int, int &, int &);
@@ -935,7 +935,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
     //playerOne[cardLocation] = deck[cardLocation]; //May need to get rid of this line.
     
-    //Telling the user what their new bet is at. 
+    //Telling the user what their new bet is at.
     cout << "Your bet is now at " << arrayForBets[0] << endl;
     cout << endl;
     
@@ -976,8 +976,12 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     arrayForBets[1] = (arrayForBets[1] * betIncrease) + arrayForBets[1];
     //Calculating the total of the cards.
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
+    
     //playerTwo[cardLocation] = deck[cardLocation]; Line may not be needed since I never used this.
+    
+    //Telling the user what their new bet is at.
     cout << "Your bet is now at " << arrayForBets[1] << endl;
+    //This line is here to help with output
     cout << endl;
     
     //I have to increment the cardLocation after each hand to ensure that the cards are not
@@ -993,6 +997,7 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
 //This function will take care of the player surrendering.
 void surrender(int *arrayForBets, int players){
     
+    //Creating a loss variable to hold the amount that the player will lose.
     int loss;
     
     //This line will take half the players bet if they choose to surrender.
@@ -1005,6 +1010,7 @@ void surrender(int *arrayForBets, int players){
 //This function will take care of the second player surrendering.
 void surrenderTwo(int *arrayForBets, int players){
     
+    //Creating a loss variable to hold the amount that the player will lose.
     int loss;
     
     //This line will take half the players bet if they choose to surrender.
@@ -1019,6 +1025,7 @@ void surrenderTwo(int *arrayForBets, int players){
 //meaning that they will no longer take any cards.
 void stand(){
     
+    //Advising the player that they choose stand and what it means.
     cout << "You choose to stand" << endl;
     cout << "This means you are not asking for any more cards!" << endl;
     
@@ -1032,6 +1039,7 @@ void stand(){
 int playAgain(){
     
     int again;
+    //Giving the player the option if they want to play again.
     cout << "1. Play Again" << endl;
     cout << "2. Stop Playing" << endl;
     cout << "Do you want to play again? " << endl;
@@ -1046,18 +1054,19 @@ int playAgain(){
     
 }// End of PlayAgain function
 
+//I may not need this function-I once did but then took it out.
 //This function checks to see if the card deck is almost used up. If it is, it will force the
 //players to end the game and reshuffle the deck.
-int cardCheck(int cardLocation, int DECKSIZE, int again){
-    
-    if (cardLocation == DECKSIZE){
-        again = 2;
-        return again;
-    }else {
-        return again;
-    }
-    
-}//End of cardCheck Function
+//int cardCheck(int cardLocation, int DECKSIZE, int again){
+//    
+//    if (cardLocation == DECKSIZE){
+//        again = 2;
+//        return again;
+//    }else {
+//        return again;
+//    }
+//    
+//}//End of cardCheck Function
 
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
