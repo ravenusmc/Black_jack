@@ -114,6 +114,7 @@ int main(){
     bool breakOne = false;
     bool breakTwo = false;
     bool booted = false;
+    //Declaring the structures which will contain info on the players.
     PlayerInfo pOne;
     PlayerInfo pTwo;
     
