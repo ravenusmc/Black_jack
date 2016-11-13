@@ -1303,20 +1303,27 @@ void shuffle(Card deck[], int DECKSIZE){
     
     srand(seed);            // to seed the random number generator
     
+    //Creating an array which will hold all the random values.
     int random[52];
     
     a = 0;
-    while(a < 52) //creates an array of 52 intergers (0-51) in random order
+    //Here, I am filling the random array. Each number in it will be in a random order.
+    while(a < 52)
     {
+        //This line assigns a random number to the current location of what a is. 
         random[a] = rand() % 52;
+        //Incrementing a to fill the next flot.
         a++;
     }
     
     for (int i = 0; i < 52; i++) //uses random array to shuffle cards
     {
-        temp[i] = deck[i]; //temp holds the card
-        deck[i] = deck[random[i]]; //a new card is assigned to place i
-        deck[random[i]] = temp[i]; //old card is reassigned to place random
+        //Temp will hold the card.
+        temp[i] = deck[i];
+        //A new card is assigned to place i.
+        deck[i] = deck[random[i]];
+        //Old card is assigned to place random.
+        deck[random[i]] = temp[i];
     }
 }
 
@@ -1463,6 +1470,7 @@ void playerOneSurrendered(int *arrayForBets, int players, int &playerOneEarnings
 
 //This function will play only if the player surroundered in the round.
 void playerTwoSurredndered(int *arrayForBets, int players, int &playerTwoEarnings,int &dealerWinnings){
+    
         cout << "Player Two you choose to surrender!" << endl;
         cout << "You now have " << arrayForBets[1] << endl;
         playerTwoEarnings -= arrayForBets[1];
@@ -1474,7 +1482,8 @@ void playerTwoSurredndered(int *arrayForBets, int players, int &playerTwoEarning
 
 
 //**************************************
-//Validation functions below this point
+//Validation functions below this point-In this program, I user both validation functions and a validation loop
+//to ensure that the data that is coming in is accurate.
 //*************************************
 
 //This function checks to ensure that the game only has one or two players.
