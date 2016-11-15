@@ -300,7 +300,6 @@ int main(){
             playerTwoSurredndered(arrayForBets, players, playerTwoEarnings, dealerWinnings);
         }
         
-        
         //line break-to help with output.
         cout << endl;
         
@@ -312,8 +311,8 @@ int main(){
         
         //Asking the player(s) if they want to play again.
         again = playAgain();
-        //Increasing the card location. Although this does not really need to be done because the cardLocation is reset when the
-        //loop starts over.
+        
+        //Increasing the card location.
         cardLocation++;
 
 
@@ -397,7 +396,6 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
                 cin >> arrayForBets[i];
             }
         }
-        
     }
 }//End of makeBets function
 
@@ -573,6 +571,9 @@ int playerChoices(){
 //This function will continue to deal cards to the dealer until they get over 17.
 int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
     
+    //I have this variable equal two because the computer received two cards which are in the dealer structure. This means that
+    //spots 0 and 1 are taken. Thus, the next card that the dealer gets will take up the subscript 2 location. Each time
+    //the below loop is incremented, i will increase by one to place more cards into the dealer structure.
     int i = 2;
     
     //If the dealers total is below 16 they get more and more cards added to their total until it is greater than 16.
@@ -619,6 +620,7 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
 //apply to dealTwoCardsTwo.
 void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal){
     
+    //Displaying the information to the player as to what their first two cards are.
     cout << "Player One here are your first two cards: " << endl;
     
     //This for loop will give the first two cards to the first player.
@@ -647,9 +649,9 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
     //This variable is what will be used to hold the value of what an ace will be worth.
     int points;
     
-    //This conditional block will check to see if the player has an ace value. I originally has code in the above loop to
-    //determine what an ace value was. The problem was that if an ace was the first card received the user had to decide if they
-    //wanted its value to be an 1 or an 11. Thus, I had to write this much longer line of code to allow the player to
+    //This conditional block will check to see if the player has an ace value. I originally had this code in the above loop to
+    //determine what an ace value was. The problem was that if an ace was the first card received the user had to decide if
+    //they wanted its value to be an 1 or an 11. Thus, I had to write this much longer line of code to allow the player to
     //determine the value of an ace after they recieved their two cards.
     if (playerOne[0].valueTwo == 11){
         cout << endl;
@@ -710,8 +712,8 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
 }//End of dealTwoCars
 
 //This function will pause the program to allow the players to review information. In many ways, the only purpose of this
-//function is to pause the program so that the user may review information. Before adding this function, I felt that the program
-//was moving to fast.
+//function is to pause the program so that the user may review information. Before adding this function, I felt that the
+//program was moving to 'fast'.
 void pauseProgram(){
     
     char temp;
@@ -725,6 +727,7 @@ void pauseProgram(){
 //This function deals the cards for the second player.
 void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, int &cardLocation, int &playerTwoTotal){
     
+    //Displaying the information to the player as to what their first two cards are.
     cout << "Player Two here are your first two cards: " << endl;
     
     //This for loop will give the first two cards to the second player.
@@ -750,9 +753,9 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
     //This variable is what will be used to hold the value of what an ace will be worth.
     int points;
 
-    //This conditional block will check to see if the player has an ace value. I originally has code in the above loop to
-    //determine what an ace value was. The problem was that if an ace was the first card received the user had to decide if they
-    //wanted its value to be an 1 or an 11. Thus, I had to write this much longer line of code to allow the player to
+    //This conditional block will check to see if the player has an ace value. I originally had this code in the above loop to
+    //determine what an ace value was. The problem was that if an ace was the first card received the user had to decide if
+    //they wanted its value to be an 1 or an 11. Thus, I had to write this much longer line of code to allow the player to
     //determine the value of an ace after they recieved their two cards.
     if (playerTwo[0].valueTwo == 11){
         cout << endl;
@@ -884,6 +887,7 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
+        //A validation loop to ensure that the player enters the correct value.
         while (aceValue != 1 && aceValue != 11){
             cout << "Please enter in the correct value, 1 or 11" << endl;
             cin >> aceValue;
@@ -1307,6 +1311,7 @@ void shuffle(Card deck[], int DECKSIZE){
     int random[52];
     
     a = 0;
+    
     //Here, I am filling the random array. Each number in it will be in a random order.
     while(a < 52)
     {
@@ -1316,7 +1321,8 @@ void shuffle(Card deck[], int DECKSIZE){
         a++;
     }
     
-    for (int i = 0; i < 52; i++) //uses random array to shuffle cards
+    //A loop to shuffle cards
+    for (int i = 0; i < 52; i++)
     {
         //Temp will hold the card.
         temp[i] = deck[i];
