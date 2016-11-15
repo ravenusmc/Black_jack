@@ -17,7 +17,6 @@
 #include <cstdlib>
 #include <ctime>
 
-
 using namespace std;
 
 //*******************************
@@ -108,7 +107,7 @@ int main(){
     int playerTwoEarnings = 0;
     bool BlackJack = false;
     bool Break = false;
-    bool Surrender = false;
+    //bool Surrender = false; I may not need this variable since SurrenderOne Replaces it
     bool SurrenderOne = false;
     bool SurrenderTwo = false;
     bool breakOne = false;
@@ -154,7 +153,7 @@ int main(){
         playerTwoEarnings = 0;
         dealerTotal = 0;
         Break = false;
-        Surrender = false;
+        //Surrender = false; I may not need this variable since SurrenderOne Replaces it
         SurrenderOne = false;
         SurrenderTwo = false;
         breakOne = false;
@@ -224,7 +223,7 @@ int main(){
                 }else if (action == 4){
                     surrender(arrayForBets, players);
                     breakOne = true;
-                    Surrender = true;
+                    SurrenderOne = true;
                 }
             }
         } else if (players == 2 && Break == false){
@@ -611,8 +610,8 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
     //to determine the amount of times to loop through to show all of the dealers cards.
     for (int i = 0; i < dealerDeckSize; i++){
         cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
-        
     }
+    
 }//End of dealerShowCards function
 
 
@@ -1299,9 +1298,10 @@ void shuffle(Card deck[], int DECKSIZE){
     time_t * value;
     value = 0;
     
-    seed = time(value);  // use the system clock to produce an initial time
-    
-    srand(seed);            // to seed the random number generator
+    //Using the system clock to produce an initial time
+    seed = time(value);
+    //Seeding the random number generator
+    srand(seed);
     
     //Creating an array which will hold all the random values.
     int random[52];
@@ -1310,7 +1310,7 @@ void shuffle(Card deck[], int DECKSIZE){
     //Here, I am filling the random array. Each number in it will be in a random order.
     while(a < 52)
     {
-        //This line assigns a random number to the current location of what a is. 
+        //This line assigns a random number to the current location of what a is.
         random[a] = rand() % 52;
         //Incrementing a to fill the next flot.
         a++;
