@@ -78,7 +78,7 @@ void Doubledown(Card [], int, Card [], int, int &, int &, int *, int);
 void DoubleDownTwo(Card [], int, Card [],int, int &, int &, int *, int);
 void getDealersCards(Card [], int, Card [], int, int &, int &);
 int dealerAddCard(Card [], int, Card [], int, int &, int &);
-void dealerShowCards(int, Card [], int);
+void dealerShowCards(int, Card [], int, int);
 bool Winner(bool, int playerOneTotal, int *, int);
 bool WinnerTwo(bool, int playerOneTotal, int *, int);
 void determineWinnerOne(int, int, int *, int, int &, int &);
@@ -92,8 +92,6 @@ bool bootedOut(PlayerInfo, PlayerInfo);
 void clearScreen();
 void mainMenu();
 void instructions();
-
-
 
 //******************************
 //Main Function
@@ -138,6 +136,7 @@ int main(){
     pauseProgram();
     clearScreen();
     
+    //Calling the main menu to allow the user to see instructions or play the game.
     mainMenu();
     pauseProgram();
     clearScreen();
@@ -198,10 +197,13 @@ int main(){
         //That are playing the game.
         if (players == 1){
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+            clearScreen();
         }else if (players == 2){
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal);
+            clearScreen();
             cout << endl;
             dealTwoCardsTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal);
+            clearScreen();
         }
         
         //These functions check to see if player one or two has BLACKJACK on the initial round.
@@ -265,6 +267,7 @@ int main(){
                         breakOne = true;
                         SurrenderOne = true;
                     }
+                    clearScreen();
                 }
                 if (breakTwo == false){
                     playerTwoInfo(playerTwoTotal);
@@ -296,7 +299,7 @@ int main(){
         //This function call will add more cards to the computer if their total is 16 or below.
         dealerDeckSize = dealerAddCard(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
         //This function call will show the dealers hands right before the winners are announced.
-        dealerShowCards(dealerDeckSize, dealer, MAXDECK);
+        dealerShowCards(dealerDeckSize, dealer, MAXDECK, dealerTotal);
         
         //This is another line which will help with output.
         cout << endl;
@@ -304,20 +307,27 @@ int main(){
         //This conditional statement will determine what the first player won or lost.
         if (SurrenderOne == false){
             determineWinnerOne(playerOneTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerOneEarnings);
+            pauseProgram();
           }else if (SurrenderOne == true){
               playerOneSurrendered(arrayForBets, players, playerOneEarnings, dealerWinnings);
+              pauseProgram();
         }
         
         //This conditional statement will determine what the second player won or lost.
         if(SurrenderTwo == false && players == 2){
             determineWinnerTwo(playerTwoTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerTwoEarnings);
+            pauseProgram();
         }
         else if (SurrenderTwo == true){
             playerTwoSurredndered(arrayForBets, players, playerTwoEarnings, dealerWinnings);
+            pauseProgram();
         }
         
         //line break-to help with output.
         cout << endl;
+        
+        //This function helps with the output and attempts to clear the screen each time it is called
+        clearScreen();
         
         //This function will display the stats for the players.
         displayStats(players, playerOneEarnings, playerTwoEarnings, pOne, pTwo, dealerTotal);
@@ -331,7 +341,7 @@ int main(){
         //Increasing the card location.
         cardLocation++;
 
-
+    //if again is equal to 2 then the loop will end and the player(s) will exit out.
     } while (again != 2);
     
     //Destroying the dynamically allocated memory
@@ -619,7 +629,9 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
 }//End of dealerAddCard Function
 
 //This function will reveal the dealers cards.
-void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
+void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK, int dealerTotal){
+    
+    clearScreen();
     
     cout << endl;
     cout << "The dealer has the following cards: " << endl;
@@ -628,6 +640,15 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK){
     for (int i = 0; i < dealerDeckSize; i++){
         cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
     }
+    
+    //This cout line will help with output.
+    cout << endl;
+    
+    //Displaying the dealer total
+    cout << "The dealers total is " << dealerTotal << endl;
+    
+    //Pausing the program so that the player can see output.
+    pauseProgram();
     
 }//End of dealerShowCards function
 
@@ -887,6 +908,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     
     //This line pauses the program and waits for user input to continue.
     pauseProgram();
+    clearScreen();
     
 }//End of dealOneCard function
 
@@ -922,7 +944,8 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     cardLocation++;
     
     //This line pauses the program and waits for user input to continue.
-    void pauseProgram();
+    pauseProgram();
+    clearScreen();
 
 }// End of dealOneCardTwo Function
 
@@ -1048,6 +1071,9 @@ void stand(){
     //Advising the player that they choose stand and what it means.
     cout << "You choose to stand" << endl;
     cout << "This means you are not asking for any more cards!" << endl;
+    
+    //Pausing the program to allow the user to see their action.
+    pauseProgram();
     
     //This line pauses the program and waits for user input to continue.
     void pauseProgram();
@@ -1351,6 +1377,7 @@ void shuffle(Card deck[], int DECKSIZE){
 
 //This function will use a massive conditional statement to determine if player one beat the dealer.
 void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings){
+    clearScreen();
     if (playerOneTotal == 21){
         cout << "Player One your total was: " << playerOneTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1358,8 +1385,9 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerOneEarnings += arrayForBets[0];
-        //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal > 21 && dealerTotal > 21){
+        cout << "Player One your total was: " << playerOneTotal << endl;
+        cout << "The Dealers total was: " << dealerTotal << endl;
         cout << "Player One went BUST" << endl;
         cout << "Dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[0] << endl;
@@ -1373,7 +1401,6 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerOneEarnings += arrayForBets[0];
-        //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal < dealerTotal && (dealerTotal > 21)){
         cout << "Player One your total was: " << playerOneTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1381,7 +1408,6 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         arrayForBets[0] = arrayForBets[0] * 2;
         cout << "You won $" << arrayForBets[0] << endl;
         playerOneEarnings += arrayForBets[0];
-        //cout << "Player one your earnings are $" << playerOneEarnings << endl;
     }else if (playerOneTotal < dealerTotal && (dealerTotal <= 21)){
         cout << "Player One your total was: " << playerOneTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1414,7 +1440,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
 
 //This function will use a massive conditional statement to determine if player Two beat the dealer.
 void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerTwoEarnings){
-    cout << endl;
+    clearScreen();
     if (playerTwoTotal == 21){
         cout << "Player Two your total was: " << playerTwoTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1424,6 +1450,8 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         playerTwoEarnings += arrayForBets[1];
         //cout << "Player two your earnings are $" << playerTwoEarnings << endl;
     }else if (playerTwoTotal > 21 && dealerTotal > 21){
+        cout << "Player Two your total was: " << playerTwoTotal << endl;
+        cout << "The Dealers total was: " << dealerTotal << endl;
         cout << "Player Two went BUST!!!" << endl;
         cout << "Dealer wins!" << endl;
         cout << "The dealer won $" << arrayForBets[1] << endl;
@@ -1503,6 +1531,7 @@ void playerTwoSurredndered(int *arrayForBets, int players, int &playerTwoEarning
 }//End of playerTwoSurrendered function
 
 void clearScreen(){
+    
     cout << endl;
     cout << endl;
     cout << endl;
@@ -1519,14 +1548,9 @@ void clearScreen(){
     cout << endl;
     cout << endl;
     cout << endl;
+    cout << endl;
+    
 }
-
-//Clears the screen
-//void clrscrn()
-//
-//{
-//    cout << "\033[2J\033[1;1H";
-//}
 
 //This is the main menu function.
 void mainMenu(){
@@ -1553,45 +1577,48 @@ void mainMenu(){
 
 }//End of mainMenu function
 
-//Instructions function
+//Instructions function-This will display all the rules to playing black jack
 void instructions(){
     
     clearScreen();
-    cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
-    cout << "*****             Instructions on how to play        *****" << endl;
+    cout << "                   INSTRUCTIONS TO PLAY                    " << endl;
     cout << "##########################################################" << endl;
     
-    cout << "##                      POINTS                          ##" << endl;
-    cout << "*****          Aces may be worth 1 or 11 points      *****" << endl;
-    cout << "*****           Face cards are worth 10 point        *****" << endl;
-    cout << "**** All other cards are worth the number on the card ****" << endl;
+    cout << "                        POINTS                            " << endl;
+    cout << "*Aces may be worth 1 or 11 points                         " << endl;
+    cout << "*Face cards are worth 10 points                           " << endl;
+    cout << "*All other cards are worth the number on the card   " << endl;
     cout << "##########################################################" << endl;
     pauseProgram();
     cout << "##########################################################" << endl;
     cout << "                    BASIC RULES                           " << endl;
-    cout << "*****     The basic goal of the game is to get to 21 or 'Black Jack' *****" << endl;
-    cout << "*****    If the player gets to 21, the player wins   *****" << endl;
-    cout << "*****     If the dealer gets 21, the dealer wins *****" << endl;
-    cout << "*****    If the player and the dealer are both over 21, the dealer wins *****" << endl;
-    cout << "     Hit: Means that the player gets one more card              " << endl;
-    cout << "     Stand: Player recieves no more cards             " << endl;
-    cout << "     DoubleDown: Player recieves one more card but cannot recieve more " << endl;
-    cout << "     Surrender: Player will lose 50% of their bet " << endl;
+    cout << "*The basic goal of the game is to get to 21 or 'Black Jack'" << endl;
+    cout << "*If the player gets to 21, the player wins " << endl;
+    cout << "*If the dealer gets 21, the dealer wins " << endl;
+    cout << "*If the player and the dealer are both over 21, the dealer wins" << endl;
+    cout << "*If the player and dealer have the same value then it is a tie-no one wins" << endl;
+    cout << "*If the player is closer to 21 than the dealer, the player wins"<< endl;
+    cout << "*Basically, the player wants to get as close to 21 without going over" << endl;
+    cout << endl;
+    cout << "                 OPTIONS DURING GAMEPLAY                   " << endl;
+    cout << "*Hit: Means that the player gets one more card              " << endl;
+    cout << "*Stand: Player recieves no more cards             " << endl;
+    cout << "*DoubleDown: Player recieves one more card but cannot recieve more " << endl;
+    cout << "*Surrender: Player will lose 50% of their bet " << endl;
     cout << "##########################################################" << endl;
     pauseProgram();
     cout << "##########################################################" << endl;
     cout << "                   BASIC STRATEGY OR TIPS                 " << endl;
-    cout << "         The most common card in Black Jack is a 10       " << endl;
-    cout << "       If you have 16 or below you may want to hit...     " << endl;
-    cout << "       If you have 17 or above you may want to stand...   " << endl;
+    cout << "*The most common card in Black Jack is a 10               " << endl;
+    cout << "*If you have 16 or below you may want to hit...           " << endl;
+    cout << "*If you have 17 or above you may want to stand...         " << endl;
+    cout << "*Always remember what the most common card is...          " << endl;
+    cout << "*You may not want to follow these rules...                " << endl;
+    cout << endl;
+    cout << "ARE YOU READY TO PLAY...HERE WE GO...                     " << endl;
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     
-    
-
 }//End of instructions function
-
-
-
 
 //**************************************
 //Validation functions below this point-In this program, I user both validation functions and a validation loop
@@ -1600,6 +1627,7 @@ void instructions(){
 
 //This function checks to ensure that the game only has one or two players.
 bool validPlayers(int value){
+    
     if (value == 1 || value == 2){
         return true;
     }else{
@@ -1610,11 +1638,13 @@ bool validPlayers(int value){
 
 //This function checks to make sure that the players only enter valid numbers to play again
 bool validAgain(int value){
+    
     if (value == 1 || value == 2){
         return true;
     }else{
         return false;
     }
+    
 }// Enof of validAgain function.
 
 
