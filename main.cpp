@@ -89,6 +89,9 @@ void pauseProgram();
 void createId(int, PlayerInfo &, PlayerInfo &);
 void displayStats(int, int, int, PlayerInfo &, PlayerInfo &, int);
 bool bootedOut(PlayerInfo, PlayerInfo);
+void clearScreen();
+void mainMenu();
+void instructions();
 
 
 
@@ -132,8 +135,17 @@ int main(){
     
     //The call to this function will great the users.
     welcome();
+    pauseProgram();
+    clearScreen();
+    
+    mainMenu();
+    pauseProgram();
+    clearScreen();
+    
     //This function will allow the user(s) to enter the number of players
     players = numberOfPlayers();
+    pauseProgram();
+    clearScreen();
     //Here the players create an ID for themselves.
     createId(players, pOne, pTwo);
     
@@ -162,6 +174,8 @@ int main(){
         //This line sets up the array for the players bets
         arrayForBets = new int[players];
         
+        clearScreen();
+        
         //This function call will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
         
@@ -174,6 +188,8 @@ int main(){
         
         //Calling the function allow the player to see their bets
         makeBets(arrayForBets, players, pOne, pTwo);
+        
+        clearScreen();
         
         //Line breaks-to help with output.
         cout << endl;
@@ -226,8 +242,8 @@ int main(){
                     SurrenderOne = true;
                 }
             }
-        } else if (players == 2 && Break == false){
-            while (breakOne == false || breakTwo == false){
+        } else if ( (players == 2) && (Break == false) ){
+            while ((breakOne == false) || (breakTwo == false)){
                 if (breakOne == false){
                     playerOneInfo(playerOneTotal);
                     action = playerChoices();
@@ -383,7 +399,7 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
             cout << "Player " << i + 1 << " please place your bet: " << endl;
             cout << "The bet must be between 10 and " << pOne.winnings << endl;
             cin >> arrayForBets[i];
-            while ((arrayForBets[i] < 10) || (arrayForBets[i] > pOne.winnings) ){
+            while ( (arrayForBets[i] < 10) || (arrayForBets[i] > pOne.winnings) ){
                 cout << "The bets must be between 10 and " << pOne.winnings << endl;
                 cin >> arrayForBets[i];
             }
@@ -558,7 +574,7 @@ int playerChoices(){
     cin >> action;
     //If a correct selection is not made, then the user will enter a while loop that will force the user to make a
     //valid choice before moving on.
-    while (action < 1 or action > 4){
+    while ((action < 1) || (action > 4)){
         cout << "That is not a valid selection" << endl;
         cout << "Please enter in 1 - 4 for your choice" << endl;
         cin >> action;
@@ -663,7 +679,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
         //validation loop to ensure that the correct value was entered.
-        while (points < 1 || points > 2){
+        while ((points < 1) || (points > 2)){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -688,7 +704,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
         //Validation statement to ensure that the correct value was entered.
-        while (points < 1 || points > 2){
+        while ((points < 1 ) || (points > 2)){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -767,7 +783,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
         //Validation loop to ensure that the correct value was entered.
-        while (points < 1 or points > 2){
+        while ((points < 1) || (points > 2)){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -788,7 +804,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
         //Validation loop to ensure that the correct value was entered.
-        while (points < 1 or points > 2){
+        while ((points < 1) || (points > 2)){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -853,7 +869,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
         cin >> aceValue;
         //If the wrong value is entered, the player goes into a validation loop. The program will not move on until
         //the correct value is entered.
-        while (aceValue != 1 && aceValue != 11){
+        while ((aceValue != 1) && (aceValue != 11)){
             cout << "Please enter in the correct value, 1 or 11" << endl;
             cin >> aceValue;
         }
@@ -888,7 +904,7 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         //A validation loop to ensure that the player enters the correct value.
-        while (aceValue != 1 && aceValue != 11){
+        while ((aceValue != 1) && (aceValue != 11)){
             cout << "Please enter in the correct value, 1 or 11" << endl;
             cin >> aceValue;
         }
@@ -920,7 +936,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     cout << "Player One, please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
     //If the bet increase is outside of the acceptable range, the player is asked to enter the correct amount.
-    while (betIncrease < 0 || betIncrease > 1){
+    while ((betIncrease < 0) || (betIncrease > 1)){
         cout << "Please enter a value between 0 and 1" << endl;
         cin >> betIncrease;
     }
@@ -963,7 +979,7 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     cout << "Player Two, Please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
     //If the bet increase is outside of the acceptable range, the player is asked to enter the correct amount.
-    while (betIncrease < 0 || betIncrease > 1){
+    while ((betIncrease < 0) || (betIncrease > 1)){
         cout << "Please enter a value between 0 and 1" << endl;
         cin >> betIncrease;
     }
@@ -1485,6 +1501,80 @@ void playerTwoSurredndered(int *arrayForBets, int players, int &playerTwoEarning
         cout << "The dealer won " << dealerWinnings << endl;
 
 }//End of playerTwoSurrendered function
+
+void clearScreen(){
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+}
+
+//Clears the screen
+//void clrscrn()
+//
+//{
+//    cout << "\033[2J\033[1;1H";
+//}
+
+//This is the main menu function.
+void mainMenu(){
+    
+    int choice;
+    
+    cout << "Welcome to the Main Menu" << endl;
+    cout << "1. Instructions" << endl;
+    cout << "2. Play Game (You will Lose)" << endl;
+    cout << "What is you choice?" << endl;
+    cin >> choice;
+    while ((choice < 1) || (choice > 2)){
+        cout << "That value is not allowed. Please enter 1 or 2" << endl;
+        cin >> choice;
+    }
+    if (choice == 1){
+        clearScreen();
+        instructions();
+    }
+    else if  (choice == 2){
+        cout << "Game Starting!" << endl;
+    }
+
+
+}//End of mainMenu function
+
+//Instructions function
+void instructions(){
+    
+    clearScreen();
+    cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
+    cout << "*****             Instructions on how to play        *****" << endl;
+    cout << "##########################################################" << endl;
+    cout << "*****          Aces may be worth 1 or 11 points      *****" << endl;
+    cout << "*****           Face cards are worth 10 point        *****" << endl;
+    cout << "**** All other cards are worth the number on the card ****" << endl;
+    cout << "##########################################################" << endl;
+    cout << "*****     The basic goal of the game is to get to 21 *****" << endl;
+    cout << "*****    If the player gets to 21, the player wins   *****" << endl;
+    cout << "*****     If the dealer gets 21, the dealer wins *****" << endl;
+    cout << "*****    If the player and the dealer are both over 21, the dealer wins *****" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    
+    
+
+}//End of instructions function
+
+
 
 
 //**************************************
