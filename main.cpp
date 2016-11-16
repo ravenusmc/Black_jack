@@ -1560,14 +1560,30 @@ void instructions(){
     cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
     cout << "*****             Instructions on how to play        *****" << endl;
     cout << "##########################################################" << endl;
+    
+    cout << "##                      POINTS                          ##" << endl;
     cout << "*****          Aces may be worth 1 or 11 points      *****" << endl;
     cout << "*****           Face cards are worth 10 point        *****" << endl;
     cout << "**** All other cards are worth the number on the card ****" << endl;
     cout << "##########################################################" << endl;
-    cout << "*****     The basic goal of the game is to get to 21 *****" << endl;
+    pauseProgram();
+    cout << "##########################################################" << endl;
+    cout << "                    BASIC RULES                           " << endl;
+    cout << "*****     The basic goal of the game is to get to 21 or 'Black Jack' *****" << endl;
     cout << "*****    If the player gets to 21, the player wins   *****" << endl;
     cout << "*****     If the dealer gets 21, the dealer wins *****" << endl;
     cout << "*****    If the player and the dealer are both over 21, the dealer wins *****" << endl;
+    cout << "     Hit: Means that the player gets one more card              " << endl;
+    cout << "     Stand: Player recieves no more cards             " << endl;
+    cout << "     DoubleDown: Player recieves one more card but cannot recieve more " << endl;
+    cout << "     Surrender: Player will lose 50% of their bet " << endl;
+    cout << "##########################################################" << endl;
+    pauseProgram();
+    cout << "##########################################################" << endl;
+    cout << "                   BASIC STRATEGY OR TIPS                 " << endl;
+    cout << "         The most common card in Black Jack is a 10       " << endl;
+    cout << "       If you have 16 or below you may want to hit...     " << endl;
+    cout << "       If you have 17 or above you may want to stand...   " << endl;
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     
     
