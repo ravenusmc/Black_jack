@@ -68,7 +68,6 @@ void stand();
 int playerChoices();
 void playerOneInfo(int, PlayerInfo);
 void playerTwoInfo(int, PlayerInfo);
-//int cardCheck(int, int, int); old function that is not really needed.
 void dealTwoCards(Card [], int, Card [], int, int &, int &, PlayerInfo);
 void dealTwoCardsTwo(Card [], int, Card [], int, int &, int &, PlayerInfo);
 void dealOneCard(Card [], int, Card [], int, int &, int &, PlayerInfo);
@@ -81,10 +80,10 @@ void DoubleDownTwo(Card [], int, Card [],int, int &, int &, int *, int, PlayerIn
 void getDealersCards(Card [], int, Card [], int, int &, int &);
 int dealerAddCard(Card [], int, Card [], int, int &, int &);
 void dealerShowCards(int, Card [], int, int);
-bool Winner(bool, int playerOneTotal, int *, int, PlayerInfo);
-bool WinnerTwo(bool, int playerOneTotal, int *, int, PlayerInfo);
-void determineWinnerOne(int, int, int *, int, int &, int &, PlayerInfo);
-void determineWinnerTwo(int, int, int *, int, int &, int &, PlayerInfo);
+bool Winner(int playerOneTotal, int *, int, PlayerInfo);
+bool WinnerTwo(int playerOneTotal, int *, int, PlayerInfo);
+void determineWinnerOne(int, int, int *, int, int &, int &, PlayerInfo, bool);
+void determineWinnerTwo(int, int, int *, int, int &, int &, PlayerInfo, bool);
 void playerOneSurrendered(int *, int , int &, int &, PlayerInfo);
 void playerTwoSurrendered(int *, int, int &,int &, PlayerInfo);
 void pauseProgram();
@@ -109,14 +108,15 @@ int main(){
     int dealerWinnings = 0;
     int playerOneEarnings = 0;
     int playerTwoEarnings = 0;
-    bool BlackJack = false;
+    bool BlackJackOne = false;
+    bool BlackJackTwo = false;
     bool Break = false;
-    //bool Surrender = false; I may not need this variable since SurrenderOne Replaces it
     bool SurrenderOne = false;
     bool SurrenderTwo = false;
     bool breakOne = false;
     bool breakTwo = false;
     bool booted = false;
+    
     //Declaring the structures which will contain info on the players.
     PlayerInfo pOne;
     PlayerInfo pTwo;
@@ -167,7 +167,8 @@ int main(){
         playerTwoEarnings = 0;
         dealerTotal = 0;
         Break = false;
-        //Surrender = false; I may not need this variable since SurrenderOne Replaces it
+        BlackJackOne = false;
+        BlackJackTwo = false;
         SurrenderOne = false;
         SurrenderTwo = false;
         breakOne = false;
@@ -212,8 +213,8 @@ int main(){
         //These functions check to see if player one or two has BLACKJACK on the initial round.
         //If they do, they will win twice the amount that they bet and they will not be allowed to
         //take any more cards.
-        Break = Winner(BlackJack, playerOneTotal, arrayForBets, players, pOne);
-        Break = WinnerTwo(BlackJack, playerTwoTotal, arrayForBets, players, pTwo);
+        BlackJackOne = Winner(playerOneTotal, arrayForBets, players, pOne);
+        BlackJackTwo = WinnerTwo(playerTwoTotal, arrayForBets, players, pTwo);
         
         //This is a line break to help with output
         cout << endl;
@@ -224,7 +225,7 @@ int main(){
         
         //This massive conditional statement is what will allow the players to decide what actions they want to take in regards
         //to taking another card, stand, double down or surrendering.
-        if (players == 1 && Break == false){
+        if ( (players == 1) && (BlackJackOne == false) ){
             while (breakOne == false){
                 playerOneInfo(playerOneTotal, pOne);
                 action = playerChoices();
@@ -247,7 +248,7 @@ int main(){
                     SurrenderOne = true;
                 }
             }
-        } else if ( (players == 2) && (Break == false) ){
+        } else if ( (players == 2) && (BlackJackOne == false) && (BlackJackTwo == false) ){
             while ((breakOne == false) || (breakTwo == false)){
                 if (breakOne == false){
                     playerOneInfo(playerOneTotal, pOne);
@@ -309,7 +310,7 @@ int main(){
         
         //This conditional statement will determine what the first player won or lost.
         if (SurrenderOne == false){
-            determineWinnerOne(playerOneTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerOneEarnings, pOne);
+            determineWinnerOne(playerOneTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerOneEarnings, pOne, BlackJackOne);
             pauseProgram();
           }else if (SurrenderOne == true){
               playerOneSurrendered(arrayForBets, players, playerOneEarnings, dealerWinnings, pOne);
@@ -318,7 +319,7 @@ int main(){
         
         //This conditional statement will determine what the second player won or lost.
         if(SurrenderTwo == false && players == 2){
-            determineWinnerTwo(playerTwoTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerTwoEarnings, pTwo);
+            determineWinnerTwo(playerTwoTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerTwoEarnings, pTwo, BlackJackTwo);
             pauseProgram();
         }
         else if (SurrenderTwo == true){
@@ -700,7 +701,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << endl;
         cout << pOne.username << " one of your cards is an 'ACE'" << endl;
         cout << "This card may be worth either 1 or 11 points " << endl;
-        cout << "You currenty have a total of " << playerOneTotal << endl;
+        cout << "You currently have a total of " << playerOneTotal << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
@@ -725,7 +726,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << endl;
         cout << pOne.username << ", one of your cards is an 'ACE'" << endl;
         cout << "This card may be worth either 1 or 11 points " << endl;
-        cout << "You currenty have a total of " << playerOneTotal << endl;
+        cout << "You currently have a total of " << playerOneTotal << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
@@ -804,7 +805,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << endl;
         cout << pTwo.username << ", one of your cards is an 'ACE'" << endl;
         cout << "This card may be worth either 1 or 11 points " << endl;
-        cout << pTwo.username << " you currenty have a total of " << playerTwoTotal << endl;
+        cout << pTwo.username << " you currently have a total of " << playerTwoTotal << endl;
         cout << "1. 1 point" << endl;
         cout << "2. 11 points" << endl;
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
@@ -852,30 +853,32 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
 
 }//End of dealTwoCardsTwo
 
-//This function will detect if there is a winner in the game
-bool Winner(bool BlackJack, int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne){
+//This function will detect if player one has 21 from the initial two cards dealt. If they do,
+//the round will be over.
+bool Winner(int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne){
     
     if (playerOneTotal == BLACKJACK){
-        cout << pOne.username << " Won" << endl;
+        cout << pOne.username << "Got 21 on the initial two cards!" << endl;
+        cout << "This means that this round will now be over!" << endl;
         arrayForBets[0] = arrayForBets[0] * 2;
-        cout << pOne.username << " won " << arrayForBets[0] << endl;
-        return BlackJack = true;
+        return true;
     }else {
-        return BlackJack = false;
+        return false;
     }
     
 }//End of Winner Function
 
-//This function will detect if there is a winner in the game
-bool WinnerTwo(bool BlackJack, int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pTwo){
+//This function will detect if player two has 21 from the initial two cards dealt. If they do,
+//the round will be over.
+bool WinnerTwo(int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pTwo){
     
     if (playerTwoTotal == BLACKJACK){
-        cout << pTwo.username << " Won" << endl;
+        cout << pTwo.username << "Got 21 on the initial two cards!" << endl;
+        cout << "This means that this round will now be over!" << endl;
         arrayForBets[1] = arrayForBets[1] * 2;
-        cout << pTwo.username << " won " << arrayForBets[1] << endl;
-        return BlackJack = true;
+        return true;
     }else {
-        return BlackJack = false;
+        return false;
     }
     
 }//End of Winner Function
@@ -1090,35 +1093,25 @@ void stand(){
 //This function will ask the player if they want to play again
 int playAgain(){
     
+    //Declaring the variable
     int again;
+    
     //Giving the player the option if they want to play again.
     cout << "1. Play Again" << endl;
     cout << "2. Stop Playing" << endl;
     cout << "Do you want to play again? " << endl;
     cin >> again;
+    
     //Input validation is occuring to ensure that the player chooses the correct option.
     while (!validAgain(again)) {
         cout << "You may only select 1 or 2" << endl;
         cin >> again;
     }
     
+    //Returning the variable
     return again;
     
 }// End of PlayAgain function
-
-//I may not need this function-I once did but then took it out.
-//This function checks to see if the card deck is almost used up. If it is, it will force the
-//players to end the game and reshuffle the deck.
-//int cardCheck(int cardLocation, int DECKSIZE, int again){
-//    
-//    if (cardLocation == DECKSIZE){
-//        again = 2;
-//        return again;
-//    }else {
-//        return again;
-//    }
-//    
-//}//End of cardCheck Function
 
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
@@ -1283,8 +1276,7 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
             deck[38].valueOne = 10;
             deck[38].valueTwo = 10;
             deck[38].suite = "Diamonds";
-            
-            deck[38].face = "King";
+    
             deck[39].valueOne = 1;
             deck[39].valueTwo = 11;
             deck[39].suite = "Hearts";
@@ -1382,9 +1374,13 @@ void shuffle(Card deck[], int DECKSIZE){
 }
 
 //This function will use a massive conditional statement to determine if player one beat the dealer.
-void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings, PlayerInfo pOne){
+void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings, PlayerInfo pOne, bool BlackJackOne){
     clearScreen();
-    if (playerOneTotal == 21){
+    if (BlackJackOne == true){
+        cout << pOne.username << " You got black jack on your initial cards!" << endl;
+        cout << pOne.username << " you won $" << arrayForBets[0] << endl;
+        playerOneEarnings += arrayForBets[0];
+    }else if (playerOneTotal == 21){
         cout << pOne.username << " your total was: " << playerOneTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
         cout << pOne.username << " Wins!" << endl;
@@ -1423,7 +1419,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         cout << pOne.username << " you lost: " << playerOneEarnings << endl;
         dealerWinnings += arrayForBets[0];
     }else if (playerOneTotal == dealerTotal){
-        cout << "The dealer and player have the same values" << endl;
+        cout << "The dealer and" << pOne.username << " have the same values" << endl;
         cout << "The game is a tie and no one wins anything" << endl;
     }else if (playerOneTotal > 21 && dealerTotal <= 21){
         cout << pOne.username << " your total was: " << playerOneTotal << endl;
@@ -1445,9 +1441,13 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
 }//End of determineWinnerOne Function
 
 //This function will use a massive conditional statement to determine if player Two beat the dealer.
-void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerTwoEarnings, PlayerInfo pTwo){
+void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerTwoEarnings, PlayerInfo pTwo, bool BlackJackTwo){
     clearScreen();
-    if (playerTwoTotal == 21){
+    if (BlackJackTwo == true){
+        cout << pTwo.username << " You got black jack on your initial cards!" << endl;
+        cout << pTwo.username << " you won $" << arrayForBets[1] << endl;
+        playerTwoEarnings += arrayForBets[1];
+    }else if (playerTwoTotal == 21){
         cout << pTwo.username << " your total was: " << playerTwoTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
         cout << pTwo.username << " Wins!" << endl;
@@ -1532,6 +1532,8 @@ void playerTwoSurrendered(int *arrayForBets, int players, int &playerTwoEarnings
 
 }//End of playerTwoSurrendered function
 
+//This function is what will be used to clear the screen to help with user output. Without using system clear,
+//it is the best that I could do.
 void clearScreen(){
     
     cout << endl;
@@ -1552,7 +1554,7 @@ void clearScreen(){
     cout << endl;
     cout << endl;
     
-}
+}//End of clearScreen function
 
 //This is the main menu function.
 void mainMenu(){
@@ -1602,6 +1604,7 @@ void instructions(){
     cout << "*If the player is closer to 21 than the dealer, the player wins"<< endl;
     cout << "*Each player plays against the dealer, not each other." << endl;
     cout << "*Basically, the player wants to get as close to 21 without going over" << endl;
+    cout << "*If the player gets to 21 on the initial two cards, they win as well!" << endl;
     cout << endl;
     cout << "                 OPTIONS DURING GAMEPLAY                   " << endl;
     cout << "*Hit: Means that the player gets one more card              " << endl;
@@ -1659,8 +1662,6 @@ bool validAgain(int value){
     }
     
 }// Enof of validAgain function.
-
-
 
 
 
