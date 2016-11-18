@@ -997,7 +997,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     cardLocation++;
     
     //This line pauses the program and waits for user input to continue.
-    void pauseProgram();
+    pauseProgram();
     
 }//End of Doubledown function
 
@@ -1041,7 +1041,7 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     cardLocation++;
     
     //This line pauses the program and waits for user input to continue.
-    void pauseProgram();
+    pauseProgram();
 
 }//End of DoubleDown Function
 
@@ -1084,6 +1084,9 @@ void stand(){
     //Pausing the program to allow the user to see their action.
     pauseProgram();
     
+    //Clearing the screen to help with output
+    clearScreen();
+    
     //This line pauses the program and waits for user input to continue.
     void pauseProgram();
     
@@ -1116,8 +1119,8 @@ int playAgain(){
 //This function will initialize the deck of cards.
 void createDeck(Card deck[], int DECKSIZE) //creates deck
 {
-            //One thing that may not make a lot of sense is that is structure has a a valueTwo. This is really not needed except
-            //for the situation involving an ACE. The value two is how I identify an ace as well as let the user or computer
+            //One thing that may not make a lot of sense is that is structure has a a valueTwo. This is really not neede except
+            //for the situation involving an ACE. The value two is how I identify an ace as well. This lets the user or computer
             //select if they want the value of the card to be a 1 or an 11. Everything else about the structure should make sense.
             deck[0].valueOne = 1;
             deck[0].valueTwo = 11;
