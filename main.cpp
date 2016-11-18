@@ -981,16 +981,22 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
-    //Calculating the bet increase and changing the initial bet to it.
-    arrayForBets[0] = (arrayForBets[0] * betIncrease) + arrayForBets[0];
     //Calculating the total of the cards.
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
+    
+    //Letting the player know what their card total is.
+    cout << pOne.username << " your card total is at: " << playerOneTotal << endl;
+    
+    //Calculating the bet increase and changing the initial bet to it.
+    arrayForBets[0] = (arrayForBets[0] * betIncrease) + arrayForBets[0];
+
     //playerOne[cardLocation] = deck[cardLocation]; //May need to get rid of this line.
     
     //Telling the user what their new bet is at.
     cout << pOne.username << " your bet is now at " << arrayForBets[0] << endl;
-    cout << endl;
     
+    //This line helps with output.
+    cout << endl;
     
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
@@ -1018,21 +1024,28 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
 
     //The player is given a card.
     cout << pTwo.username << " you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    
     //The card is checked to see whether it is an ace.
     if (deck[cardLocation].valueTwo == 11){
         cout << pTwo.username << " you have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
-    //Calculating the bet increase and changing the initial bet to it.
-    arrayForBets[1] = (arrayForBets[1] * betIncrease) + arrayForBets[1];
+    
     //Calculating the total of the cards.
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
+    
+    //Letting the player know what their card total is.
+    cout << pTwo.username << " your card total is at: " << playerTwoTotal << endl;
+    
+    //Calculating the bet increase and changing the initial bet to it.
+    arrayForBets[1] = (arrayForBets[1] * betIncrease) + arrayForBets[1];
     
     //playerTwo[cardLocation] = deck[cardLocation]; Line may not be needed since I never used this.
     
     //Telling the user what their new bet is at.
-    cout << "Your bet is now at " << arrayForBets[1] << endl;
+    cout << pTwo.username << " your bet is now at " << arrayForBets[1] << endl;
+    
     //This line is here to help with output
     cout << endl;
     
@@ -1056,7 +1069,13 @@ void surrender(int *arrayForBets, int players){
     loss = arrayForBets[0] * .50;
     //Making the value in the array equal the new loss variable.
     arrayForBets[0] = loss;
-
+    
+    //Letting the user know that they surrendered.
+    cout << "You choose to surrender!" << endl;
+    
+    //This line pauses the program and waits for user input to continue.
+    pauseProgram();
+    
 }//End of surrender function
 
 //This function will take care of the second player surrendering.
@@ -1069,6 +1088,12 @@ void surrenderTwo(int *arrayForBets, int players){
     loss = arrayForBets[1] * .50;
     //Making the value in the array equal the new loss variable.
     arrayForBets[1] = loss;
+    
+    //Letting the user know that they surrendered.
+    cout << "You choose to surrender!" << endl;
+    
+    //This line pauses the program and waits for user input to continue.
+    pauseProgram();
     
 
 }//End of Surrender function
