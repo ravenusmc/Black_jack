@@ -23,6 +23,7 @@ using namespace std;
 //Structures
 //*******************************
 
+//The structure will handle the card deck.
 class Card
 {
 public:
@@ -32,6 +33,7 @@ public:
     string face;
 };
 
+//This structure will handle the player(s) information.
 class PlayerInfo
 {
 public:
@@ -136,22 +138,29 @@ int main(){
     
     //The call to this function will great the users.
     welcome();
+    
+    //I pause the program and then clear the screen with these two functions.
     pauseProgram();
     clearScreen();
     
     //Calling the main menu to allow the user to see instructions or play the game.
     mainMenu();
+    
+    //I pause the program and then clear the screen with these two functions.
     pauseProgram();
     clearScreen();
     
     //This function will allow the user(s) to enter the number of players
     players = numberOfPlayers();
+    
+    //I pause the program and then clear the screen with these two functions.
     pauseProgram();
     clearScreen();
+    
     //Here the players create an ID for themselves.
     createId(players, pOne, pTwo);
     
-    //Line break
+    //Line break-To help with user output.
     cout << endl;
     
     //This function call will create the deck of cards.
@@ -174,9 +183,11 @@ int main(){
         breakOne = false;
         breakTwo = false;
         booted = false;
+        
         //This line sets up the array for the players bets
         arrayForBets = new int[players];
         
+        //Clearing the screen to help with output.
         clearScreen();
         
         //This function call will shuffle the deck of cards
@@ -184,14 +195,16 @@ int main(){
         
         //This code will forbid the players from playing the game if they have negative money.
         booted = bootedOut(pOne, pTwo);
+        
         //If a player does have a negative balance they will be booted from the game-the while loop will break.
         if (booted){
             break;
         }
         
-        //Calling the function allow the player to see their bets
+        //Calling this function allows the player(s) to make their bets
         makeBets(arrayForBets, players, pOne, pTwo);
         
+        //Clearing the screen to help with user output.
         clearScreen();
         
         //Line breaks-to help with output.
@@ -221,9 +234,11 @@ int main(){
         
         //This function will get the dealers hand.
         getDealersCards(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
+        
+        //This line will help with output.
         cout << endl;
         
-        //This massive conditional statement is what will allow the players to decide what actions they want to take in regards
+        //This conditional statement is what will allow the players to decide what actions they want to take in regards
         //to taking another card, stand, double down or surrendering.
         if ( (players == 1) && (BlackJackOne == false) ){
             while (breakOne == false){
@@ -302,10 +317,11 @@ int main(){
         
         //This function call will add more cards to the computer if their total is 16 or below.
         dealerDeckSize = dealerAddCard(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
+        
         //This function call will show the dealers hands right before the winners are announced.
         dealerShowCards(dealerDeckSize, dealer, MAXDECK, dealerTotal);
         
-        //This is another line which will help with output.
+        //This line will help to make output nicer.
         cout << endl;
         
         //This conditional statement will determine what the first player won or lost.
@@ -345,16 +361,16 @@ int main(){
         //Increasing the card location.
         cardLocation++;
 
-    //if again is equal to 2 then the loop will end and the player(s) will exit out.
+    //If again is equal to 2 then the loop will end and the player(s) will exit out. The game will end at that point.
     } while (again != 2);
     
+    //This function will display a message telling the user(s) bye.
     goodBye();
     
     //Destroying the dynamically allocated memory
     delete [] arrayForBets;
     arrayForBets = nullptr;
 
-    
     //system("pause"); //This line is for Microsoft Visual users.
     
     return 0;
@@ -362,7 +378,9 @@ int main(){
 }// End of main function
 
 //******************************
-//Functions
+//Functions-All of the functions used in the program are described here.
+//There is another section below where validation functions are described. Look for that
+//at the bottom.
 //******************************
 
 //This function is the title menu and greets the user(s)
@@ -397,11 +415,13 @@ int numberOfPlayers(){
     cin >> players;
     //If the user(s) enters a value that is not acceptable they go into a validation loop.
     while (!validPlayers(players)) {
+        //This line alerts the user to what is the correct value that may be entered.
         cout << "The amount of players may only be between 1 or 2" << endl;
         cin >> players;
     }
     
     return players;
+    
 }// End of numberOfPlayers function
 
 //This function will allow the players to make their bets
@@ -415,6 +435,7 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
             cout << pOne.username << " please place your bet: " << endl;
             cout << "The bet must be between 10 and " << pOne.winnings << endl;
             cin >> arrayForBets[i];
+            //This validation loop ensures that the player may only input money within a correct range.
             while ( (arrayForBets[i] < 10) || (arrayForBets[i] > pOne.winnings) ){
                 cout << "The bets must be between 10 and " << pOne.winnings << endl;
                 cin >> arrayForBets[i];
@@ -424,12 +445,14 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
             cout << pTwo.username << " please place your bet: " << endl;
             cout << "The bet must be between 10 and " << pTwo.winnings << endl;
             cin >> arrayForBets[i];
+            //This validation loop ensures that the player may only input money within a correct range.
             while ((arrayForBets[i] < 10) || (arrayForBets[i] > pTwo.winnings) ){
                 cout << "The bets must be between 10 and " << pTwo.winnings << endl;
                 cin >> arrayForBets[i];
             }
         }
     }
+    
 }//End of makeBets function
 
 
@@ -481,7 +504,6 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
     }
     
-    
 }//End of createId function
 
 //This function will determine if the player has enough money to play a round.
@@ -495,7 +517,7 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
         cout << "You are now booted out of the game!" << endl;
         booted = true;
         return booted;
-    //If player two has no money then they get booted out of the casino.
+    //If player two has no money then they get booted out of the casino. Yes, the first player gets booted as well.
     }else if (pTwo.winnings <= 0){
         cout << pTwo.username << " you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
@@ -514,12 +536,12 @@ void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, Pla
     
     //Showing the game stats for the first player
     if (players == 1){
-        cout << "Here are the stats for the amount of money and wins each player has: " << endl;
+        cout << "Here are the stats for the amount of money each player has: " << endl;
         pOne.winnings = pOne.winnings + playerOneEarnings;
         cout << pOne.username << " has a total of: $" << pOne.winnings << endl;
     //Showing the game stats for the first and second player.
     }else if (players == 2){
-        cout << "Here are the stats for the amount of money and wins each player has: " << endl;
+        cout << "Here are the stats for the amount of money each player has: " << endl;
         cout << endl;
         pOne.winnings = pOne.winnings + playerOneEarnings;
         pTwo.winnings = pTwo.winnings + playerTwoEarnings;
@@ -597,6 +619,7 @@ int playerChoices(){
         cin >> action;
     }
     
+    //Returning the action that the player choose.
     return action;
     
 }//End of playerOneAction function
@@ -624,8 +647,10 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
         }else{
             dealerTotal = dealerTotal + deck[cardLocation].valueOne;
         }
+        
         //Incrementing card location
         cardLocation++;
+        
         //I keep track of the number of times that the loop increments.
         i++;
     }
@@ -638,10 +663,12 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
 //This function will reveal the dealers cards.
 void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK, int dealerTotal){
     
+    //Calling the clearScreen function to help with output.
     clearScreen();
     
-    cout << endl;
+    //Outputing the following sentence to alert the user to what cards the dealer has
     cout << "The dealer has the following cards: " << endl;
+    
     //The value of i, which is now dealerDeckSize, which was calculated in the dealerAddCard function, will be used
     //to determine the amount of times to loop through to show all of the dealers cards.
     for (int i = 0; i < dealerDeckSize; i++){
@@ -736,6 +763,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
+        //Conditional statement to determine what the value of the ace will be.
         if (points == 1){
             playerOne[1].valueOne = 1;
         }else if (points == 2){
@@ -836,6 +864,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
+        //Conditional statement to determine what the value of the ace will be.
         if (points == 1){
             playerTwo[1].valueOne = 1;
         }else if (points == 2){
@@ -857,6 +886,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
 //the round will be over.
 bool Winner(int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne){
     
+    //Conditional statement to determine if the player has blackjack on initial two cards.
     if (playerOneTotal == BLACKJACK){
         cout << pOne.username << "Got 21 on the initial two cards!" << endl;
         cout << "This means that this round will now be over!" << endl;
@@ -872,6 +902,7 @@ bool Winner(int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne)
 //the round will be over.
 bool WinnerTwo(int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pTwo){
     
+    //Conditional statement to determine if the player has blackjack on initial two cards.
     if (playerTwoTotal == BLACKJACK){
         cout << pTwo.username << "Got 21 on the initial two cards!" << endl;
         cout << "This means that this round will now be over!" << endl;
@@ -887,6 +918,7 @@ bool WinnerTwo(int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pT
 //This function will deal one card to the player(s) when they do the hit action
 void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal, PlayerInfo pOne){
     
+    //Declaring a local variable for use in the function.
     int aceValue;
     
     //This line is dealing out the card to the player.
