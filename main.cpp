@@ -956,6 +956,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
 //This function will deal one card to the second player when they do the hit action
 void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, int &cardLocation, int &playerTwoTotal, PlayerInfo pTwo){
     
+    //Declaring a local variable for use in the function.
     int aceValue;
     
     //This line is dealing out the card to the player.
@@ -973,8 +974,10 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
         }
         deck[cardLocation].valueOne = aceValue;
     }
+    
     //The players new total is calculated by adding together the playerOneTotal plus the value of the new card.
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
+    
     //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand Line probably not needed
     
     //This line displays the new total to the screen.
@@ -984,7 +987,7 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     //repeated.
     cardLocation++;
     
-    //This line pauses the program and waits for user input to continue.
+    //This line pauses the program and waits for user input to continue. The following function will clear the screen.
     pauseProgram();
     clearScreen();
 
@@ -993,6 +996,7 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
 //This function is where the player will doubledown.
 void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne){
     
+    //Declaring local variables
     float betIncrease;
     int aceValue;
     
@@ -1013,6 +1017,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
         cin >> aceValue;
         deck[cardLocation].valueOne = aceValue;
     }
+    
     //Calculating the total of the cards.
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
     
@@ -1042,6 +1047,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
 //This function is where the second player will doubledown.
 void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int &cardLocation, int &playerTwoTotal, int *arrayForBets, int players, PlayerInfo pTwo){
     
+    //Local variables are declared
     float betIncrease;
     int aceValue;
     
@@ -1094,11 +1100,12 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
 //This function will take care of the player surrendering.
 void surrender(int *arrayForBets, int players){
     
-    //Creating a loss variable to hold the amount that the player will lose.
+    //Creating a loss local variable to hold the amount that the player will lose.
     int loss;
     
     //This line will take half the players bet if they choose to surrender.
     loss = arrayForBets[0] * .50;
+    
     //Making the value in the array equal the new loss variable.
     arrayForBets[0] = loss;
     
@@ -1113,11 +1120,12 @@ void surrender(int *arrayForBets, int players){
 //This function will take care of the second player surrendering.
 void surrenderTwo(int *arrayForBets, int players){
     
-    //Creating a loss variable to hold the amount that the player will lose.
+    //Creating a loss local variable to hold the amount that the player will lose.
     int loss;
     
     //This line will take half the players bet if they choose to surrender.
     loss = arrayForBets[1] * .50;
+    
     //Making the value in the array equal the new loss variable.
     arrayForBets[1] = loss;
     
@@ -1144,16 +1152,13 @@ void stand(){
     //Clearing the screen to help with output
     clearScreen();
     
-    //This line pauses the program and waits for user input to continue.
-    void pauseProgram();
-    
 }//End of stand function
 
 
 //This function will ask the player if they want to play again
 int playAgain(){
     
-    //Declaring the variable
+    //Declaring a local variable
     int again;
     
     //Giving the player the option if they want to play again.
@@ -1395,8 +1400,9 @@ void createDeck(Card deck[], int DECKSIZE) //creates deck
 //This function will shuffle the deck
 void shuffle(Card deck[], int DECKSIZE){
     
+    //Declaring variables
     long seed;
-    int a;
+    int a = 0;
     const int TEMPSIZE = 52;
     Card temp[TEMPSIZE];
     time_t * value;
@@ -1404,13 +1410,12 @@ void shuffle(Card deck[], int DECKSIZE){
     
     //Using the system clock to produce an initial time
     seed = time(value);
+    
     //Seeding the random number generator
     srand(seed);
     
     //Creating an array which will hold all the random values.
     int random[52];
-    
-    a = 0;
     
     //Here, I am filling the random array. Each number in it will be in a random order.
     while(a < 52)
