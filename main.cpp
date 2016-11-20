@@ -1438,7 +1438,7 @@ void shuffle(Card deck[], int DECKSIZE){
     }
 }
 
-//This function will use a massive conditional statement to determine if player one beat the dealer.
+//This function will use a conditional statement to determine if player one beat the dealer.
 void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings, PlayerInfo pOne, bool BlackJackOne){
     clearScreen();
     if (BlackJackOne == true){
@@ -1503,9 +1503,10 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         playerOneEarnings -= arrayForBets[0];
         cout << pOne.username << " you lost $" << playerOneEarnings << endl;
     }
+    
 }//End of determineWinnerOne Function
 
-//This function will use a massive conditional statement to determine if player Two beat the dealer.
+//This function will use a conditional statement to determine if player Two beat the dealer.
 void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerTwoEarnings, PlayerInfo pTwo, bool BlackJackTwo){
     clearScreen();
     if (BlackJackTwo == true){
@@ -1576,11 +1577,20 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
 //This function will play only if the player surroundered in the round.
 void playerOneSurrendered(int *arrayForBets, int players, int &playerOneEarnings, int &dealerWinnings, PlayerInfo pOne){
     
+    //Alerting the player to the option they choose
     cout << pOne.username << " you choose to surrender!" << endl;
     cout << pOne.username << " you now have " << arrayForBets[0] << endl;
+    
+    //Setting the player One Earnings to the correct amount.
     playerOneEarnings -= arrayForBets[0];
+    
+    //Alerting the player to what their new amount is.
     cout << pOne.username << " your total earnings are $" << playerOneEarnings << endl;
+    
+    //Giving the dealer the amount that the player lost.
     dealerWinnings += playerOneEarnings;
+    
+    //Alerting the user to the amount that the dealer won from the player.
     cout << "The dealer won " << dealerWinnings << endl;
     
 }//End of playerOneSurrendered function
@@ -1588,11 +1598,20 @@ void playerOneSurrendered(int *arrayForBets, int players, int &playerOneEarnings
 //This function will play only if the player surroundered in the round.
 void playerTwoSurrendered(int *arrayForBets, int players, int &playerTwoEarnings,int &dealerWinnings, PlayerInfo pTwo){
     
+        //Alerting the player to the option they choose
         cout << pTwo.username << " you choose to surrender!" << endl;
         cout << pTwo.username << " you now have " << arrayForBets[1] << endl;
+    
+        //Setting the player One Earnings to the correct amount.
         playerTwoEarnings -= arrayForBets[1];
+    
+        //Alerting the player to what their new amount is.
         cout << pTwo.username << " your total earnings are $" << playerTwoEarnings << endl;
+    
+        //Giving the dealer the amount that the player lost.
         dealerWinnings += playerTwoEarnings;
+    
+        //Alerting the user to the amount that the dealer won from the player.
         cout << "The dealer won " << dealerWinnings << endl;
 
 }//End of playerTwoSurrendered function
@@ -1624,8 +1643,10 @@ void clearScreen(){
 //This is the main menu function.
 void mainMenu(){
     
+    //Declaring a local variable
     int choice;
     
+    //Outputing user choices for the player.
     cout << "Welcome to the Main Menu" << endl;
     cout << "1. Instructions" << endl;
     cout << "2. Play Game (You will Lose)" << endl;
@@ -1649,7 +1670,10 @@ void mainMenu(){
 //Instructions function-This will display all the rules to playing black jack
 void instructions(){
     
+    //Clearing the screen to help with output.
     clearScreen();
+    
+    //The below output will provide instructions on how to play the game with the user.
     cout << "                   INSTRUCTIONS TO PLAY                    " << endl;
     cout << "##########################################################" << endl;
     
@@ -1658,6 +1682,8 @@ void instructions(){
     cout << "*Face cards are worth 10 points                           " << endl;
     cout << "*All other cards are worth the number on the card   " << endl;
     cout << "##########################################################" << endl;
+    
+    //Pausing the program to help with user output.
     pauseProgram();
     cout << "##########################################################" << endl;
     cout << "                    BASIC RULES                           " << endl;
@@ -1677,6 +1703,8 @@ void instructions(){
     cout << "*DoubleDown: Player recieves one more card but cannot recieve more " << endl;
     cout << "*Surrender: Player will lose 50% of their bet " << endl;
     cout << "##########################################################" << endl;
+    
+    //Pausing the program to help with user output.
     pauseProgram();
     cout << "##########################################################" << endl;
     cout << "                   BASIC STRATEGY OR TIPS                 " << endl;
@@ -1694,9 +1722,14 @@ void instructions(){
 //This function closes out the game.
 void goodBye(){
     
+    //Clearing the screen to help with user output
     clearScreen();
+    
+    //Outputing a message to the user
     cout << "I hope you were not scared off by losing!" << endl;
     cout << "Come back real soon now!" << endl;
+    
+    //Pausing the program so that the user may read what is on the screen
     pauseProgram();
     
 }//End of goodBye function
