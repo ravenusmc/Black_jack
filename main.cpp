@@ -408,9 +408,14 @@ void welcome(){
 //This function is what will determine the number of players in the game.
 int numberOfPlayers(){
     
-    //Declaring variables
+    //Declaring a local variable
     int players;
     
+    //Alerting the player know that they are at the numer of players selection screen.
+    cout << "***************************" << endl;
+    cout << "Number of Players Selection" << endl;
+    cout << "***************************" << endl;
+    cout << endl;
     //The user(s) enter the number of players
     cout << "Please enter the number of players (1 or 2): " << endl;
     cin >> players;
@@ -427,6 +432,14 @@ int numberOfPlayers(){
 
 //This function will allow the players to make their bets
 void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
+    
+    //This will alert the user that they are at the screen to make their bets.
+    cout << "***************************" << endl;
+    cout << "Place your Bets" << endl;
+    cout << "***************************" << endl;
+    cout << endl;
+    cout << "Here you will enter in the amount you want to bet" << endl;
+    cout << endl;
     
     //This loop will ask the players to make their bets.
     for (int i = 0; i < players; i++){
@@ -454,16 +467,29 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
         }
     }
     
+    //Alerting the user to what is occuring
+    cout << endl;
+    cout << "The bets are made, the cards have been shuffled and now the cards will be dealt..." << endl;
+    pauseProgram();
+    
 }//End of makeBets function
 
 
 //This function allows for the players to set up the information about who they are.
 void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
-    //Declaring variables which will be used to set up the user information structures.
+    //Declaring local variables which will be used to set up the user information structures.
     string name;
     string email;
     string username;
+    
+    //Outputing the display for the player creation screen.
+    cout << "***************************" << endl;
+    cout << "Player Creation Screen" << endl;
+    cout << "***************************" << endl;
+    cout << endl;
+    cout << "Here you will enter in information about your player" << endl;
+    cout << endl;
     
     //This conditional loop will allow the players to set up their user information.
     if (players == 1){
@@ -474,6 +500,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> email;
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
+        cout << "The username will be used to ID you during gameplay" << endl;
         cin >> username;
         pOne.username = username;
         pOne.winnings = 500;
@@ -488,6 +515,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> email;
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
+        cout << "The username will be used to ID you during gameplay" << endl;
         cin >> username;
         pOne.username = username;
         pOne.winnings = 500;
@@ -499,6 +527,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> email;
         pTwo.emailAddress = email;
         cout << "Player TWo please enter a username: " << endl;
+        cout << "The username will be used to ID you during gameplay" << endl;
         cin >> username;
         pTwo.username = username;
         pTwo.winnings = 500;
@@ -510,6 +539,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
 //This function will determine if the player has enough money to play a round.
 bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
     
+    //Declaring a local variable
     bool booted = false;
     
     //If player one has no winnings they get booted out of the virtual casino
@@ -584,7 +614,9 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
 //This function simply displays information for player one.
 void playerOneInfo(int playerOneTotal, PlayerInfo pOne){
     
+    //This line helps with the display output
     cout << endl;
+    
     //Player ones total is outputed.
     cout << pOne.username << " your total is: " << playerOneTotal << endl;
     cout << pOne.username << ", what is your action: " << endl;
@@ -594,7 +626,9 @@ void playerOneInfo(int playerOneTotal, PlayerInfo pOne){
 //This function simply displays information for player two.
 void playerTwoInfo(int playerTwoTotal, PlayerInfo pTwo){
     
+    //This line helps with the display output
     cout << endl;
+    
     //Player two's total is outputted.
     cout << pTwo.username << " your total is: " << playerTwoTotal << endl;
     cout << pTwo.username << ", what is your action: " << endl;
@@ -604,7 +638,9 @@ void playerTwoInfo(int playerTwoTotal, PlayerInfo pTwo){
 //This function provides the menu for the options on what the player can do.
 int playerChoices(){
     
+    //Declaring a local variable
     int action;
+    
     //Choices are presented for the players actions
     cout << "1. Hit" << endl;
     cout << "2. Stand" << endl;
@@ -694,6 +730,9 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
     
     //Displaying the information to the player as to what their first two cards are.
     cout << pOne.username << " here are your first two cards: " << endl;
+    
+    //Helping with output
+    cout << endl;
     
     //This for loop will give the first two cards to the first player.
     for (int i = 0; i < 2; i++)
@@ -802,6 +841,9 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
     
     //Displaying the information to the player as to what their first two cards are.
     cout << pTwo.username << " here are your first two cards: " << endl;
+    
+    //Helping with output
+    cout << endl;
     
     //This for loop will give the first two cards to the second player.
     for (int i = 0; i < 2; i++)
@@ -1485,7 +1527,7 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
         cout << pOne.username << " you lost: " << playerOneEarnings << endl;
         dealerWinnings += arrayForBets[0];
     }else if (playerOneTotal == dealerTotal){
-        cout << "The dealer and" << pOne.username << " have the same values" << endl;
+        cout << "The dealer and " << pOne.username << " have the same values" << endl;
         cout << "The game is a tie and no one wins anything" << endl;
     }else if (playerOneTotal > 21 && dealerTotal <= 21){
         cout << pOne.username << " your total was: " << playerOneTotal << endl;
@@ -1648,13 +1690,19 @@ void mainMenu(){
     int choice;
     
     //Outputing user choices for the player.
+    cout << "************************" << endl;
     cout << "Welcome to the Main Menu" << endl;
-    cout << "1. Instructions" << endl;
+    cout << "************************" << endl;
+    cout << endl;
+    cout << "Please select an option" << endl;
+    cout << endl;
+    cout << "1. How to play and basic strategy" << endl;
     cout << "2. Play Game (You will Lose)" << endl;
+    cout << endl;
     cout << "What is you choice?" << endl;
     cin >> choice;
     while ( (choice < 1) || (choice > 2) ){
-        cout << "That value is not allowed. Please enter 1 or 2" << endl;
+        cout << "That value is not allowed. Please enter either 1 or 2" << endl;
         cin >> choice;
     }
     if (choice == 1){
@@ -1662,7 +1710,9 @@ void mainMenu(){
         instructions();
     }
     else if  (choice == 2){
-        cout << "Game Starting!" << endl;
+        cout << endl;
+        cout << "The Game will be starting soon!" << endl;
+        cout << "But first, the player(s) must place their bets and create an ID" << endl;
     }
 
 
