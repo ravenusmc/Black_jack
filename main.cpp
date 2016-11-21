@@ -7,7 +7,8 @@
 
 /*
  
- Explanation: This program is an electronic version of the casino game Black Jack
+ Explanation: This program is an electronic version of the casino game Black Jack. It is designed to be played with 
+ either one or two players.
  
  */
 
@@ -264,7 +265,7 @@ int main(){
                 }
             }
         } else if ( (players == 2) && (BlackJackOne == false) && (BlackJackTwo == false) ){
-            while ((breakOne == false) || (breakTwo == false)){
+            while ( (breakOne == false) || (breakTwo == false) ){
                 if (breakOne == false){
                     playerOneInfo(playerOneTotal, pOne);
                     action = playerChoices();
@@ -446,7 +447,7 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
             cout << "The bet must be between 10 and " << pTwo.winnings << endl;
             cin >> arrayForBets[i];
             //This validation loop ensures that the player may only input money within a correct range.
-            while ((arrayForBets[i] < 10) || (arrayForBets[i] > pTwo.winnings) ){
+            while ( (arrayForBets[i] < 10) || (arrayForBets[i] > pTwo.winnings) ){
                 cout << "The bets must be between 10 and " << pTwo.winnings << endl;
                 cin >> arrayForBets[i];
             }
@@ -613,7 +614,7 @@ int playerChoices(){
     cin >> action;
     //If a correct selection is not made, then the user will enter a while loop that will force the user to make a
     //valid choice before moving on.
-    while ((action < 1) || (action > 4)){
+    while ( (action < 1) || (action > 4) ){
         cout << "That is not a valid selection" << endl;
         cout << "Please enter in 1 - 4 for your choice" << endl;
         cin >> action;
@@ -734,7 +735,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
         //validation loop to ensure that the correct value was entered.
-        while ((points < 1) || (points > 2)){
+        while ( (points < 1) || (points > 2) ){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -759,7 +760,7 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
         //Validation statement to ensure that the correct value was entered.
-        while ((points < 1 ) || (points > 2)){
+        while ( (points < 1 ) || (points > 2) ){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -839,7 +840,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "Would you like the card to be worth 1 or 11 points: (1/2) " << endl;
         cin >> points;
         //Validation loop to ensure that the correct value was entered.
-        while ((points < 1) || (points > 2)){
+        while ( (points < 1) || (points > 2) ){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -860,7 +861,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
         cout << "Would you like the card to be worth 1 or 11 points: " << endl;
         cin >> points;
         //Validation loop to ensure that the correct value was entered.
-        while ((points < 1) || (points > 2)){
+        while ( (points < 1) || (points > 2) ){
             cout << "That value is not allowed. Please enter 1 or 2" << endl;
             cin >> points;
         }
@@ -931,7 +932,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
         cin >> aceValue;
         //If the wrong value is entered, the player goes into a validation loop. The program will not move on until
         //the correct value is entered.
-        while ((aceValue != 1) && (aceValue != 11)){
+        while ( (aceValue != 1) && (aceValue != 11) ){
             cout << "Please enter in the correct value, 1 or 11" << endl;
             cin >> aceValue;
         }
@@ -968,7 +969,7 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
         cout << pTwo.username << "you have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         //A validation loop to ensure that the player enters the correct value.
-        while ((aceValue != 1) && (aceValue != 11)){
+        while ( (aceValue != 1) && (aceValue != 11) ){
             cout << "Please enter in the correct value, 1 or 11" << endl;
             cin >> aceValue;
         }
@@ -1004,7 +1005,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     cout << pOne.username << ", please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
     //If the bet increase is outside of the acceptable range, the player is asked to enter the correct amount.
-    while ((betIncrease < 0) || (betIncrease > 1)){
+    while ( (betIncrease < 0) || (betIncrease > 1) ){
         cout << "Please enter a value between 0 and 1" << endl;
         cin >> betIncrease;
     }
@@ -1055,7 +1056,7 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     cout << pTwo.username << ", Please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
     //If the bet increase is outside of the acceptable range, the player is asked to enter the correct amount.
-    while ((betIncrease < 0) || (betIncrease > 1)){
+    while ( (betIncrease < 0) || (betIncrease > 1) ){
         cout << "Please enter a value between 0 and 1" << endl;
         cin >> betIncrease;
     }
@@ -1652,7 +1653,7 @@ void mainMenu(){
     cout << "2. Play Game (You will Lose)" << endl;
     cout << "What is you choice?" << endl;
     cin >> choice;
-    while ((choice < 1) || (choice > 2)){
+    while ( (choice < 1) || (choice > 2) ){
         cout << "That value is not allowed. Please enter 1 or 2" << endl;
         cin >> choice;
     }
