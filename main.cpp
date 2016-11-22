@@ -47,7 +47,7 @@ public:
 
 
 //*******************************
-//Global Variables/constants
+//Global Variables/Constants
 //*******************************
 
 const int DECKSIZE = 52;
@@ -88,7 +88,7 @@ bool WinnerTwo(int playerOneTotal, int *, int, PlayerInfo);
 void determineWinnerOne(int, int, int *, int, int &, int &, PlayerInfo, bool);
 void determineWinnerTwo(int, int, int *, int, int &, int &, PlayerInfo, bool);
 void playerOneSurrendered(int *, int , int &, int &, PlayerInfo);
-void playerTwoSurrendered(int *, int, int &,int &, PlayerInfo);
+void playerTwoSurrendered(int *, int, int &, int &, PlayerInfo);
 void pauseProgram();
 void createId(int, PlayerInfo &, PlayerInfo &);
 void displayStats(int, int, int, PlayerInfo &, PlayerInfo &, int);
@@ -99,7 +99,8 @@ void instructions();
 void goodBye();
 
 //******************************
-//Main Function
+//Main Function-This is the function which will drive the program and
+//handle all other functions.
 //******************************
 
 int main(){
@@ -132,7 +133,7 @@ int main(){
     //The constanst is set to 11 because that is the maximun number of cards that someone can have
     //before Black Jack or 21 may arise. However, the main reason why these structures were created
     //was to allow me to have a place to hold cards, if I needed them. Which became quite useful in dealing
-    //with aces.
+    //with aces. However, other than that, I really did not use them as much as I thought I would.
     Card playerOne[MAXDECK];
     Card playerTwo[MAXDECK];
     Card dealer[MAXDECK];
@@ -214,13 +215,22 @@ int main(){
         //This conditional statement will deal the initial first two cards based on how many players
         //That are playing the game.
         if (players == 1){
+            
+            //Calling the function to deal the first two cards to the first player
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, pOne);
+            //Clearing the screen to help with user output
             clearScreen();
+            
         }else if (players == 2){
+            
+            //Calling the function to deal the first two cards to the first player
             dealTwoCards(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, pOne);
+            //Clearing the screen to help with output
             clearScreen();
-            cout << endl;
+            
+            //Calling the function to deal the first two cards to the second player
             dealTwoCardsTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal, pTwo);
+            //Clearing the screen to help with output
             clearScreen();
         }
         
@@ -242,11 +252,14 @@ int main(){
         //This conditional statement is what will allow the players to decide what actions they want to take in regards
         //to taking another card, stand, double down or surrendering.
         if ( (players == 1) && (BlackJackOne == false) ){
+            //This loop will repeat until breakOne is made true which will occur by the player's actions.
             while (breakOne == false){
                 playerOneInfo(playerOneTotal, pOne);
                 action = playerChoices();
                 if (action == 1){
                     dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, pOne);
+                    //If the player's total is greater than 21 or if it is 21 breakOne is set to true
+                    //which will end the loop
                     if (playerOneTotal > BLACKJACK){
                         breakOne = true;
                     }else if (playerOneTotal == BLACKJACK){
@@ -265,12 +278,15 @@ int main(){
                 }
             }
         } else if ( (players == 2) && (BlackJackOne == false) && (BlackJackTwo == false) ){
+            //This loop will repeat until breakOne is made true which will occur by the players actions.
             while ( (breakOne == false) || (breakTwo == false) ){
                 if (breakOne == false){
                     playerOneInfo(playerOneTotal, pOne);
                     action = playerChoices();
                     if (action == 1){
                         dealOneCard(deck, DECKSIZE, playerOne, MAXDECK, cardLocation, playerOneTotal, pOne);
+                        //If the player's total is greater than 21 or if it is 21 breakOne is set to true
+                        //which will end the loop
                         if (playerOneTotal > BLACKJACK){
                             breakOne = true;
                         }else if (playerOneTotal == BLACKJACK){
@@ -294,6 +310,8 @@ int main(){
                     action = playerChoices();
                     if (action == 1){
                         dealOneCardTwo(deck, DECKSIZE, playerTwo, MAXDECK, cardLocation, playerTwoTotal, pTwo);
+                        //If the player's total is greater than 21 or if it is 21 breakOne is set to true
+                        //which will end the loop
                         if (playerTwoTotal > BLACKJACK){
                             breakTwo = true;
                         }else if (playerTwoTotal == BLACKJACK){
@@ -328,19 +346,23 @@ int main(){
         //This conditional statement will determine what the first player won or lost.
         if (SurrenderOne == false){
             determineWinnerOne(playerOneTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerOneEarnings, pOne, BlackJackOne);
+            //Pausing the program here to help with user output
             pauseProgram();
           }else if (SurrenderOne == true){
               playerOneSurrendered(arrayForBets, players, playerOneEarnings, dealerWinnings, pOne);
+              //Pausing the program here to help with user output
               pauseProgram();
         }
         
         //This conditional statement will determine what the second player won or lost.
         if(SurrenderTwo == false && players == 2){
             determineWinnerTwo(playerTwoTotal, dealerTotal, arrayForBets, players, dealerWinnings, playerTwoEarnings, pTwo, BlackJackTwo);
+            //Pausing the program here to help with user output
             pauseProgram();
         }
         else if (SurrenderTwo == true){
             playerTwoSurrendered(arrayForBets, players, playerTwoEarnings, dealerWinnings, pTwo);
+            //Pausing the program here to help with user output
             pauseProgram();
         }
         
@@ -412,9 +434,9 @@ int numberOfPlayers(){
     int players;
     
     //Alerting the player know that they are at the numer of players selection screen.
-    cout << "***************************" << endl;
-    cout << "Number of Players Selection" << endl;
-    cout << "***************************" << endl;
+    cout << "****************************" << endl;
+    cout << "* Choose Number of Players *" << endl;
+    cout << "****************************" << endl;
     cout << endl;
     //The user(s) enter the number of players
     cout << "Please enter the number of players (1 or 2): " << endl;
@@ -500,7 +522,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> email;
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
-        cout << "The username will be used to ID you during gameplay" << endl;
+        cout << "The username will be used during gameplay" << endl;
         cin >> username;
         pOne.username = username;
         pOne.winnings = 500;
@@ -515,7 +537,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> email;
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
-        cout << "The username will be used to ID you during gameplay" << endl;
+        cout << "The username will be used during gameplay" << endl;
         cin >> username;
         pOne.username = username;
         pOne.winnings = 500;
@@ -527,7 +549,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin >> email;
         pTwo.emailAddress = email;
         cout << "Player TWo please enter a username: " << endl;
-        cout << "The username will be used to ID you during gameplay" << endl;
+        cout << "The username will be used during gameplay" << endl;
         cin >> username;
         pTwo.username = username;
         pTwo.winnings = 500;
@@ -565,6 +587,12 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
 //This function will display the earnings of the players.
 void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, PlayerInfo &pOne, PlayerInfo &pTwo, int dealerTotal){
     
+    //Output for the user to see what screen they are at
+    cout << "*********************" << endl;
+    cout << "*    Round Stats    *" << endl;
+    cout << "*********************" << endl;
+    cout << endl;
+    
     //Showing the game stats for the first player
     if (players == 1){
         cout << "Here are the stats for the amount of money each player has: " << endl;
@@ -579,6 +607,12 @@ void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, Pla
         cout << pOne.username << " has a total of: $" << pOne.winnings << endl;
         cout << pTwo.username << " has a total of: $" << pTwo.winnings << endl;
     }
+    
+    //Pausing the program to help with output
+    pauseProgram();
+    
+    //Clearing the screen
+    clearScreen();
 
     
 }//end of displayStats function
@@ -1185,6 +1219,9 @@ void surrenderTwo(int *arrayForBets, int players){
 //meaning that they will no longer take any cards.
 void stand(){
     
+    //This line is to improve output
+    cout << endl;
+    
     //Advising the player that they choose stand and what it means.
     cout << "You choose to stand" << endl;
     cout << "This means you are not asking for any more cards!" << endl;
@@ -1204,10 +1241,16 @@ int playAgain(){
     //Declaring a local variable
     int again;
     
+    cout << "************************" << endl;
+    cout << "*  The Round is over   *" << endl;
+    cout << "************************" << endl;
+    cout << endl;
+    
     //Giving the player the option if they want to play again.
     cout << "1. Play Again" << endl;
     cout << "2. Stop Playing" << endl;
-    cout << "Do you want to play again? " << endl;
+    cout << endl;
+    cout << "What is your option: " << endl;
     cin >> again;
     
     //Input validation is occuring to ensure that the player chooses the correct option.
@@ -1690,14 +1733,16 @@ void mainMenu(){
     int choice;
     
     //Outputing user choices for the player.
-    cout << "************************" << endl;
-    cout << "Welcome to the Main Menu" << endl;
-    cout << "************************" << endl;
+    cout << "****************************" << endl;
+    cout << "*                          *" << endl;
+    cout << "* Welcome to the Main Menu *" << endl;
+    cout << "*                          *" << endl;
+    cout << "****************************" << endl;
     cout << endl;
     cout << "Please select an option" << endl;
     cout << endl;
-    cout << "1. How to play and basic strategy" << endl;
-    cout << "2. Play Game (You will Lose)" << endl;
+    cout << "1. Play Black Jack" << endl;
+    cout << "2. How to play and basic strategy" << endl;
     cout << endl;
     cout << "What is you choice?" << endl;
     cin >> choice;
@@ -1706,13 +1751,18 @@ void mainMenu(){
         cin >> choice;
     }
     if (choice == 1){
-        clearScreen();
-        instructions();
-    }
-    else if  (choice == 2){
         cout << endl;
         cout << "The Game will be starting soon!" << endl;
+        cout << endl;
         cout << "But first, the player(s) must place their bets and create an ID" << endl;
+    }
+    else if  (choice == 2){
+        
+        //Clearing the screen to help with output.
+        clearScreen();
+        //Calling the function which will display the instrutions
+        instructions();
+        
     }
 
 
@@ -1775,6 +1825,21 @@ void goodBye(){
     
     //Clearing the screen to help with user output
     clearScreen();
+    
+    //All of these cout statements introduce the user to the game.
+    cout << "***********************" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*----Cuddy Casino-----*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "* You are now exiting *" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "*-------Where---------*" << endl;
+    cout << "*------You Lose-------*" << endl;
+    cout << "*-------We Win--------*" << endl;
+    cout << "*---------------------*" << endl;
+    cout << "***********************" << endl;
+    cout << endl;
     
     //Outputing a message to the user
     cout << "I hope you were not scared off by losing!" << endl;
