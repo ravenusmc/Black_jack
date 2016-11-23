@@ -737,6 +737,14 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK, int dealerT
     //Calling the clearScreen function to help with output.
     clearScreen();
     
+    //Alerting the user that the will now see what cards the dealer has
+    cout << "*****************" << endl;
+    cout << "* Dealers Cards *" << endl;
+    cout << "*****************" << endl;
+    
+    //line output clearing to help with the output.
+    cout << endl;
+    
     //Outputing the following sentence to alert the user to what cards the dealer has
     cout << "The dealer has the following cards: " << endl;
     
@@ -1527,6 +1535,13 @@ void shuffle(Card deck[], int DECKSIZE){
 //This function will use a conditional statement to determine if player one beat the dealer.
 void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings, PlayerInfo pOne, bool BlackJackOne){
     clearScreen();
+    
+    //alerting the user to who one
+    cout << "**********************" << endl;
+    cout << "* Displaying who won *" << endl;
+    cout << "**********************" << endl;
+    cout << endl;
+    
     if (BlackJackOne == true){
         cout << pOne.username << " You got black jack on your initial cards!" << endl;
         cout << pOne.username << " you won $" << arrayForBets[0] << endl;
@@ -1595,6 +1610,13 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
 //This function will use a conditional statement to determine if player Two beat the dealer.
 void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerTwoEarnings, PlayerInfo pTwo, bool BlackJackTwo){
     clearScreen();
+    
+    //alerting the user to who one.
+    cout << "**********************" << endl;
+    cout << "* Displaying who won *" << endl;
+    cout << "**********************" << endl;
+    cout << endl;
+
     if (BlackJackTwo == true){
         cout << pTwo.username << " You got black jack on your initial cards!" << endl;
         cout << pTwo.username << " you won $" << arrayForBets[1] << endl;
@@ -1751,7 +1773,8 @@ void mainMenu(){
         cin >> choice;
     }
     if (choice == 1){
-        cout << endl;
+        //Clearing the screen
+        clearScreen();
         cout << "The Game will be starting soon!" << endl;
         cout << endl;
         cout << "But first, the player(s) must place their bets and create an ID" << endl;
