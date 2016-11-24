@@ -90,10 +90,10 @@ void determineWinnerTwo(int, int, int *, int, int &, int &, PlayerInfo, bool);
 void playerOneSurrendered(int *, int , int &, int &, PlayerInfo);
 void playerTwoSurrendered(int *, int, int &, int &, PlayerInfo);
 void pauseProgram();
+void clearScreen();
 void createId(int, PlayerInfo &, PlayerInfo &);
 void displayStats(int, int, int, PlayerInfo &, PlayerInfo &, int);
 bool bootedOut(PlayerInfo, PlayerInfo);
-void clearScreen();
 void mainMenu();
 void instructions();
 void goodBye();
@@ -489,8 +489,9 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
         }
     }
     
+    //Clearing the screen to help with output
+    clearScreen();
     //Alerting the user to what is occuring
-    cout << endl;
     cout << "The bets are made, the cards have been shuffled and now the cards will be dealt..." << endl;
     pauseProgram();
     
@@ -507,7 +508,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
     //Outputing the display for the player creation screen.
     cout << "***************************" << endl;
-    cout << "Player Creation Screen" << endl;
+    cout << "* Player Creation Screen  *" << endl;
     cout << "***************************" << endl;
     cout << endl;
     cout << "Here you will enter in information about your player" << endl;
@@ -515,42 +516,44 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
     //This conditional loop will allow the players to set up their user information.
     if (players == 1){
+        cin.ignore();
         cout << "Player One please enter your name: " << endl;
-        cin >> name;
+        getline(cin, name);
         pOne.name = name;
         cout << "Player One please enter your email: " << endl;
-        cin >> email;
+        getline(cin, email);
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
         cout << "The username will be used during gameplay" << endl;
-        cin >> username;
+        getline(cin, username);
         pOne.username = username;
         pOne.winnings = 500;
         //I add this line because I had a slight bug where the program thought, in one player mode, that the second
         //player had no money and thus would enter into an endless loop.
         pTwo.winnings = 500;
     }else if (players == 2){
+        cin.ignore();
         cout << "Player One please enter your name: " << endl;
-        cin >> name;
+        getline(cin, name);
         pOne.name = name;
         cout << "Player One please enter your email: " << endl;
-        cin >> email;
+        getline(cin, email);
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
         cout << "The username will be used during gameplay" << endl;
-        cin >> username;
+        getline(cin, username);
         pOne.username = username;
         pOne.winnings = 500;
         cout << endl;
         cout << "Player Two please enter your name: " << endl;
-        cin >> name;
+        getline(cin, name);
         pTwo.name = name;
         cout << "Player Two please enter your email: " << endl;
-        cin >> email;
+        getline(cin, email);
         pTwo.emailAddress = email;
         cout << "Player TWo please enter a username: " << endl;
         cout << "The username will be used during gameplay" << endl;
-        cin >> username;
+        getline(cin, username);
         pTwo.username = username;
         pTwo.winnings = 500;
     
@@ -640,6 +643,7 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
         //card location is incremented so a card is not used twice.
         cardLocation++;
     }
+    
     //This line here will get the dealers top card.
     cout << "The dealers top card is a " << dealer[1].valueOne << " " << "of " << dealer[1].suite << endl;
 
@@ -751,7 +755,12 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK, int dealerT
     //The value of i, which is now dealerDeckSize, which was calculated in the dealerAddCard function, will be used
     //to determine the amount of times to loop through to show all of the dealers cards.
     for (int i = 0; i < dealerDeckSize; i++){
-        cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
+        if (dealer[i].valueTwo != 11){
+            cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
+        }else if(dealer[i].valueTwo == 11){
+            cout << "card " << i + 1 << " is a " << dealer[i].face << " of " << dealer[i].suite << endl;
+        }
+        
     }
     
     //This cout line will help with output.
