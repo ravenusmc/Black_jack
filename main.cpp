@@ -644,8 +644,22 @@ void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int 
         cardLocation++;
     }
     
-    //This line here will get the dealers top card.
+    //Clearing the screen to help with user output
+    clearScreen();
+    
+    //Outputing the dealers top card
+    cout << "********************" << endl;
+    cout << "* Dealers Top Card *" << endl;
+    cout << "********************" << endl;
+    cout << endl;
+    
+    //This line here will get the dealers top card
     cout << "The dealers top card is a " << dealer[1].valueOne << " " << "of " << dealer[1].suite << endl;
+    
+    //Pausing and then clearing the screen to help with user output.
+    pauseProgram();
+    clearScreen();
+    
 
 }//End of getDealersCards function
 
@@ -755,10 +769,11 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK, int dealerT
     //The value of i, which is now dealerDeckSize, which was calculated in the dealerAddCard function, will be used
     //to determine the amount of times to loop through to show all of the dealers cards.
     for (int i = 0; i < dealerDeckSize; i++){
+        //This conditional statement will show the user if the dealer has an Ace.
         if (dealer[i].valueTwo != 11){
             cout << "card " << i + 1 << " is a " << dealer[i].valueOne << " of " << dealer[i].suite << endl;
         }else if(dealer[i].valueTwo == 11){
-            cout << "card " << i + 1 << " is a " << dealer[i].face << " of " << dealer[i].suite << endl;
+            cout << "card " << i + 1 << " is a " << dealer[i].face << "of " << dealer[i].suite << endl;
         }
         
     }
