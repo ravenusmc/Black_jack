@@ -63,7 +63,6 @@ void createDeck(Card [], int);
 void shuffle(Card [], int);
 int numberOfPlayers();
 bool validPlayers(int);
-bool validAgain(int);
 bool validBets(int);
 void game(int, Card [], int);
 int playAgain();
@@ -1288,7 +1287,7 @@ int playAgain(){
     cin >> again;
     
     //Input validation is occuring to ensure that the player chooses the correct option.
-    while (!validAgain(again)) {
+    while (!validPlayers(again)) {
         cout << "You may only select 1 or 2" << endl;
         cin >> again;
     }
@@ -1556,7 +1555,7 @@ void shuffle(Card deck[], int DECKSIZE){
         //Old card is assigned to place random.
         deck[random[i]] = temp[i];
     }
-}
+}//End of shuffle function 
 
 //This function will use a conditional statement to determine if player one beat the dealer.
 void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings, PlayerInfo pOne, bool BlackJackOne){
@@ -1907,24 +1906,17 @@ void goodBye(){
 //This function checks to ensure that the game only has one or two players.
 bool validPlayers(int value){
     
+    //If the value is 1 or 2 then the function returns true.
     if (value == 1 || value == 2){
         return true;
+    //If the value is anything else other than 1 or 2 than false will be returned
     }else{
         return false;
     }
 
 }// End of validPlayers function.
 
-//This function checks to make sure that the players only enter valid numbers to play again
-bool validAgain(int value){
-    
-    if (value == 1 || value == 2){
-        return true;
-    }else{
-        return false;
-    }
-    
-}// Enof of validAgain function.
+
 
 
 
