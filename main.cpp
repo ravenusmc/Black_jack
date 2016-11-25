@@ -448,6 +448,7 @@ int numberOfPlayers(){
         cin >> players;
     }
     
+    //The function will return the number of players that the user selected.
     return players;
     
 }// End of numberOfPlayers function
@@ -493,10 +494,10 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
     clearScreen();
     //Alerting the user to what is occuring
     cout << "The bets are made, the cards have been shuffled and now the cards will be dealt..." << endl;
+    //Pausing the program to help with user output.
     pauseProgram();
     
 }//End of makeBets function
-
 
 //This function allows for the players to set up the information about who they are.
 void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
@@ -700,6 +701,7 @@ int playerChoices(){
     cout << "4. Surrender" << endl;
     cout << "What is your action: " << endl;
     cin >> action;
+    
     //If a correct selection is not made, then the user will enter a while loop that will force the user to make a
     //valid choice before moving on.
     while ( (action < 1) || (action > 4) ){
