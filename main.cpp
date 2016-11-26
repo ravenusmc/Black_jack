@@ -519,6 +519,11 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin.ignore();
         cout << "Player One please enter your name: " << endl;
         getline(cin, name);
+        //validation to ensure that the player enters something for their name. 
+        while (name == ""){
+            cout << "You must enter some type of name!" << endl;
+            getline(cin, name);
+        }
         pOne.name = name;
         cout << "Player One please enter your email: " << endl;
         getline(cin, email);
@@ -1555,7 +1560,7 @@ void shuffle(Card deck[], int DECKSIZE){
         //Old card is assigned to place random.
         deck[random[i]] = temp[i];
     }
-}//End of shuffle function 
+}//End of shuffle function
 
 //This function will use a conditional statement to determine if player one beat the dealer.
 void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, int players, int &dealerWinnings, int &playerOneEarnings, PlayerInfo pOne, bool BlackJackOne){
