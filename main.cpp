@@ -519,7 +519,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin.ignore();
         cout << "Player One please enter your name: " << endl;
         getline(cin, name);
-        //validation to ensure that the player enters something for their name. 
+        //validation to ensure that the player enters a value for their name.
         while (name == ""){
             cout << "You must enter some type of name!" << endl;
             getline(cin, name);
@@ -527,10 +527,20 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         pOne.name = name;
         cout << "Player One please enter your email: " << endl;
         getline(cin, email);
+        //Validation to ensure that the player enter a value for their email
+        while (email == ""){
+            cout << "You must enter some type of name!" << endl;
+            getline(cin, email);
+        }
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
         cout << "The username will be used during gameplay" << endl;
         getline(cin, username);
+        //Validation to ensure that the player enter a value for their username
+        while (username == ""){
+            cout << "You must enter some type of name!" << endl;
+            getline(cin, username);
+        }
         pOne.username = username;
         pOne.winnings = 500;
         //I add this line because I had a slight bug where the program thought, in one player mode, that the second
@@ -540,25 +550,55 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         cin.ignore();
         cout << "Player One please enter your name: " << endl;
         getline(cin, name);
+        //Validation to ensure that the player enter a value for their name
+        while (name == ""){
+            cout << "You must enter some type of name!" << endl;
+            getline(cin, name);
+        }
         pOne.name = name;
         cout << "Player One please enter your email: " << endl;
         getline(cin, email);
+        //Validation to ensure that the player enter a value for their email
+        while (email == ""){
+            cout << "You must enter some type of email!" << endl;
+            getline(cin, email);
+        }
         pOne.emailAddress = email;
         cout << "Player One please enter a username: " << endl;
         cout << "The username will be used during gameplay" << endl;
         getline(cin, username);
+        //Validation to ensure that the player enter a value for their username
+        while (username == ""){
+            cout << "You must enter some type of username!" << endl;
+            getline(cin, username);
+        }
         pOne.username = username;
         pOne.winnings = 500;
         cout << endl;
         cout << "Player Two please enter your name: " << endl;
         getline(cin, name);
+        //Validation to ensure that the player enter a value for their name
+        while (name == ""){
+            cout << "You must enter some type of name!" << endl;
+            getline(cin, name);
+        }
         pTwo.name = name;
         cout << "Player Two please enter your email: " << endl;
         getline(cin, email);
+        //Validation to ensure that the player enter a value for their email
+        while (email == ""){
+            cout << "You must enter some type of Email!" << endl;
+            getline(cin, email);
+        }
         pTwo.emailAddress = email;
         cout << "Player TWo please enter a username: " << endl;
         cout << "The username will be used during gameplay" << endl;
         getline(cin, username);
+        //Validation to ensure that the player enter a value for their username
+        while (username == ""){
+            cout << "You must enter some type of username!" << endl;
+            getline(cin, username);
+        }
         pTwo.username = username;
         pTwo.winnings = 500;
     
@@ -566,17 +606,25 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
     
 }//End of createId function
 
-//This function will determine if the player has enough money to play a round.
+//This function will determine if the player has enough money to play a round. If they do not have enough money then
+//the function will boot them from the game.
 bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
     
     //Declaring a local variable
     bool booted = false;
+    
+    //Clearing the screen to help with player output
+    clearScreen();
     
     //If player one has no winnings they get booted out of the virtual casino
     if (pOne.winnings <= 0){
         cout << pOne.username << " you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
         booted = true;
+        
+        //Pausing the program to help with player output.
+        pauseProgram();
+        
         return booted;
     //If player two has no money then they get booted out of the casino. Yes, the first player gets booted as well.
     }else if (pTwo.winnings <= 0){
@@ -584,8 +632,14 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
         cout << "You are now booted out of the game!" << endl;
         cout << pOne.username << " is booted as well!" << endl;
         booted = true;
+        
+        //Pausing the program to help with player output.
+        pauseProgram();
+        
         return booted;
     }
+    
+    
     
     //returning the boolean variable to determine if the player(s) will be booted by the game.
     return booted;
