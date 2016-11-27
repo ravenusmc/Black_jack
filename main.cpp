@@ -129,7 +129,7 @@ int main(){
     Card deck[DECKSIZE];
     
     //These structures will be used to hold the cards that dealer, playerOne and playerTwo have
-    //The constanst is set to 11 because that is the maximun number of cards that someone can have
+    //The constant is set to 11 because that is the maximun number of cards that someone can have
     //before Black Jack or 21 may arise. However, the main reason why these structures were created
     //was to allow me to have a place to hold cards, if I needed them. Which became quite useful in dealing
     //with aces. However, other than that, I really did not use them as much as I thought I would.
@@ -879,8 +879,6 @@ void dealTwoCards(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int 
         playerOne[i].valueTwo = deck[cardLocation].valueTwo;
         playerOne[i].suite = deck[cardLocation].suite;
         playerOne[i].face = deck[cardLocation].face;
-   
-        //playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand
         
         //I have to increment the cardLocation after each hand to ensure that the cards are not
         //repeated.
@@ -980,8 +978,6 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
     {
         cout << "Card " << i + 1 << " is the" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
         playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
-        
-        //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand
         
         //These lines are where the players deck structure is loaded with what they were given. This will be useful
         //further down in this function when an ace is given to the player.
@@ -1087,7 +1083,6 @@ bool WinnerTwo(int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pT
     
 }//End of Winner Function
 
-
 //This function will deal one card to the player(s) when they do the hit action
 void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &cardLocation, int &playerOneTotal, PlayerInfo pOne){
     
@@ -1151,8 +1146,6 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     //The players new total is calculated by adding together the playerOneTotal plus the value of the new card.
     playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
     
-    //playerTwo[cardLocation] = deck[cardLocation]; //assigns card to players hand Line probably not needed
-    
     //This line displays the new total to the screen.
     cout << pTwo.username << " your total is " << playerTwoTotal << endl;
     
@@ -1199,8 +1192,6 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     
     //Calculating the bet increase and changing the initial bet to it.
     arrayForBets[0] = (arrayForBets[0] * betIncrease) + arrayForBets[0];
-
-    //playerOne[cardLocation] = deck[cardLocation]; //May need to get rid of this line.
     
     //Telling the user what their new bet is at.
     cout << pOne.username << " your bet is now at " << arrayForBets[0] << endl;
@@ -1309,7 +1300,7 @@ void surrenderTwo(int *arrayForBets, int players){
     pauseProgram();
     
 
-}//End of Surrender function
+}//End of SurrenderTwo function
 
 //This function will simply alert the user that they have decided to stand
 //meaning that they will no longer take any cards.
@@ -1329,7 +1320,6 @@ void stand(){
     clearScreen();
     
 }//End of stand function
-
 
 //This function will ask the player if they want to play again
 int playAgain(){
