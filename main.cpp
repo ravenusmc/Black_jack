@@ -618,13 +618,17 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
     
     //If player one has no winnings they get booted out of the virtual casino
     if (pOne.winnings <= 0){
+        //Alerting the user to what is happening
         cout << pOne.username << " you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
+        
+        //Booted flag being turned to true-this will break the do-while loop.
         booted = true;
         
         //Pausing the program to help with player output.
         pauseProgram();
         
+        //Returning the booted flag to the main function
         return booted;
     //If player two has no money then they get booted out of the casino. Yes, the first player gets booted as well.
     }else if (pTwo.winnings <= 0){
