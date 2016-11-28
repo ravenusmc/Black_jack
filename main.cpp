@@ -50,12 +50,13 @@ public:
 //Global Variables/Constants
 //*******************************
 
-const int DECKSIZE = 52;
-const int MAXDECK = 11;
-const int BLACKJACK = 21;
+const int DECKSIZE = 52; //This constant will hold the size of the deck
+const int MAXDECK = 11; //This constant is to hold the max number of cards for a players deck.
+const int BLACKJACK = 21; //This constant is for determining blackjack
 
 //*******************************
-//Prototype Functions
+//Prototype Functions-See Function definitions at the end of the main function
+//to see what each of these functions does.
 //*******************************
 
 void welcome();
@@ -124,11 +125,10 @@ int main(){
     PlayerInfo pOne;
     PlayerInfo pTwo;
     
-    
     //Creating the deck of cards
     Card deck[DECKSIZE];
     
-    //These structures will be used to hold the cards that dealer, playerOne and playerTwo have
+    //These structures will be used to hold the cards that the dealer, playerOne and playerTwo are dealt.
     //The constant is set to 11 because that is the maximun number of cards that someone can have
     //before Black Jack or 21 may arise. However, the main reason why these structures were created
     //was to allow me to have a place to hold cards, if I needed them. Which became quite useful in dealing
@@ -194,7 +194,7 @@ int main(){
         //This function call will shuffle the deck of cards
         shuffle(deck, DECKSIZE);
         
-        //This code will forbid the players from playing the game if they have negative money.
+        //This code will forbid the players from playing the game if they have zero or negative money.
         booted = bootedOut(pOne, pTwo);
         
         //If a player does have a negative balance they will be booted from the game-the while loop will break.
@@ -333,7 +333,7 @@ int main(){
             }
         }
         
-        //This function call will add more cards to the computer if their total is 16 or below.
+        //This function call will add more cards to the computer/dealer if their total is 16 or below.
         dealerDeckSize = dealerAddCard(deck, DECKSIZE, dealer, MAXDECK, cardLocation, dealerTotal);
         
         //This function call will show the dealers hands right before the winners are announced.
@@ -409,18 +409,18 @@ int main(){
 void welcome(){
     
     //All of these cout statements introduce the user to the game.
-    cout << "***********************" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*----Cuddy Casino-----*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*Welcome to Black Jack*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*-------Where---------*" << endl;
-    cout << "*------You Lose-------*" << endl;
-    cout << "*-------We Win--------*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "***********************" << endl;
+    cout << "\t\t\t***********************" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*----Cuddy Casino-----*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*Welcome to Black Jack*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*-------Where---------*" << endl;
+    cout << "\t\t\t*------You Lose-------*" << endl;
+    cout << "\t\t\t*-------We Win--------*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t***********************" << endl;
     cout << endl;
 
 
@@ -643,8 +643,6 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
         return booted;
     }
     
-    
-    
     //returning the boolean variable to determine if the player(s) will be booted by the game.
     return booted;
     
@@ -681,7 +679,7 @@ void displayStats(int players, int playerOneEarnings, int playerTwoEarnings, Pla
     clearScreen();
 
     
-}//end of displayStats function
+}//End of displayStats function
 
 //This function will deal two cards to the dealer.
 void getDealersCards(Card deck[], int DECKSIZE, Card dealer[], int MAXDECK, int &cardLocation, int &dealerTotal){
@@ -783,7 +781,7 @@ int dealerAddCard(Card deck [], int DECKSIZE, Card dealer[], int MAXDECK, int &c
     
     //I have this variable equal two because the computer received two cards which are in the dealer structure. This means that
     //spots 0 and 1 are taken. Thus, the next card that the dealer gets will take up the subscript 2 location. Each time
-    //the below loop is incremented, i will increase by one to place more cards into the dealer structure.
+    //the below loop is incremented, I will increase by one to place more cards into the dealer structure.
     int i = 2;
     
     //If the dealers total is below 16 they get more and more cards added to their total until it is greater than 16.
@@ -853,7 +851,6 @@ void dealerShowCards(int dealerDeckSize, Card dealer[], int MAXDECK, int dealerT
     pauseProgram();
     
 }//End of dealerShowCards function
-
 
 //This function will deal the first two cards to the player(s). All of the comments below also
 //apply to dealTwoCardsTwo.
@@ -1066,7 +1063,10 @@ bool Winner(int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne)
         //Pausing the program so that the player may read the above message
         pauseProgram();
         
+        //Increasing the bet by multiplying it by 2.
         arrayForBets[0] = arrayForBets[0] * 2;
+        
+        //Returning the flag's boolean value
         return true;
     }else {
         return false;
@@ -1088,7 +1088,10 @@ bool WinnerTwo(int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pT
         //Pausing the program so that the player may read the above message
         pauseProgram();
         
+        //Increasing the bet by multiplying it by 2.
         arrayForBets[1] = arrayForBets[1] * 2;
+        
+        //Returning the flag's boolean value
         return true;
     }else {
         return false;
@@ -1128,7 +1131,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     //repeated.
     cardLocation++;
     
-    //This line pauses the program and waits for user input to continue.
+    //This line pauses and then clears the program and waits for user input to continue.
     pauseProgram();
     clearScreen();
     
@@ -1952,18 +1955,18 @@ void goodBye(){
     clearScreen();
     
     //All of these cout statements introduce the user to the game.
-    cout << "***********************" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*----Cuddy Casino-----*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "* You are now exiting *" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "*-------Where---------*" << endl;
-    cout << "*------You Lose-------*" << endl;
-    cout << "*-------We Win--------*" << endl;
-    cout << "*---------------------*" << endl;
-    cout << "***********************" << endl;
+    cout << "\t\t\t***********************" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*----Cuddy Casino-----*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t* You are now exiting *" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t*-------Where---------*" << endl;
+    cout << "\t\t\t*------You Lose-------*" << endl;
+    cout << "\t\t\t*-------We Win--------*" << endl;
+    cout << "\t\t\t*---------------------*" << endl;
+    cout << "\t\t\t***********************" << endl;
     cout << endl;
     
     //Outputing a message to the user
@@ -1976,8 +1979,8 @@ void goodBye(){
 }//End of goodBye function
 
 //**************************************
-//Validation functions below this point-In this program, I user both validation functions and a validation loop
-//to ensure that the data that is coming in is accurate.
+//Validation functions below this point. This one validation function is used twice in my
+//program to validate data.
 //*************************************
 
 //This function checks to ensure that the game only has one or two players.
