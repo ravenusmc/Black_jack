@@ -529,7 +529,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         getline(cin, email);
         //Validation to ensure that the player enter a value for their email
         while (email == ""){
-            cout << "You must enter some type of name!" << endl;
+            cout << "You must enter some type of email!" << endl;
             getline(cin, email);
         }
         pOne.emailAddress = email;
@@ -538,7 +538,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         getline(cin, username);
         //Validation to ensure that the player enter a value for their username
         while (username == ""){
-            cout << "You must enter some type of name!" << endl;
+            cout << "You must enter some type of username!" << endl;
             getline(cin, username);
         }
         pOne.username = username;
@@ -734,6 +734,7 @@ void playerOneInfo(int playerOneTotal, PlayerInfo pOne){
     
     //Player ones total is outputed.
     cout << pOne.username << " your total is: " << playerOneTotal << endl;
+    cout << endl;
     cout << pOne.username << ", what is your action: " << endl;
     
 }//End of playerOneInfo function
@@ -1057,8 +1058,14 @@ bool Winner(int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne)
     
     //Conditional statement to determine if the player has blackjack on initial two cards.
     if (playerOneTotal == BLACKJACK){
+        
+        //Alerting the player to what is happening
         cout << pOne.username << "Got 21 on the initial two cards!" << endl;
         cout << "This means that this round will now be over!" << endl;
+        
+        //Pausing the program so that the player may read the above message
+        pauseProgram();
+        
         arrayForBets[0] = arrayForBets[0] * 2;
         return true;
     }else {
@@ -1073,8 +1080,14 @@ bool WinnerTwo(int playerTwoTotal, int *arrayForBets, int players, PlayerInfo pT
     
     //Conditional statement to determine if the player has blackjack on initial two cards.
     if (playerTwoTotal == BLACKJACK){
+        
+        //Alerting the player to what is happening
         cout << pTwo.username << "Got 21 on the initial two cards!" << endl;
         cout << "This means that this round will now be over!" << endl;
+        
+        //Pausing the program so that the player may read the above message
+        pauseProgram();
+        
         arrayForBets[1] = arrayForBets[1] * 2;
         return true;
     }else {
@@ -1166,6 +1179,9 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     float betIncrease;
     int aceValue;
     
+    //Clearing the screen to help with user output
+    clearScreen();
+    
     //The player is asked what percentage they want to increase their wager by.
     cout << pOne.username << ", please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
     cin >> betIncrease;
@@ -1214,6 +1230,9 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     //Local variables are declared
     float betIncrease;
     int aceValue;
+    
+    //Clearing the screen to help with user output
+    clearScreen();
     
     //The player is asked what percentage they want to increase their wager by.
     cout << pTwo.username << ", Please enter in a percentage (0-1) of how much you would like to increase the bet by: " << endl;
@@ -1763,9 +1782,11 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
 //This function will play only if the player surroundered in the round.
 void playerOneSurrendered(int *arrayForBets, int players, int &playerOneEarnings, int &dealerWinnings, PlayerInfo pOne){
     
+    //Clearing the screen to help with user output
+    clearScreen();
+    
     //Alerting the player to the option they choose
     cout << pOne.username << " you choose to surrender!" << endl;
-    cout << pOne.username << " you now have " << arrayForBets[0] << endl;
     
     //Setting the player One Earnings to the correct amount.
     playerOneEarnings -= arrayForBets[0];
@@ -1784,9 +1805,11 @@ void playerOneSurrendered(int *arrayForBets, int players, int &playerOneEarnings
 //This function will play only if the player surroundered in the round.
 void playerTwoSurrendered(int *arrayForBets, int players, int &playerTwoEarnings,int &dealerWinnings, PlayerInfo pTwo){
     
+        //Clearing the screen to help with user output
+        clearScreen();
+    
         //Alerting the player to the option they choose
         cout << pTwo.username << " you choose to surrender!" << endl;
-        cout << pTwo.username << " you now have " << arrayForBets[1] << endl;
     
         //Setting the player One Earnings to the correct amount.
         playerTwoEarnings -= arrayForBets[1];
@@ -1896,6 +1919,7 @@ void instructions(){
     cout << "*If the player and dealer have the same value then it is a tie-no one wins" << endl;
     cout << "*If the player is closer to 21 than the dealer, the player wins"<< endl;
     cout << "*Each player plays against the dealer, not each other." << endl;
+    cout << "*If the player and the dealer both have 21, the player wins." << endl;
     cout << "*Basically, the player wants to get as close to 21 without going over" << endl;
     cout << "*If the player gets to 21 on the initial two cards, they win as well!" << endl;
     cout << endl;
