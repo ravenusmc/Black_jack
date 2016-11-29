@@ -1,7 +1,8 @@
 /*
  program: Black Jack
  Programmer: Mike Cuddy
- Date: 24 October 2016
+ Date Started: 24 October 2016
+ Date Submitted: 29 November 2016
  Other: N/A
  */
 
@@ -437,6 +438,7 @@ int numberOfPlayers(){
     cout << "* Choose Number of Players *" << endl;
     cout << "****************************" << endl;
     cout << endl;
+    
     //The user(s) enter the number of players
     cout << "Please enter the number of players (1 or 2): " << endl;
     cin >> players;
@@ -590,7 +592,7 @@ void createId(int players, PlayerInfo &pOne, PlayerInfo &pTwo){
         getline(cin, email);
         //Validation to ensure that the player enter a value for their email
         while (email == ""){
-            cout << "You must enter some type of Email!" << endl;
+            cout << "You must enter some type of email!" << endl;
             getline(cin, email);
         }
         pTwo.emailAddress = email;
@@ -749,6 +751,7 @@ void playerTwoInfo(int playerTwoTotal, PlayerInfo pTwo){
     
     //Player two's total is outputted.
     cout << pTwo.username << " your total is: " << playerTwoTotal << endl;
+    cout << endl;
     cout << pTwo.username << ", what is your action: " << endl;
     
 }//End of playerOneInfo function
@@ -1125,12 +1128,13 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
         }
         deck[cardLocation].valueOne = aceValue;
     }
+    
     //The players new total is calculated by adding together the playerOneTotal plus the value of the new card.
     playerOneTotal = playerOneTotal + deck[cardLocation].valueOne;
     
-    //playerOne[cardLocation] = deck[cardLocation]; //assigns card to players hand This line probably not needed.
     //This line displays the new total to the screen.
     cout << pOne.username << " your total is " << playerOneTotal << endl;
+    
     //I have to increment the cardLocation after each hand to ensure that the cards are not
     //repeated.
     cardLocation++;
@@ -1355,6 +1359,7 @@ int playAgain(){
     //Declaring a local variable
     int again;
     
+    //Letting the user know that the round is over
     cout << "************************" << endl;
     cout << "*  The Round is over   *" << endl;
     cout << "************************" << endl;
@@ -1643,9 +1648,9 @@ void determineWinnerOne(int playerOneTotal, int dealerTotal, int *arrayForBets, 
     clearScreen();
     
     //alerting the user to who one
-    cout << "**********************" << endl;
-    cout << "* Displaying who won *" << endl;
-    cout << "**********************" << endl;
+    cout << "**************************************" << endl;
+    cout << "* Displaying who won - " << pOne.username << " *" << endl;
+    cout << "**************************************" << endl;
     cout << endl;
     
     if (BlackJackOne == true){
@@ -1718,9 +1723,9 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
     clearScreen();
     
     //alerting the user to who one.
-    cout << "**********************" << endl;
-    cout << "* Displaying who won *" << endl;
-    cout << "**********************" << endl;
+    cout << "**************************************" << endl;
+    cout << "* Displaying who won - " << pTwo.username << " *" << endl;
+    cout << "**************************************" << endl;
     cout << endl;
 
     if (BlackJackTwo == true){
@@ -1919,6 +1924,7 @@ void instructions(){
     
     //Pausing the program to help with user output.
     pauseProgram();
+    //Clearing the screen to help with output.
     clearScreen();
     cout << "##########################################################" << endl;
     cout << "                    BASIC RULES                           " << endl;
@@ -1942,6 +1948,7 @@ void instructions(){
     
     //Pausing the program to help with user output.
     pauseProgram();
+    //Clearing the screen to help with output.
     clearScreen();
     cout << "##########################################################" << endl;
     cout << "                   BASIC STRATEGY OR TIPS                 " << endl;
