@@ -489,6 +489,9 @@ void makeBets(int *arrayForBets, int players, PlayerInfo pOne, PlayerInfo pTwo){
         }
     }
     
+    //This line helps with output
+    cout << endl;
+    
     //Clearing the screen to help with output
     clearScreen();
     //Alerting the user to what is occuring
@@ -621,6 +624,7 @@ bool bootedOut(PlayerInfo pOne, PlayerInfo pTwo){
         //Alerting the user to what is happening
         cout << pOne.username << " you attempted to make bets with money you did not have" << endl;
         cout << "You are now booted out of the game!" << endl;
+        cout << "You got player two booted as well!" << endl;
         
         //Booted flag being turned to true-this will break the do-while loop.
         booted = true;
@@ -974,7 +978,7 @@ void dealTwoCardsTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, i
     //This for loop will give the first two cards to the second player.
     for (int i = 0; i < 2; i++)
     {
-        cout << "Card " << i + 1 << " is the" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
+        cout << "Card " << i + 1 << " is the " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite  << endl;
         playerTwoTotal = playerTwoTotal + deck[cardLocation].valueOne;
         
         //These lines are where the players deck structure is loaded with what they were given. This will be useful
@@ -1057,7 +1061,7 @@ bool Winner(int playerOneTotal, int *arrayForBets, int players, PlayerInfo pOne)
     if (playerOneTotal == BLACKJACK){
         
         //Alerting the player to what is happening
-        cout << pOne.username << "Got 21 on the initial two cards!" << endl;
+        cout << pOne.username << " Got 21 on the initial two cards!" << endl;
         cout << "This means that this round will now be over!" << endl;
         
         //Pausing the program so that the player may read the above message
@@ -1106,7 +1110,7 @@ void dealOneCard(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &
     int aceValue;
     
     //This line is dealing out the card to the player.
-    cout << pOne.username << " you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    cout << pOne.username << " you just recieved a " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
     
     //This conditional statement will check to see if the card, that the player recieves is an ace.
     //If the card is an ace, the player will be allowed to choose its value.
@@ -1144,12 +1148,12 @@ void dealOneCardTwo(Card deck[], int DECKSIZE, Card playerTwo[], int MAXDECK, in
     int aceValue;
     
     //This line is dealing out the card to the player.
-    cout << pTwo.username << " you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    cout << pTwo.username << " you just recieved a " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
     
     //This conditional statement will check to see if the card, that the player recieves is an ace.
     //If the card is an ace, the player will be allowed to choose its value.
     if (deck[cardLocation].valueTwo == 11){
-        cout << pTwo.username << "you have an ace, what do you want it to equal 1 or 11?" << endl;
+        cout << pTwo.username << " you have an ace, what do you want it to equal 1 or 11?" << endl;
         cin >> aceValue;
         //A validation loop to ensure that the player enters the correct value.
         while ( (aceValue != 1) && (aceValue != 11) ){
@@ -1195,7 +1199,7 @@ void Doubledown(Card deck[], int DECKSIZE, Card playerOne[], int MAXDECK, int &c
     }
     
     //The player is given a card.
-    cout << pOne.username << " you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    cout << pOne.username << " you just recieved a " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
     //The card is checked to see whether it is an ace.
     if (deck[cardLocation].valueTwo == 11){
         cout << "You have an ace, what do you want it to equal 1 or 11?" << endl;
@@ -1247,7 +1251,7 @@ void DoubleDownTwo(Card deck[], int DECKSIZE, Card playerTwo[],int  MAXDECK, int
     }
 
     //The player is given a card.
-    cout << pTwo.username << " you just recieved a" << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
+    cout << pTwo.username << " you just recieved a " << deck[cardLocation].face << " " << deck[cardLocation].valueOne << " of " << deck[cardLocation].suite << endl;
     
     //The card is checked to see whether it is an ace.
     if (deck[cardLocation].valueTwo == 11){
@@ -1320,6 +1324,8 @@ void surrenderTwo(int *arrayForBets, int players){
     
     //This line pauses the program and waits for user input to continue.
     pauseProgram();
+    //clearing the screen to help with user experience
+    clearScreen();
     
 
 }//End of SurrenderTwo function
@@ -1747,9 +1753,9 @@ void determineWinnerTwo(int playerTwoTotal, int dealerTotal, int *arrayForBets, 
         cout << pTwo.username << " your total was: " << playerTwoTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
         cout << pTwo.username << " Wins!" << endl;
-        arrayForBets[0] = arrayForBets[0] * 2;
-        cout << pTwo.username << " you won $" << arrayForBets[0] << endl;
-        playerTwoEarnings += arrayForBets[0];
+        arrayForBets[1] = arrayForBets[1] * 2;
+        cout << pTwo.username << " you won $" << arrayForBets[1] << endl;
+        playerTwoEarnings += arrayForBets[1];
     }else if (playerTwoTotal < dealerTotal && (dealerTotal <= 21)){
         cout << pTwo.username << " your total was: " << playerTwoTotal << endl;
         cout << "The Dealers total was: " << dealerTotal << endl;
@@ -1913,6 +1919,7 @@ void instructions(){
     
     //Pausing the program to help with user output.
     pauseProgram();
+    clearScreen();
     cout << "##########################################################" << endl;
     cout << "                    BASIC RULES                           " << endl;
     cout << "*The basic goal of the game is to get to 21 or 'Black Jack'" << endl;
@@ -1921,8 +1928,8 @@ void instructions(){
     cout << "*If the player and the dealer are both over 21, the dealer wins" << endl;
     cout << "*If the player and dealer have the same value then it is a tie-no one wins" << endl;
     cout << "*If the player is closer to 21 than the dealer, the player wins"<< endl;
-    cout << "*Each player plays against the dealer, not each other." << endl;
     cout << "*If the player and the dealer both have 21, the player wins." << endl;
+    cout << "*Each player plays against the dealer, not each other." << endl;
     cout << "*Basically, the player wants to get as close to 21 without going over" << endl;
     cout << "*If the player gets to 21 on the initial two cards, they win as well!" << endl;
     cout << endl;
@@ -1935,6 +1942,7 @@ void instructions(){
     
     //Pausing the program to help with user output.
     pauseProgram();
+    clearScreen();
     cout << "##########################################################" << endl;
     cout << "                   BASIC STRATEGY OR TIPS                 " << endl;
     cout << "*The most common card in Black Jack is a 10               " << endl;
